@@ -30,7 +30,7 @@ const errorHandler = (err, req, res, next) => {
         message = `Resource not found - ${err.path}`;
     }
 
-    if (err.code = 1100) {
+    if (err.code === 1100) {
         message = `Duplicate ${Object.keys(err.keyValue)}`
     }
 
@@ -40,4 +40,7 @@ const errorHandler = (err, req, res, next) => {
     })
 }
 
-module.exports = errorHandler;
+module.exports = {
+    notFound,
+    errorHandler
+};
