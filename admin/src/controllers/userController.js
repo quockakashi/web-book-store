@@ -20,9 +20,9 @@ const renderIndexPage = async(req, res, next) => {
         let matchedUsers = [];
         if (search) {
             if(mongoose.Types.ObjectId.isValid(search)) {
-                const user = userModel.findById(search).exec();
+                const user = await userModel.findById(search).lean();
                  if(user) {
-                matchedUsers.push(user);
+                    matchedUsers.push(user);
                 }
             } else {
                 matchedUsers = await userModel.find({
@@ -92,7 +92,7 @@ const removeUser = async (req, res, next) => {
         const user = await userModel.findByIdAndDelete(id);
         if(user) {
             return res.status(200).json({
-                message: `User ${id} has been deleted`,
+                message: `User ${user.fullName} has been deleted`,
             })
         } else {
             return res.status(404).json({

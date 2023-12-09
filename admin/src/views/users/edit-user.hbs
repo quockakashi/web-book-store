@@ -91,13 +91,6 @@
 </div>
 
 <script>
-    const toBase64 = file => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-    });
-
     function displaySelectedImage(event, elementId) {
     const selectedImage = document.getElementById(elementId);
     const fileInput = event.target;
@@ -140,7 +133,8 @@
 
         if(response.ok) {
           const json = await response.json();
-          console.log(json);
+          localStorage.setItem('justEditing', id);
+          window.location.href = `/users?search=${id}`;
         } else {
           const json = await response.json();
           showMainAlert('danger', json.message)

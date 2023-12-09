@@ -26,8 +26,8 @@
         <tr class="px-4 py-3" rowId="{{this._id}}">
             <td>
             <div class="d-flex align-items-center">
-                <img src="{{this.avatar.url}}" style="width: 35px; height: 35px; border-radius: 6px;">
-                <p class="card-subtitle" style="margin-left: 6px;font-size: 14px; object-fit: cover; object-position: center">{{this.email}}</p>
+                <img src="{{this.avatar.url}}" style="width: 35px; height: 35px; border-radius: 6px;  object-fit: cover; object-position: center">
+                <p class="card-subtitle" style="margin-left: 6px;font-size: 14px;">{{this.email}}</p>
             </div></td>
             <td>{{this.fullName}}</td>
             <td>
@@ -73,6 +73,11 @@
 
   <script>
     $(document).ready(() => {
+        const editedId = localStorage.getItem('justEditing');
+        if(editedId) {
+            showMainAlert('success', `User ${editedId} edited successfully`);
+            localStorage.removeItem('justEditing');
+        }
         $('.btn-delete-user').each((index, btn) => {
             $(btn).on('click', async (e) => {
                 const userId = $(btn).attr('userId');

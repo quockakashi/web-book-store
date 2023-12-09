@@ -1,0 +1,130 @@
+<h3 style="font-weight: bold; margin-bottom: 0px;">
+        {{component.name}}
+</h3>
+<p>{{component.subtitle}}</p>
+
+<a href="/categories/new-category" class="btn btn-primary mb-4"><i class="fa-solid fa-plus"></i>&nbsp;Add Category</a>
+
+<form style="max-width: 220px; border-radius: 16px" class="shadow-sm" action="/categories">
+    <div class="input-group mb-3" style="border-radius: 16px;">
+        <input name="search" type="text" class="form-control" style="border-radius: 16px 0 0 16px; border: none" placeholder="Search!" value="{{meta.search}}">
+        <button style="border-radius: 0 16px 16px 0; background-color: inherit; border: none" class="input-group-text">
+            <i class=" text-primary fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
+</form>
+  <table class="mx-auto table mt-4" style="border-radius: 8px; box-shadow:7px 7px 7px rgba(0, 0, 0, 0.1); max-width: 900px;">
+    <caption class="caption-top">List of categories</caption>
+    <thead>
+      <tr>
+        <th scope="col">Category Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Number products</th>
+        <th scope="col" class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        {{#each categories}}
+        <tr class="px-4 py-3" rowId="{{this._id}}" rowName="{{this.name}}">
+            <td>
+            <div class="d-flex align-items-center">
+                <p>{{this.name}}</p>
+            </div></td>
+            <td >{{this.fullName}}</td>
+            <td>
+                <p class="text-center">0</p>
+            </td>
+            <td>
+                <div>
+                    <a href="products?catId={{this._id}}" class="btn btn-primary btn-sm me-2">Views</a>
+                    <a href="categories/edit/{{this._id}}" class="btn btn-warning btn-sm me-2">Edit</a>
+                    <a class="btn btn-danger btn-sm btn-delete-category" catId="{{this._id}}"
+                    catName="{{this.name}}" 
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">Remove</a>
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+  </table>
+{{#if meta.showPagination}}
+<nav aria-label="Page navigation example" style="margin-top: 32px;">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {{#if meta.noPrev}}disabled{{/if}}">
+      <a class="page-link" href="/categories?page={{meta.prevPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {{#range 1 meta.totalPage}}
+        <li class="page-item {{#eq this ../meta.page}}active{{/eq}}"><a class="page-link" href="/categories?page={{this}}&sortBy={{../meta.sortBy}}&sortDir={{../meta.sortDir}}{{#if ../meta.hasSearch}}&search={{../meta.search}}{{/if}}">{{this}}</a></li>
+    {{/range}}
+    <li class="page-item {{#if meta.noNext}}disabled{{/if}}">
+      <a class="page-link" href="/categories?page={{meta.nextPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+{{/if}}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Deleting!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" 
+        data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="continueBtn" data-bs-dismiss="modal">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+    let catId = null;
+    $(document).ready(() => {
+        const editingMessage = localStorage.getItem('justEditing');
+        if(editingMessage) {
+            showMainAlert('success', editingMessage);
+            localStorage.removeItem('justEditing');
+        }
+        
+        $('.btn-delete-category').each((index, btn) => {
+            $(btn).on('click', async (e) => {
+                catId = $(btn).attr('catId');
+                const catName = $(btn).attr('catName');
+                $(".modal-body").text(`Are you sure to delete ${catName}`);
+            
+        })
+
+        $("#continueBtn").unbind('click').on('click', async function(e) {
+            console.log(e.target);
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Hello');
+            const response = await fetch(`/api/categories/${catId}`, {
+                    method: 'DELETE',
+                })
+
+                const json = await response.json();
+                if(response.ok) {
+                    showMainAlert('success', json.message);
+                    $(`tr[rowid="${catId}"]`).remove();
+                } else {
+                    showMainAlert('danger', json.message);
+                }
+            })
+        })
+    })
+    
+  </script>
