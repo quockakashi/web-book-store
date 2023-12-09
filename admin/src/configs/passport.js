@@ -1,6 +1,5 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const JwtStrategy = require('passport-jwt').Strategy;
 const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -18,33 +17,21 @@ passport.use(new LocalStrategy({usernameField: 'email'}, async (username, passwo
 }));
 
 
-const options = {
-    jwtFromRequest: req => {
-        if (req && req.cookies) {
-            token = req.cookies['AccessToken'];
-        }
-        // console.log('Token: ', token);
-        return token;
-    },
-    secretOrKey: process.env.JWT_SECRET_KEY,
-}
+passport.serializeUser((user, done) => {
+    done(null, user._id);
+});
 
-
-passport.use(new JwtStrategy(options, async (payload, done) => {
+passport.deserializeUser(async (_id, done) => {
     try {
-        console.log('Jwt Passport: ', payload);
-        const { userId } = payload;
-        if(!userId) {
-            return done(null, false, 'Invalid token');
+        console.log('id', _id);
+        const user = await userModel.findById(_id || '6561438820ac22b4e4045397').exec();
+        if(!user) {
+            done(null, false);
+        } else {
+            done(null, user);
         }
-        const user = await userModel.findById(userId).exec();
-        if( !user ) {
-            return done(null, false, 'Invalid user id');
-        }
-        return done(null, user);
     } catch(err) {
         done(err);
     }
-}));
-
+});
 module.exports = passport;

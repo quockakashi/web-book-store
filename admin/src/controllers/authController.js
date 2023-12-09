@@ -5,6 +5,12 @@ const { sendConfirmAccountMail } = require('../utils/sendMailUtils');
 const { generateJWT, checkJWT, generateAccessToken, generateRefreshToken } = require('../utils/jwtUtils');
 
 
+/**Render pages methods */
+const renderLoginPage = async(req, res, next) => {
+    res.render('auth/login-page', {layout: 'auth/login-layout'});
+}
+
+
 /**Register an account  */
 const registerAccount = async (req, res, next) => {
     let imageUrl;
@@ -74,39 +80,9 @@ const confirmAccountByMail = async(req, res, next) => {
 }
 };
 
-// login user
-const loginUser = async (req, res, next) => {
-    console.log('hello')
-    try {
-        if(req.user) {
-            const {_id, fullName, email, createdAt, updatedAt, avatar} = req.user;
-            generateAccessToken(_id, res);
-            generateRefreshToken(_id, res);
-            return res.status(200).json({
-            message: 'Login successfully',
-            data: {
-                _id,
-                fullName,
-                email,
-                createdAt, 
-                updatedAt,
-                avatar: avatar.url,
-            }
-        })
-        } else {
-            throw new Error('Invalid credential');
-        }
-    } catch(err) {
-        console.error(err);
-        return res.status(401).json({
-            message: 'Auth failed!',
-        })
-    }
-}
-
 
 module.exports = {
+    renderLoginPage,
     registerAccount,
     confirmAccountByMail,
-    loginUser,
 }
