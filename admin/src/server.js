@@ -32,6 +32,12 @@ hbs.registerHelper('range', function(start, end, options) {
     return accumulator;
 })
 
+hbs.registerHelper('ifIn', function(elem, list, options) {
+    if (list.indexOf(elem) > -1) {
+        return options.fn(this);
+    } 
+})
+
 // create app
 const app = express();
 

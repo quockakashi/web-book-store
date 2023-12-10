@@ -1,0 +1,306 @@
+<h3 style="font-weight: bold; margin-bottom: 0px;">
+        {{component.name}}
+    </h3>
+    <p>{{component.subtitle}}</p>
+
+<form enctype="multipart/form-data" class="form rounded-3 shadow-sm mx-auto py-3 px-4" style="max-width: 550px;" onsubmit="return handleSubmit(event)" action="/api/users/{{user._id}}" method="post">
+    <div class="mb-3 g-2 row align-items-center">
+        <div class="col-4">                     <label    
+                for="name"
+                class="form-label">Product Name:<span class="text-danger">*</span>
+        </label>
+          </div>
+          <div class="col-8">
+            <input type="text" class="form-control" id="name"
+            required
+            name="name">
+          </div>
+        </div>
+        <div class="mb-3 g-2 row align-items-center" style="align-content: flex-end; justify-content: end">
+            <div class="col-4">
+              <label for="authors" class="form-label">Authors:</label>
+            </div>
+            <div class="col-8">
+              <input type="text"
+              name="authors"
+              class="form-control" 
+              id="authors" aria-describedby="emailHelp">
+            </div>
+            <div class="col-8" style="align-self: flex-end;">
+                <p class="form-text" style="margin: 0;">If more than two author: Nguyen A, Nguyen B</p>
+            </div>
+          </div>
+          <div class="mb-3 g-2 row align-items-center">
+            <div class="col-4">
+              <label for="publisher" class="form-label">Publisher:</label>
+            </div>
+            <div class="col-8">
+              <input type="text"
+              class="form-control" 
+              id="publisher"
+              name="publisher"
+              aria-describedby="emailHelp">
+            </div>
+          </div>
+          <div class="mb-3 g-2 row align-items-center">
+                <div class="col-4">
+                <label for="publishDate" class="form-label">Publish Date:</label>
+                </div>
+                <div class="col-8">
+                <input type="date" type="text"
+                class="form-control" 
+                id="publishDate"
+                name="publishDate">
+                </div>
+            </div>
+          <div class="mb-3 g-2 row align-items-center">
+            <div class="col-4">
+                <label for="role" class="form-label">Categories:<span class="text-danger">*</span> 
+            </div>
+            <div class="col-8">
+                <select
+                    id="categories"
+                    name="categories"
+                    multiple
+                    class="form-select" size="5"
+                    {{#each categories}}
+                        <option value="{{this._id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            </div>
+            <div class="mb-3 g-2 row align-items-center">
+                <div class="col-4">
+                    <label 
+                    for="price" class="form-label">Price:<span class="text-danger">*</span></label>
+                </div>
+                <div class="col-8">
+                    <div class="input-group mb-3">
+                        <span 
+                        class="input-group-text text-primary"
+                        style="background-color: inherit;"
+                        >$</span>
+                        <input
+                        id="price"
+                        name="price"
+                        step="0.01"
+                        value="0"
+                        type="number" class="form-control"
+                        style="border-left: none" 
+                        aria-label="Amount (to the nearest dollar)">
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                 <div class="col-4">
+                    <label for="publisher" class="form-label">Language:</label>
+                </div>
+                <div class="col-8">
+                    <input
+                        type="text"
+                        name="language"
+                        id="language"
+                        class="form-control" 
+                        id="pages">
+                </div>
+        </div>
+            <div class="row mb-3">
+                 <div class="col-4">
+                    <label for="publisher" class="form-label">Description:</label>
+                </div>
+                <div class="col-8">
+                    <textarea
+                        name="description"
+                        id="description"
+                        rows="3"
+                        type="text" 
+                        class="form-control" 
+                        id="pages"></textarea>
+                </div>
+        </div>
+        <div class="row align-items-center mb-3">
+            <div class="col-6 row">
+                 <div class="col-4">
+                    <label for="pages" class="form-label">Pages:</label>
+                </div>
+                <div class="col-8">
+                    <input
+                        id="pages"
+                        name="pages" 
+                        type="number"
+                        class="form-control" 
+                        id="pages">
+                </div>
+            </div>
+            <div class="col-6 row">
+                 <div class="col-4">
+                    <label
+                     for="stock" class="form-label">Stock:<span class="text-danger">*</span></label>
+                </div>
+                <div class="col-8">
+                    <input
+                        id="stock"
+                        name="stock"
+                        value="0" 
+                        type="number"
+                        class="form-control" 
+                        id="number"
+                        name="number">
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-3 mb-4">
+            <div class="mb-2 d-flex justify-content-center">
+                <img id="selectedImage" src="/images/default-image.jpg"
+                alt="example placeholder" style="width: 200px;" />
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="btn btn-rounded btn-sm" style="border-radius: 80px; background-color: rgba(11, 49, 171, 0.6);" >
+                    <label class="form-label text-white m-1" for="image">Choose file</label>
+                    <input 
+                    type="file" 
+                    name="image"
+                    id="image"
+                    accept="image/jpeg, image/png"
+                    class="form-control d-none" onchange="displaySelectedImage(event, 'selectedImage')" />
+                </div>
+            </div>
+        </div>
+        <div class="d-flex w-100 justify-content-center mt-3">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-danger me-4">Cancle</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+      </form>
+  
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Do your want to cancel this action?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        If you continue, this editing will be canceled.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="/categories" type="button" class="btn btn-primary" >Continue</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+    })
+
+    function displaySelectedImage(event, elementId) {
+    const selectedImage = document.getElementById(elementId);
+    const fileInput = event.target;
+
+    if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            selectedImage.src = e.target.result;
+        };
+
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        const formData = new FormData();
+        const pagesInput = $('#pages').val();
+
+        const name = $('#name').val();
+        let authors = $('#authors').val();
+        let categories = $
+        ('#categories').val();
+        const publisher = $('#publisher').val();
+        const price = parseFloat($('#price').val());
+        const language = $('#language').val();
+        const publishDate = $("#publishDate").val();      
+        const description = $('#description').val();
+        const pages = parseFloat(pagesInput);
+        const stock = $('#stock').val();
+        const image = $('#image')[0].files[0];
+
+        if(!name.trim()) {
+            showMainAlert('warning', 'Name must be input');
+            return false;
+        }
+
+        if(!categories.length) {
+            showMainAlert('warning', 'Must select at least one category!')
+            return false;
+        }
+
+        if(Number.isNaN(price) || price < 0) {
+            showMainAlert('warning', 'Invalid price value');
+        }
+
+        if(pagesInput && (!Number.isInteger(pages) || pages < 0)) {
+            showMainAlert('warning', 'Invalid pages value')
+        }
+
+        if(!stock || parseInt(stock) < 0) {
+            console.log(stock);
+            showMainAlert('warning', 'Invalid stock value!');
+            return false;
+        }
+
+        if(authors) {
+            authors = JSON.stringify(authors.split(',').map(author => author.trim()));
+        }
+
+        categories = JSON.stringify(categories);
+
+        formData.append('name', name);
+        if(authors) {
+            formData.append('authors', authors);
+        }
+        if(publisher) {
+            formData.append('publisher', publisher);
+        }
+        if(pagesInput) {
+            formData.append('pages', pages);
+        }
+        if(publishDate) {
+            formData.append('publishDate', publishDate);
+        }
+        formData.append('price', price);
+        formData.append('stock', stock);
+        formData.append('categories', categories);
+        if(image) {
+            formData.append('image', image);
+        }
+        if(description) {
+            formData.append('description', description)
+        }
+        if(language) {
+            formData.append('language', language);
+        }
+
+        const response = await fetch(`/api/products`, {
+          method: 'POST',
+          body: formData,
+        })
+
+        if(response.ok) {
+          const json = await response.json();
+          localStorage.setItem('justEditing', json.message);
+          window.location.href = `/products?search=${json.data._id}`;
+        } else {
+          const json = await response.json();
+          showMainAlert('danger', json.message);
+        }
+
+        return false;
+    }
+</script>

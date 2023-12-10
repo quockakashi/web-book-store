@@ -1,0 +1,24 @@
+.product-list {
+    display: grid;
+    justify-content: space-between;
+    column-gap: 12px;
+    row-gap: 24px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.4s;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+    .product-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .product-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}

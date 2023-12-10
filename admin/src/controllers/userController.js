@@ -158,7 +158,6 @@ const editUser = async (req, res, next) => {
             const result = await cloudinary.uploader.upload(avatar, {
                 folder: 'book-store-system/avatars',
             });
-            console.log(result);
 
             avatar = {public_id: result.public_id, url: result.secure_url};
             editInfo.avatar = avatar;
@@ -167,7 +166,6 @@ const editUser = async (req, res, next) => {
         console.log('User info: ', editInfo);
 
         user = await userModel.findOneAndUpdate({_id: id}, editInfo);
-        await user.save();
         return res.status(200).json({
             message: 'User updated',
             data: {

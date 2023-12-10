@@ -1,4 +1,5 @@
 const categoryModel = require("../models/categoryModel");
+const productModel = require('../models/productModel');
 const mongoose = require('mongoose');
 /**render pages */
 const NUMBER_CAT_PER_PAGE = 5;
@@ -32,6 +33,12 @@ const renderCategoriesPage = async (req, res, next) => {
         .sort([[sortBy, sortDir == "asc" ? 1 : -1]])
         .lean();
     }
+
+    // get number of products of each category
+    for(const category of matchedCategories) {
+        const products = await productModel.find({categories: {$in: [category._id]}}).lean();
+        category.numProducts = products.length;
+    };
 
     const categories = matchedCategories.slice(
       (page - 1) * NUMBER_CAT_PER_PAGE,
