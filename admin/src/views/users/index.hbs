@@ -16,6 +16,7 @@
     <thead>
       <tr>
         <th scope="col">User</th>
+        <th scope="col">Username</th>
         <th scope="col">Name</th>
         <th scope="col">Role</th>
         <th scope="col">Actions</th>
@@ -29,7 +30,8 @@
                 <img src="{{this.avatar.url}}" style="width: 35px; height: 35px; border-radius: 6px;  object-fit: cover; object-position: center">
                 <p class="card-subtitle" style="margin-left: 6px;font-size: 14px;">{{this.email}}</p>
             </div></td>
-            <td>{{this.fullName}}</td>
+            <td style="font-size: 14px"><p>{{this.username}}</p></td>
+            <td style="font-size: 14px;"><p>{{this.fullName}}</p></td>
             <td>
                 <div class="bg-primary d-flex align-items-center justify-content-center" style="width: 80px; color: white; padding: 4px 6px; border-radius: 6px;">
                     {{#eq this.role 'admin'}}

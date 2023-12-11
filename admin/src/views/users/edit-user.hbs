@@ -13,6 +13,24 @@
             value="{{user.fullName}}" name="fullName">
           </div>
         </div>
+        <div class="mb-3 g-2 row align-items-center justify-content-end">
+            <div class="col-4">
+              <label for="email" class="form-label">Username:</label>
+            </div>
+            <div class="col-8">
+              <input type="username"
+              value="{{user.username}}"
+              name="username"
+              required
+              min="8"
+              max="20" 
+              class="form-control" 
+              id="username">
+            </div>
+            <div class="col-8" style="align-self: flex-end;">
+                <p class="form-text" style="margin: 0;">Only contains alphanumeric characters, underscore and dot. Start and end with an alphanumeric</p>
+            </div>
+          </div>
         <div class="mb-3 g-2 row align-items-center">
             <div class="col-4">
               <label for="email" class="form-label">Email:</label>
@@ -26,7 +44,7 @@
               id="email" aria-describedby="emailHelp">
             </div>
           </div>
-          <div class="mb-3 g-2 row align-items-center">
+          <div class="mb-3 g-2 row align-items-center justify-content-end">
             <div class="col-4">
               <label for="email" class="form-label">Password:</label>
             </div>
@@ -35,15 +53,17 @@
               class="form-control" 
               id="password"
               name="password"
-              placeholder="Leave blank if you don't want to change pw"
               aria-describedby="emailHelp">
+            </div>
+            <div class="col-8" style="align-self: flex-end;">
+                <p class="form-text" style="margin: 0;">Leave blank if you don't want to change password</p>
             </div>
           </div>
           <div class="row">
             <div class="col-4">
                 <label for="role" class="">Role: 
             </div>
-            <div class="col-8">
+            <div class="col-8" style="padding: 8px;">
                 <select class="form-select mb-3 form-select-sm" id="role" aria-label=".form-select-lg example" name="role">
                     <option value="user" {{#eq user.role 'user'}}selected{{/eq}}>User</option>
                     <option value="admin" {{#eq user.role 'admin'}}selected{{/eq}}>Admin</option>
@@ -117,7 +137,14 @@
         const password = $('#password').val();
         const role = $('#role').find(':selected').val();
         const avatar = $('#avatar')[0].files[0];
+        const username = $('#username').val();
 
+        if(!/^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(username)) {
+          showMainAlert('warning', 'Invalid username, try another!')
+          return false;
+        }
+
+        formData.append('username', username)
         formData.append('fullName', fullName);
         formData.append('email', email);
         formData.append('password', password);

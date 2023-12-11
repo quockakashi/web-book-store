@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const regexPatterns = require('../utils/regexUtils');
 
 const userSchema = new mongoose.Schema({
+    username: {
+        type:  String,
+        required: [true, 'Username is required'],
+    },
     fullName: {
         type: String,
         required: [true, 'Name is required'],

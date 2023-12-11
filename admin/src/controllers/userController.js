@@ -113,6 +113,7 @@ const editUser = async (req, res, next) => {
             email,
             password,
             role,
+            username,
         } = req.body;
 
         let avatar = req.files?.avatar;
@@ -124,6 +125,16 @@ const editUser = async (req, res, next) => {
                 message: `User ${id} not found`,
             })
         };
+
+        // check username
+        if(username != user.username) {
+            const user = await userModel.findOne({username});
+            if(user) {
+                return res.status(400).json({
+                    message: 'This username was used by another',
+                })
+            }
+        }
 
         // check email
         if(email != user.email) {
@@ -139,6 +150,7 @@ const editUser = async (req, res, next) => {
             fullName,
             email,
             role,
+            username
         };
 
         // handle if editing includes password
