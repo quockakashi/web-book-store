@@ -3,7 +3,7 @@ const http = require('http');
 require('dotenv').config();
 const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
-const hbs = require('hbs');
+const hbs = require('./configs/hbs');
 const session = require('express-session');
 
 // import database
@@ -20,23 +20,6 @@ const {errorHandler, notFound} = require('./middlewares/errorHandler');
 // import api router
 const router = require('./routers');
 const path = require('path');
-
-hbs.registerHelper('eq', function(arg1, arg2, options) {
-    return (arg1 == arg2) ? options.fn(this) : '';
-})
-
-hbs.registerHelper('range', function(start, end, options) {
-    var accumulator = '';
-    for(let i = start; i <= end; i++) 
-        accumulator += options.fn(i);
-    return accumulator;
-})
-
-hbs.registerHelper('ifIn', function(elem, list, options) {
-    if (list.indexOf(elem) > -1) {
-        return options.fn(this);
-    } 
-})
 
 // create app
 const app = express();

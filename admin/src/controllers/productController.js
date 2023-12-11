@@ -1,11 +1,13 @@
 const productModel = require('../models/productModel');
 const categoryModel = require('../models/categoryModel');
+const reviewModel = require('../models/reviewModel');
 const toDataUri = require('../utils/dataUri');
 const cloudinary = require('../configs/cloudinary')
 const mongoose = require('mongoose');
 
 const NUMBER_PRODUCT_PER_PAGE = 8;
 const DEFAULT_IMAGE_URL = 'https://res.cloudinary.com/dsv2f6qxf/image/upload/v1702191078/book-store-system/products/709158-200_dbqhpd.png';
+const DEFAULT_AVATAR_URL = 'https://res.cloudinary.com/dsv2f6qxf/image/upload/v1700707173/book-store-system/avatars/default-avatar.png';
 
 // render index page
 const renderIndexPage = async (req, res, next) => {
@@ -55,6 +57,25 @@ const renderIndexPage = async (req, res, next) => {
             }
             return product;
         });
+        
+        // get review information
+        for(const product of products) {
+            const reviews = await reviewModel.find({product: product._id}).lean();
+            if(reviews.length > 0) {
+                let rating = 0;
+                let count = 0;
+                reviews.forEach(review => {
+                    if(review.rating >= 1) {
+                        rating += review.rating;
+                        count++;
+                    }
+                })
+                rating = (rating /count).toFixed(1);
+                product.rating = rating;
+                product.reviews = reviews.length;
+            }
+
+        }
 
         const totalPage = Math.ceil(matchedProducts.length / NUMBER_PRODUCT_PER_PAGE);
 
@@ -159,6 +180,30 @@ const renderDetailPage = async(req, res, next) => {
                 console.log('sorry')
                 product.image = DEFAULT_IMAGE_URL;
             }
+
+            const reviews = await reviewModel.find({product: product._id}).populate('user').lean();
+            reviews.forEach(review => {
+                if(review.user.avatar?.public_id) {
+                    review.user.avatar = review.user.avatar.url;
+                } else {
+                    review.user.avatar = DEFAULT_AVATAR_URL;
+                }
+            })
+
+            if(reviews.length > 0) {
+                let rating = 0;
+                let count = 0;
+                reviews.forEach(review => {
+                    if(review.rating >= 1) {
+                        rating += review.rating;
+                        count++;
+                    }
+                })
+                rating = (rating /count).toFixed(1);
+                product.rating = rating;
+            }
+            product.reviews = reviews;
+            
 
             return res.render('products/product-detail', {
                 layout: 'layouts/index',

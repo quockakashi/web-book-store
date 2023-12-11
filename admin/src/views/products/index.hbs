@@ -54,7 +54,12 @@
         </div>
         <div class="card-body">
             <h5 class="card-title" style="text-overflow: ellipsis; overflow: hidden; max-width: 100%; white-space: nowrap;">{{this.name}}</h5>
-            <p class="card-text" style="margin: 0;">Price: <span class="text-primary">${{this.price}}</span></p>
+            <div class="mb-2">
+                  {{#if this.rating}}<span class="me-1" style="color: orange">{{this.rating}}</span>{{/if}}{{#renderStars this.rating}}{{/renderStars}}
+                  {{#if this.reviews}}<span class="text-primary" style="font-size: 14px;">({{this.reviews}} reviews)</span>{{/if}}
+            </div>
+            <p class="card-text" 
+            style="margin: 0;">Price: <span class="text-primary">${{this.price}}</span></p>
             <p class="card-text">Stock: {{this.stock}}</p>
             <div>
             <a href="/products/edit/{{this._id}}" class="btn btn-primary">Edit</a>

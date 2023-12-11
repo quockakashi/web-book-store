@@ -41,7 +41,7 @@ const renderOrderPage = async (req, res, next) => {
                 total += elem.product.price * elem.quantity;
             })
             order.total = total;
-            order.createdAt = order.createdAt.toLocaleDateString('vi-VN')
+            order.createdAt = order.createdAt.toLocaleDateString('en-UK', { day: 'numeric', month: 'long', year: 'numeric' });
         });
 
         if(sortBy == 'total') {
