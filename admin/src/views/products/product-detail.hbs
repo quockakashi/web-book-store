@@ -1,7 +1,7 @@
 <h3 style="font-weight: bold; margin-bottom: 0px;">
         {{component.name}}
 </h3>
-<p>{{component.subtitle}}</p>
+<p class="mb-4">{{component.subtitle}}</p>
 
 <h5 class="fw-bold" style="font-size: 26px;">{{product.name}}</h5>
     {{#if product.authors}}
@@ -13,11 +13,11 @@
     <div class="{{#if product.stock}}bg-success{{else}}bg-danger{{/if}} text-center text-light mx-auto mb-3" style="max-width: 200px; border-radius: 16px; padding: 9px;">
       {{#if product.stock}}Available ({{product.stock}} in stock){{else}}Out of stock{{/if}}</div>
     {{#if product.description}}
-    <div>
+    <div class="mb-3">
       <h4 class="fw-bold">
         Description
       </h4>
-      <p style="font-size: 14px;">{{product.description}}</p>
+      <div style="font-size: 14px;">{{{product.description}}}</div>
     </div>
     {{/if}}
     <div class="mb-4">

@@ -8,6 +8,8 @@ const categoryRouter = require('./categoryRouter');
 const categoryApiRouter = require('./api/categoryApiRouter');
 const productRouter = require('./productRouter');
 const productApiRouter = require('./api/productApiRouter');
+const orderRouter = require('./orderRouter');
+const orderApiRouter = require('./api/orderApiRouter');
 
 
 /** views */
@@ -19,6 +21,7 @@ router.get('/', async(req, res) => {
 })
 router.use('/categories', categoryRouter);
 router.use('/products', productRouter);
+router.use('/orders', orderRouter);
 
 
 /** api  */
@@ -26,5 +29,6 @@ router.use('/api/auth', authApiRouter);
 router.use('/api/users', userApiRouter);
 router.use('/api/categories', categoryApiRouter);
 router.use('/api/products', productApiRouter);
+router.use('/api/orders', orderApiRouter);
 
 module.exports = router;
