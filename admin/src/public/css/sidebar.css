@@ -85,6 +85,7 @@ a {
 .nav_logo-icon {
   font-size: 1.25rem;
   color: var(--white-color);
+  font-size: 24px;
 }
 .nav_logo-name {
   color: var(--white-color);

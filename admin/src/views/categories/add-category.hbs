@@ -2,7 +2,7 @@
         {{component.name}}
     </h3>
     <p class="mb-4">{{component.subtitle}}</p>
-    <form enctype="multipart/form-data" class="form rounded-3 shadow-sm mx-auto py-3 px-4" style="max-width: 550px;" onsubmit="return handleSubmit(event)">
+    <form enctype="multipart/form-data" class="form rounded-3 shadow-sm mx-auto py-3 px-4 bg-light" style="max-width: 550px;" onsubmit="return handleSubmit(event)">
         <div class="mb-3 g-2 row align-items-center">
           <div class="col-4">
             <label for="exampleInputEmail1" class="form-label">Category Name:</label>
@@ -47,31 +47,4 @@
   </div>
 </div>
 
-<script>
-    async function handleSubmit(e) {
-        e.preventDefault();
-
-        const formData = new FormData();
-        const name = $('#name').val();
-        const description = $('#description').val();
-
-        formData.append('name', name);
-        formData.append('description', description);
-
-        const response = await fetch(`/api/categories`, {
-          method: 'POST',
-          body: formData,
-        })
-
-        if(response.ok) {
-          const json = await response.json();
-          localStorage.setItem('justEditing', json.message);
-          window.location.href = `/categories?search=${json.data._id}`;
-        } else {
-          const json = await response.json();
-          showMainAlert('danger', json.message)
-        }
-
-        return false;
-    }
-</script>
+<script src="/js/add-category-page.js"></script>

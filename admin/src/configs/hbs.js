@@ -37,6 +37,10 @@ hbs.registerHelper('renderStars', (rating, option) => {
     }
 
     return result;
+});
+
+hbs.registerHelper('add', (op1, op2) => {
+    return op1 + op2;
 })
 
 module.exports = hbs;

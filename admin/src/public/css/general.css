@@ -27,3 +27,8 @@ th {
 .checked-star {
     color: orange;
 }
+
+ul {
+    margin-bottom: 0;
+    list-style: none;
+}

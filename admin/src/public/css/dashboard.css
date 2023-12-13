@@ -1,0 +1,157 @@
+.summary {
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 16px;
+}
+.summary-box {
+    max-width: 250px;
+    border-radius: 12px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05);
+    padding: 12px 24px;
+    background: #6baef5;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+}
+
+.summary-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    color: #333333;
+}
+
+.summary-title i {
+    color: #007bff;
+}
+.summary-content p {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #007bff;
+}
+
+.summary-content .status-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.summary-content .increased {
+    color: green;
+}
+
+.summary-content span {
+    font-size: 12px;
+}
+
+.content-2 {
+    display: grid;
+    grid-template-columns: 0.7fr 1fr;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.order-review {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    max-width: 450px;
+    padding: 16px 22px;
+    border-radius: 12px;
+    justify-self: center;
+    width: 100%;
+}
+
+.content-2 p {
+    color: #666666;
+}
+
+.order-review-box {
+    display: flex;
+    gap: 32px;
+}
+
+.order-review-box i {
+    margin-top: 6px;
+}
+
+.order-review-box .order-id {
+    font-size: 14px;
+}
+
+.line-chart-box {
+    position: relative;
+    padding: 12px 12px; 
+    width:90%;
+    max-height: 360px;
+    border-radius: 12px;
+    justify-self: center;
+}
+
+.line-chart-box select {
+    max-width: 200px;
+    border: none;
+    border-radius: 12px;
+}
+
+.doughnut-chart-box {
+    position: relative;
+    padding: 12px 12px; 
+    width:450px;
+    max-height: 540px;
+    border-radius: 12px;
+    justify-self: center;
+}
+
+.doughnut-chart-box select {
+    max-width: 200px;
+    border: none;
+    border-radius: 12px;
+}
+
+@media screen and (max-width: 900px) {
+    .summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .content-2 {
+        grid-template-columns: 1fr;
+    }
+    
+}
+
+.top-user-box {
+    max-width: 90%; 
+    width: 100%;
+    border-radius: 12px;
+    padding: 24px 52px;
+    justify-self: center;
+    overflow: scroll;
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    display: flex;
+}
+
+td, th {
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.top-user-box img{
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    object-position: center;
+}

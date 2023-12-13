@@ -3,15 +3,15 @@
 </h3>
 <p class="mb-4">{{component.subtitle}}</p>
 
-<form style="max-width: 220px; border-radius: 16px" class="shadow-sm" action="/users">
+<form style="max-width: 220px; border-radius: 16px" class="shadow-sm bg-light" action="/users">
     <div class="input-group mb-3" style="border-radius: 16px;">
-        <input name="search" type="text" class="form-control" style="border-radius: 16px 0 0 16px; border: none" placeholder="Search!" value="{{meta.search}}">
+        <input name="search" type="text" class="form-control bg-light" style="border-radius: 16px 0 0 16px; border: none" placeholder="Search!" value="{{meta.search}}">
         <button style="border-radius: 0 16px 16px 0; background-color: inherit; border: none" class="input-group-text">
             <i class=" text-primary fa-solid fa-magnifying-glass"></i>
         </button>
     </div>
 </form>
-  <table class="mx-auto table mt-4" style="border-radius: 8px; box-shadow:7px 7px 7px rgba(0, 0, 0, 0.1); max-width: 900px;">
+  <table class="mx-auto table mt-4 bg-light" style="border-radius: 8px; box-shadow:7px 7px 7px rgba(0, 0, 0, 0.1); max-width: 900px;">
     <caption class="caption-top">List of users</caption>
     <thead>
       <tr>
@@ -73,30 +73,4 @@
 </nav>
 {{/if}}  
 
-  <script>
-    $(document).ready(() => {
-        const editedId = localStorage.getItem('justEditing');
-        if(editedId) {
-            showMainAlert('success', `User ${editedId} edited successfully`);
-            localStorage.removeItem('justEditing');
-        }
-        $('.btn-delete-user').each((index, btn) => {
-            $(btn).on('click', async (e) => {
-                const userId = $(btn).attr('userId');
-                const response = await fetch(`/api/users/${userId}`, {
-                    method: 'DELETE',
-                })
-
-                const json = await response.json();
-                if(response.ok) {
-                    showMainAlert('success', json.message);
-                    $(`tr[rowid="${userId}"]`).remove();
-                } else {
-                    showMainAlert('danger', json.message);
-                }
-            })
-            
-        })
-    })
-    
-  </script>
+<script src="/js/user-page.js"></script>

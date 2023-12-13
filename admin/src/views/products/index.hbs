@@ -9,15 +9,15 @@
 <div class="d-flex mb-4" style="gap: 24px;">
     <form style="max-width: 220px; border-radius: 16px" class="shadow-sm" action="/products">
       <div class="input-group" style="border-radius: 16px;">
-          <input name="search" type="text" class="form-control" style="border-radius: 16px 0 0 16px; border: none" placeholder="Search!" value="{{meta.search}}" required>
-          <button style="border-radius: 0 16px 16px 0; background-color: inherit; border: none" class="input-group-text">
+          <input name="search" type="text" class="form-control bg-light" style="border-radius: 16px 0 0 16px; border: none" placeholder="Search!" value="{{meta.search}}" required>
+          <button style="border-radius: 0 16px 16px 0; background-color: inherit; border: none" class="input-group-text bg-light">
               <i class=" text-primary fa-solid fa-magnifying-glass"></i>
           </button>
       </div>
   </form>
   <div class="d-flex align-items-center" style="gap: 8px">
     <i class="text-primary fa-solid fa-filter"></i>
-    <select class="form-select form-select-sm shadow-sm" aria-label=".form-select-sm example" style="max-width: 180px; border: none; border-radius: 16px" onchange="handleSelectCategoriesChange(event)" id="categorySelect">
+    <select class="form-select form-select-sm shadow-sm bg-light" aria-label=".form-select-sm example" style="max-width: 180px; border: none; border-radius: 16px" onchange="handleSelectCategoriesChange(event)" id="categorySelect">
               <option value="all">All Categories</option>
             {{#each categories}}
               <option value="{{this._id}}" {{#eq this._id ../meta.catId}}selected{{/eq}}>
@@ -28,7 +28,7 @@
   </div>
   <div class="d-flex align-items-center" style="gap: 8px">
     <i class="text-primary fa-solid fa-sort"></i>
-    <select class="form-select form-select-sm shadow-sm" aria-label=".form-select-sm example" style="max-width: 140px; border: none; border-radius: 16px" onchange="handleSelectSortChange(event)" id="sortSelect">
+    <select class="form-select form-select-sm shadow-sm bg-light" aria-label=".form-select-sm example" style="max-width: 140px; border: none; border-radius: 16px" onchange="handleSelectSortChange(event)" id="sortSelect">
             <option value="publishDate-desc" {{#eq meta.sort 'publishDate-desc'}}selected{{/eq}}>Newest</option>
             <option value="publishDate-asc" {{#eq meta.sort 'publishDate-asc'}}selected{{/eq}}>Oldest</option>
             <option value="name-asc" {{#eq meta.sort 'name-asc'}}selected{{/eq}}>
@@ -61,9 +61,9 @@
             <p class="card-text" 
             style="margin: 0;">Price: <span class="text-primary">${{this.price}}</span></p>
             <p class="card-text">Stock: {{this.stock}}</p>
-            <div>
-            <a href="/products/edit/{{this._id}}" class="btn btn-primary">Edit</a>
-            <a class="btn btn-danger btn-remove-product" productId="{{this._id}}" productName="{{this.name}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Remove</a>
+            <div class="mt-2">
+            <a href="/products/edit/{{this._id}}" class="btn btn-primary btn-sm">Edit</a>
+            <a class="btn btn-danger btn-sm btn-remove-product" productId="{{this._id}}" productName="{{this.name}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Remove</a>
             </div>
         </div>
         </div>
@@ -112,70 +112,4 @@
 
 
 
-<script>
-    let productId = null;
-    $(document).ready(() => {
-        const editingMessage = localStorage.getItem('justEditing');
-        if(editingMessage) {
-            showMainAlert('success', editingMessage);
-            localStorage.removeItem('justEditing');
-        }
-
-       $('.card').each((index, product) => {
-            $(product).click(function(e) {
-                const productId = $(this).attr('cardId');
-                window.location.href = `/products/${productId}`
-            })
-        })
-        
-        $('.btn-remove-product').each((index, btn) => {
-            $(btn).on('click', async (e) => {
-                e.stopPropagation();
-                productId = $(btn).attr('productId');
-                const productName = $(btn).attr('productName');
-                $(".modal-body").text(`Are you sure to delete "${productName}"`);
-            
-        })
-    
-
-
-        $("#continueBtn").unbind('click').on('click', async function(e) {
-            console.log(e.target);
-            e.preventDefault();
-            e.stopPropagation();
-            const response = await fetch(`/api/products/${productId}`, {
-                    method: 'DELETE',
-                })
-
-                const json = await response.json();
-                if(response.ok) {
-                    showMainAlert('success', json.message);
-                    $(`div[cardId="${productId}"]`).remove();
-                } else {
-                    showMainAlert('danger', json.message);
-                }
-            })
-        })
-    })
-
-    function handleSelectCategoriesChange(e) {
-      let currentHref = new URLSearchParams(window.location.search);
-      const categoryId = $('#categorySelect').find(':selected').val()
-      if(categoryId == 'all')
-        currentHref.delete('catId');
-      else {
-        currentHref.set('catId', categoryId);
-      }
-      window.location.search = currentHref.toString();
-    }
-
-    function handleSelectSortChange(e) {
-      let currentHref = new URLSearchParams(window.location.search);
-      const sortVal = $('#sortSelect').find(':selected').val()
-      const [sortBy, sortDir] = sortVal.split('-');
-      currentHref.set('sortBy', sortBy);
-      currentHref.set('sortDir', sortDir);
-      window.location.search = currentHref.toString();
-    }
-    
-  </script>
+<script src="/js/product-page.js"></script>
