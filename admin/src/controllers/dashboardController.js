@@ -157,7 +157,7 @@ const getTopUserByRevenue = async() => {
             total: 1,
             orders: {$size: '$orders'}
         }},
-        {$sort: {total: 1}}
+        {$sort: {total: -1}}
 
     ]);
 

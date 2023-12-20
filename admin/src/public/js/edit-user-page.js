@@ -27,8 +27,9 @@ function displaySelectedImage(event, elementId) {
         const username = $('#username').val();
 
         if(!/^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(username)) {
-          showMainAlert('warning', 'Invalid username, try another!')
-          return false;
+            scrollToTop();
+            showMainAlert('warning', 'Invalid username, try another!')
+            return false;
         }
 
         formData.append('username', username)
@@ -50,10 +51,10 @@ function displaySelectedImage(event, elementId) {
           localStorage.setItem('justEditing', id);
           window.location.href = `/users?search=${id}`;
         } else {
+        scrollToTop();
           const json = await response.json();
           showMainAlert('danger', json.message)
         }
-
         return false;
     }
 

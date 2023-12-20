@@ -9,5 +9,8 @@ router.get('/', userController.renderIndexPage);
 // render user edit page
 router.get('/edit/:id', userController.renderEditPage);
 
+// render detail user page
+router.get('/:id', userController.renderDetailPage);
+
 
 module.exports = router;

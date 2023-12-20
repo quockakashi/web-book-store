@@ -32,3 +32,26 @@ ul {
     margin-bottom: 0;
     list-style: none;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.page-link {
+    cursor: pointer;
+}
+
+table {
+    overflow: hidden;
+}
+
+.card {
+    overflow: hidden;
+}

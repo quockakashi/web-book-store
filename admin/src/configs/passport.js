@@ -24,7 +24,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (_id, done) => {
     try {
         console.log('id', _id);
-        const user = await userModel.findById(_id || '6561438820ac22b4e4045397').exec();
+        const user = await userModel.findById(_id).exec();
         if(!user) {
             done(null, false);
         } else {

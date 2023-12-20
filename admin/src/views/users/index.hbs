@@ -1,3 +1,11 @@
+<style>
+  tr:hover {
+    background: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: linear background 0.4s;
+  }
+</style>
+
 <h3 style="font-weight: bold; margin-bottom: 0px;">
         {{component.name}}
 </h3>
@@ -57,15 +65,15 @@
 <nav aria-label="Page navigation example" style="margin-top: 32px;">
   <ul class="pagination justify-content-center">
     <li class="page-item {{#if meta.noPrev}}disabled{{/if}}">
-      <a class="page-link" href="/users?page={{meta.prevPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Previous">
+      <a class="page-link" aria-label="Previous" pageNum="{{meta.prevPage}}">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     {{#range 1 meta.totalPage}}
-        <li class="page-item {{#eq this ../meta.page}}active{{/eq}}"><a class="page-link" href="/users?page={{this}}&sortBy={{../meta.sortBy}}&sortDir={{../meta.sortDir}}{{#if ../meta.hasSearch}}&search={{../meta.search}}{{/if}}" href="#">{{this}}</a></li>
+        <li class="page-item {{#eq this ../meta.page}}active{{/eq}}"><a class="page-link" pageNum="{{this}}">{{this}}</a></li>
     {{/range}}
     <li class="page-item {{#if meta.noNext}}disabled{{/if}}">
-      <a class="page-link" href="/users?page={{meta.nextPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Next">
+      <a class="page-link"  aria-label="Next" pageNum="{{meta.nextPage}}">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

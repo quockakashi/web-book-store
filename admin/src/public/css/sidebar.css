@@ -158,3 +158,21 @@ a {
     padding-left: calc(var(--nav-width) + 186px);
   }
 }
+
+.hide {
+  opacity: 0;
+}
+
+.unhide {
+  opacity: 0.8;
+}
+
+.profile-popover li {
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.profile-popover li:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}

@@ -39,25 +39,32 @@ async function handleSubmit(e) {
 
     if(!name.trim()) {
         showMainAlert('warning', 'Name must be input');
+        scrollToTop();
         return false;
     }
 
     if(!categories.length) {
         showMainAlert('warning', 'Must select at least one category!')
+        scrollToTop();
         return false;
     }
 
     if(Number.isNaN(price) || price < 0) {
         showMainAlert('warning', 'Invalid price value');
+        scrollToTop();
+        return false;
     }
 
     if(pagesInput && (!Number.isInteger(pages) || pages < 0)) {
-        showMainAlert('warning', 'Invalid pages value')
+        showMainAlert('warning', 'Invalid pages value');
+        scrollToTop();
+        return false;
     }
 
     if(!stock || parseInt(stock) < 0) {
         console.log(stock);
         showMainAlert('warning', 'Invalid stock value!');
+        scrollToTop();
         return false;
     }
 
@@ -105,6 +112,7 @@ async function handleSubmit(e) {
     } else {
       const json = await response.json();
       showMainAlert('danger', json.message);
+      scrollToTop();
     }
 
     return false;

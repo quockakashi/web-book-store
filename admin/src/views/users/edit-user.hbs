@@ -2,7 +2,7 @@
         {{component.name}}
     </h3>
     <p class="mb-4">{{component.subtitle}}</p>
-    <form enctype="multipart/form-data" class="form rounded-3 shadow-sm mx-auto py-3 px-4 bg-light" style="max-width: 550px;" onsubmit="return handleSubmit(event)" action="/api/users/{{user._id}}" method="post">
+    <form enctype="multipart/form-data" class="form rounded-3 shadow-sm mx-auto py-3 px-4 bg-light" style="max-width: 700px;" onsubmit="return handleSubmit(event)" action="/api/users/{{user._id}}" method="post">
         <input type="hidden" value="{{user._id}}" name="_id" id="id">
         <div class="mb-3 g-2 row align-items-center">
           <div class="col-4">

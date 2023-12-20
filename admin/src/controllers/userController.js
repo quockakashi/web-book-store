@@ -1,12 +1,14 @@
 const userModel = require('../models/userModel');
 const cloudinary = require('../configs/cloudinary');
 const bcrypt = require('bcrypt');
-const DatauriParser = require('datauri/parser');
 const path = require('path');
 const toDataUri = require('../utils/dataUri');
 const mongoose = require('mongoose');
+const reviewModel = require('../models/reviewModel');
 
 const NUMBER_USER_PER_PAGE =  5;
+
+const DEFAULT_AVATAR_URL = 'https://res.cloudinary.com/dsv2f6qxf/image/upload/v1700707173/book-store-system/avatars/default-avatar.png';
 
 // render index page
 const renderIndexPage = async(req, res, next) => {
@@ -83,12 +85,43 @@ const renderEditPage = async(req, res, next) => {
     }
 }
 
+// render detail page
+const renderDetailPage = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+    
+        const user = await userModel.findById(id).lean();
+        if(!user) {
+            return res.render('errors/404');
+        } 
+
+        if(!user.avatar?.public_id) {
+            user.avatar = DEFAULT_AVATAR_URL;
+        } else {
+            user.avatar = user.avatar.url;
+        }
+
+        return res.render('users/detail-user-page', {
+            layout: 'layouts/index',
+            title: 'User Detail',
+            component: {
+                name: 'Users',
+            },
+            user,
+        })
+    } catch(err) {
+        console.error(err);
+        next(err);
+    }
+}
+
 /**
  * desc Remove a user by admin
  */
 const removeUser = async (req, res, next) => {
     try {
         const { id } = req.params;
+        await reviewModel.deleteMany({user: id});
         const user = await userModel.findByIdAndDelete(id);
         if(user) {
             return res.status(200).json({
@@ -192,9 +225,26 @@ const editUser = async (req, res, next) => {
     }
 }
 
+const getPersonalInfo = async(req, res, next) => {
+    let {username, email, fullName, avatar} = req.user;
+
+    avatar = avatar?.public_id ? avatar.url : DEFAULT_AVATAR_URL;
+
+    return res.status(200).json({
+        data: {
+            username,
+            email,
+            fullName,
+            avatar
+        }
+    })
+}
+
 module.exports = {
     renderIndexPage,
     renderEditPage,
+    renderDetailPage,
     removeUser,
     editUser,
+    getPersonalInfo
 }

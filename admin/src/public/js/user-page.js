@@ -6,6 +6,8 @@ $(document).ready(() => {
     }
     $('.btn-delete-user').each((index, btn) => {
         $(btn).on('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             const userId = $(btn).attr('userId');
             const response = await fetch(`/api/users/${userId}`, {
                 method: 'DELETE',
@@ -20,5 +22,12 @@ $(document).ready(() => {
             }
         })
         
+    });
+
+    $('tr').each((index, row) => {
+        $(row).click(() => {
+            const userId = $(row).attr('rowId');
+            window.location.href = `/users/${userId}`
+        })
     })
 })

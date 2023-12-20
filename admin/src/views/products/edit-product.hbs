@@ -1,17 +1,18 @@
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 <h3 style="font-weight: bold; margin-bottom: 0px;">
         {{component.name}}
     </h3>
     <p class="mb-4">{{component.subtitle}}</p>
 
-<form enctype="multipart/form-data" class="form rounded-3 shadow-sm mx-auto py-3 px-4 bg-light" style="max-width: 550px;" onsubmit="return handleSubmit(event)" >
+<form enctype="multipart/form-data" class="form rounded-3 shadow-sm mx-auto py-3 px-4 bg-light" style="max-width: 700px;" onsubmit="return handleSubmit(event)" >
     <input type="hidden" value="{{product._id}}" id="id" name="id">
     <div class="mb-3 g-2 row align-items-center">
-        <div class="col-4">                     <label    
+        <div class="col-3">                     <label    
                 for="name"
                 class="form-label">Product Name:<span class="text-danger">*</span>
         </label>
           </div>
-          <div class="col-8">
+          <div class="col-9">
             <input type="text" class="form-control" id="name"
             required
             name="name"
@@ -19,25 +20,25 @@
           </div>
         </div>
         <div class="mb-3 g-2 row align-items-center" style="align-content: flex-end; justify-content: end">
-            <div class="col-4">
+            <div class="col-3">
               <label for="authors" class="form-label">Authors:</label>
             </div>
-            <div class="col-8">
+            <div class="col-9">
               <input type="text"
               name="authors"
               class="form-control" 
               id="authors" aria-describedby="emailHelp"
               value="{{product.authors}}">
             </div>
-            <div class="col-8" style="align-self: flex-end;">
+            <div class="col-9" style="align-self: flex-end;">
                 <p class="form-text" style="margin: 0;">If more than two author: Nguyen A, Nguyen B</p>
             </div>
           </div>
           <div class="mb-3 g-2 row align-items-center">
-            <div class="col-4">
+            <div class="col-3">
               <label for="publisher" class="form-label">Publisher:</label>
             </div>
-            <div class="col-8">
+            <div class="col-9">
               <input type="text"
               class="form-control" 
               id="publisher"
@@ -47,10 +48,10 @@
             </div>
           </div>
           <div class="mb-3 g-2 row align-items-center">
-                <div class="col-4">
+                <div class="col-3">
                 <label for="publishDate" class="form-label">Publish Date:</label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                 <input type="date" type="text"
                 class="form-control" 
                 id="publishDate"
@@ -60,10 +61,10 @@
                 </div>
             </div>
           <div class="mb-3 g-2 row align-items-center">
-            <div class="col-4">
+            <div class="col-3">
                 <label for="role" class="form-label">Categories:<span class="text-danger">*</span> 
             </div>
-            <div class="col-8">
+            <div class="col-9">
                 <select
                     id="categories"
                     name="categories"
@@ -76,11 +77,11 @@
             </div>
             </div>
             <div class="mb-3 g-2 row align-items-center">
-                <div class="col-4">
+                <div class="col-3">
                     <label 
                     for="price" class="form-label">Price:<span class="text-danger">*</span></label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <div class="input-group mb-3">
                         <span 
                         class="input-group-text text-primary"
@@ -97,10 +98,10 @@
                 </div>
             </div>
             <div class="row mb-3">
-                 <div class="col-4">
+                 <div class="col-3">
                     <label for="publisher" class="form-label">Language:</label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <input
                         type="text"
                         name="language"
@@ -111,14 +112,14 @@
                 </div>
         </div>
             <div class="row mb-3">
-                 <div class="col-4">
+                 <div class="col-3">
                     <label for="publisher" class="form-label">Description:</label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <textarea
                         name="description"
                         id="description"
-                        rows="3"
+                        rows="5"
                         type="text" 
                         class="form-control" 
                         id="pages"
@@ -127,10 +128,10 @@
         </div>
         <div class="row align-items-center mb-3">
             <div class="col-6 row">
-                 <div class="col-4">
+                 <div class="col-3">
                     <label for="pages" class="form-label">Pages:</label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <input
                         id="pages"
                         name="pages" 
@@ -141,11 +142,11 @@
                 </div>
             </div>
             <div class="col-6 row">
-                 <div class="col-4">
+                 <div class="col-3">
                     <label
                      for="stock" class="form-label">Stock:<span class="text-danger">*</span></label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <input
                         id="stock"
                         name="stock"
@@ -202,3 +203,9 @@
 </div>
 
 <script src="/js/edit-product-page.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+
+<!-- Initialize the editor. -->
+<script>
+  new FroalaEditor('textarea');
+</script>

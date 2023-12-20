@@ -45,4 +45,11 @@ $('.page-link').each((index, page) => {
         window.location.search = currentHref.toString();
       }
     })
-  })
+})
+
+function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+}

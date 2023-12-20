@@ -7,4 +7,6 @@ router.get('/yearly-revenue', orderController.getYearlyRevenue);
 
 router.get('/top-revenue', orderController.getTopRevenue);
 
+router.get('/by-user', orderController.getOrdersByUser);
+
 module.exports = router;

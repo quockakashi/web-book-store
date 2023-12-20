@@ -182,6 +182,7 @@ const renderDetailPage = async(req, res, next) => {
             }
 
             const reviews = await reviewModel.find({product: product._id}).populate('user').lean();
+            console.log(reviews)
             reviews.forEach(review => {
                 if(review.user.avatar?.public_id) {
                     review.user.avatar = review.user.avatar.url;
