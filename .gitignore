@@ -3,6 +3,7 @@
 admin/node_modules
 client/node_modules
 admin/src/views/test.html
+client/src/views/test.html
 
 
 # evironment

@@ -19,6 +19,8 @@ const {errorHandler, notFound} = require('./middlewares/errorHandler');
 
 const path = require('path');
 
+const router = require('./routers');
+
 // create app
 const app = express();
 
@@ -47,11 +49,13 @@ app.use(passport.session());
 
 app.use(morgan('dev'));
 
+app.use('/', router);
+
 
 // create server
 const server = http.createServer(app);
 // listen on the server
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
     console.log(`Server listening at PORT ${PORT}`);
 })

@@ -1,5 +1,5 @@
 BOOK STORE SYSTEM
 
-#To start the server 
+#To start the admin 
 cd server
 npm start

@@ -146,11 +146,12 @@ const getYearlyRevenue = async (req, res, next) => {
             }
         }
         else {
-            let month = current.getDate();
+            let month = current.getMonth();
             let year = current.getFullYear();
             for (let i = 0; i < 12; i++) {
-                const startMonth = new Date(year, month - 1, 1);
-                const endMonth = new Date(year, month, 0, 23, 59, 59, 999);
+                
+                const startMonth = new Date(year, month, 1);
+                const endMonth = new Date(year, month + 1, 0, 23, 59, 59, 999);
 
                 const orders = await orderModel.find({
                     status: 'completed',

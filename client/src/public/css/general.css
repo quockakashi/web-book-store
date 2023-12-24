@@ -1,0 +1,66 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    height: 100%;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+tr {
+    align-items: center;
+}
+
+th {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.checked-star {
+    color: orange;
+}
+
+ul {
+    margin-bottom: 0;
+    list-style: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.page-link {
+    cursor: pointer;
+}
+
+table {
+    overflow: hidden;
+}
+
+.card {
+    overflow: hidden;
+}
+
+a {
+    color: #666;
+    text-decoration: none;
+}
+
+.category-link:hover {
+    text-decoration: underline;
+}
