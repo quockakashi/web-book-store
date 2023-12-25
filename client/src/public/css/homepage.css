@@ -5,7 +5,7 @@
   overflow: hidden;
 }
 
-.card image {
+.card-image{
   height: 11rem;
   object-fit: cover;
 }

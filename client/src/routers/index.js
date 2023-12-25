@@ -5,9 +5,12 @@ const productApiRouter = require('./api/productApiRouter');
 const categoryApiRouter = require('./api/categoryApiRouter');
 
 router.get('/', productController.renderHomePage);
+router.get('/books/:id', productController.renderProductDetails);
+
 
 router.use('/api/products', productApiRouter);
 
 router.use('/api/categories', categoryApiRouter);
+
 
 module.exports = router;

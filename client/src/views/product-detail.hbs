@@ -1,0 +1,111 @@
+<link href="/css/book-detail.css" rel="stylesheet">
+<main class="container-fluid d-flex flex-column justify-content-center" style="padding-top: 130px; padding-bottom: 40px; max-width: 1000px;">
+    <input type="hidden" class="product-id" value="{{product._id}}">
+    <section class="product-box d-grid bg-white rounded-3 p-3" style="grid-template-columns: 30% 70%; gap: 24px;">
+        <div style="max-width: 250px; max-height: 400px; justify-self: center;" class="d-flex">
+            <img style="width: 80%; height: 90%;"  src="{{product.image}}">
+        </div>
+        <div class="d-flex flex-column justify-content-start gap-2">
+            <h3 class="fw-bold" style="display: -webkit-box;
+            font-size: 18px;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;">{{product.name}}</h3>
+            <div class="product-stat d-flex gap-3">
+                {{#if product.rating}}
+                <span>
+                    <span style="color: orange;">{{product.rating}}</span>
+                    {{#renderStars product.rating}}
+                    {{/renderStars}}
+                </span>
+                {{/if}}
+                {{#if product.reviews}}
+                    <p>{{product.reviews}} Reviews</p>
+                {{else}}
+                    <p>No reviews</p>
+                {{/if}}
+                <p>{{product.sold}} Sold</p>
+            </div>
+            <p class="product-price text-primary" style="font-size: 28px;">${{product.price}}</p>
+            <form>
+                <div class="d-flex align-items-center gap-3 mb-3 disable">
+                    <div class="input-group" style="max-width: 120px;">
+                        <span class="quantity-btn desc-btn input-group-text text-primary">-</span>
+                        <input type="number" value="1" style="text-align: center;" class="quantity-input form-control" min="1" max="{{product.stock}}">
+                        <span class="quantity-btn inc-btn input-group-text text-primary">+</span>
+                    </div> 
+                    {{#if product.stock}}
+                    <p style="font-size: 14px; color: #666;">{{product.stock}} in stock</p>
+                    {{else}}
+                    <p class="text-danger">Out of stock</p>
+                    {{/if}}
+                </div>
+                <button class="add-cart-btn btn btn-danger" style="padding: 6px 24px; border-radius: 24px;" {{#eq product.stock 0}}disabled{{/eq}}>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Add to Cart</button>                         
+            </form>
+        </div>
+    </section>
+    <section class="p-3 mt-3">
+        <h4>Product Details</h4>
+        <ul style="padding: 0;">
+            <li>
+                <div class="row" style="width: 500px;">
+                    <p class="detail-key text-secondary col-4">Categories </p>
+                    {{#each product.categories}}
+                    <a class="col-8 text-primary" href="/books?cat={{this._id}}">{{this.name}}</a>
+                    {{/each}}
+                </div>
+            </li>
+            <li>
+                <div class="row" style="width: 500px;">
+                    <p class="detail-key text-secondary col-4">Authors </p>
+                    <div class="col-8 d-flex">
+                        {{#each product.authors}}
+                        {{#eq @index 0}}
+                        {{else}} 
+                            <span class="text-primary">,&nbsp;</span>
+                        {{/eq}}
+                        <a class="detail-value text-primary" href="/books?search={{this}}">{{this}}</a>
+                        {{/each}}
+                    </div>
+                </div>
+            </li>
+            {{#if product.publishDate}}
+                <li>
+                <div class="row" style="width: 500px;">
+                    <p class="detail-key text-secondary col-4">Publish Date</p>
+                    <p class="col-8" class="detail-value">{{product.publishDate}}</p>
+                </div>
+            </li>
+            {{/if}}
+            {{#if product.publisher}}
+                <li>
+                <div class="row" style="width: 500px;">
+                    <p class="detail-key text-secondary col-4">Publisher</p>
+                    <p class="col-8" class="detail-value">{{product.publisher}}</p>
+                </div>
+            </li>
+            {{/if}}
+            {{#if product.pages}}
+                <li>
+                <div class="row" style="width: 500px;">
+                    <p class="detail-key text-secondary col-4">Pages</p>
+                    <p class="col-8" class="detail-value">{{product.pages}}</p>
+                </div>
+            </li>
+            {{/if}}
+
+        </ul>
+    </section>
+
+    {{#if product.description}}
+    <section class="p-3 mt-3">
+        <h4>Description</h4>
+        <div class="description-content">
+            {{{product.description}}}
+        </div>
+    </section>
+    {{/if}}
+</main>
+<script src="/js/book-detail.js"></script>

@@ -1,7 +1,7 @@
 const hbs = require('hbs');
 
 hbs.registerHelper('eq', function(arg1, arg2, options) {
-    return (arg1 == arg2) ? options.fn(this) : '';
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 })
 
 hbs.registerHelper('range', function(start, end, options) {

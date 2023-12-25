@@ -52,9 +52,24 @@ table {
     overflow: hidden;
 }
 
-.card {
-    overflow: hidden;
-}
+
+  input:focus {
+      outline: none !important;
+  }
+
+  .hide {
+      display: none;
+  }
+
+  .card {
+      cursor: pointer;
+      overflow: hidden;
+  }
+
+  .card:hover {
+      transform: scale(1.05);
+      transition: transform 0.4s;
+  }
 
 a {
     color: #666;

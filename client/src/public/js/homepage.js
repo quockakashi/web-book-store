@@ -7,8 +7,6 @@ $(document).ready(async() => {
     await loadBook($('.top-rating-container'), 'top-rating');
     await loadBook($('.best-seller-container'), 'best-seller');
     await loadBook($('.for-kid-container'), 'for-kids');
-
-
     $('.card').each((index, card) => {
         $(card).click(() => {
             const bookId = $(card).attr('bookId');
@@ -26,7 +24,7 @@ async function loadBook(container, urlPrams) {
             container.append(
             `
             <div class="card border-0 shadow-sm" bookId="${book._id}">
-                    <img src="${book.image}">
+                    <img class="card-image" src="${book.image}">
                     <div class="card-body p-1 d-flex flex-column gap-1">
                         <h5 class="card-title mb-0">${book.name}</h5>
                         <div class="mt-auto" style="font-size: 12px;">
@@ -45,26 +43,6 @@ async function loadBook(container, urlPrams) {
         )
         })
     }
-}
-
-const renderStar = (rating) => {
-    if(!rating || rating < 1) {
-        return '';
-    }
-    let result = '';
-            for (let i = 1; i <= 5; i++) {
-              let starClass = '';
-              if(rating >= i) {
-                  starClass = 'fa-solid fa-star checked-star';
-              } else if(Math.round(rating) >= i) {
-                starClass = 'fa-solid fa-star-half-stroke checked-star'
-              } else {
-                  starClass = 'fa-regular fa-star';
-              }
-
-              result += `<span class="${starClass}"></span>`;
-            }
-    return result;
 }
 
 async function loadCategories() {
