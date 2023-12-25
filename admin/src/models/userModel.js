@@ -44,6 +44,10 @@ const userSchema = new mongoose.Schema({
     confirmed: {
         type: Boolean,
         default: false,
+    },
+    balance: {
+        type:Number,
+        default: 0,
     }
 }, {versionKey: false, timestamps: true});
 

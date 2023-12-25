@@ -25,6 +25,7 @@ function displaySelectedImage(event, elementId) {
         const role = $('#role').find(':selected').val();
         const avatar = $('#avatar')[0].files[0];
         const username = $('#username').val();
+        const balance =$('#balance').val();
 
         if(!/^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(username)) {
             scrollToTop();
@@ -37,6 +38,7 @@ function displaySelectedImage(event, elementId) {
         formData.append('email', email);
         formData.append('password', password);
         formData.append('role', role);
+        formData.append('balance',balance)
         if(avatar) {
           formData.append('avatar', avatar);
         };

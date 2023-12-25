@@ -147,6 +147,7 @@ const editUser = async (req, res, next) => {
             password,
             role,
             username,
+            balance
         } = req.body;
 
         let avatar = req.files?.avatar;
@@ -183,7 +184,8 @@ const editUser = async (req, res, next) => {
             fullName,
             email,
             role,
-            username
+            username,
+            balance
         };
 
         // handle if editing includes password
