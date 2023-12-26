@@ -6,6 +6,7 @@ const categoryApiRouter = require('./api/categoryApiRouter');
 
 router.get('/', productController.renderHomePage);
 router.get('/books/:id', productController.renderProductDetails);
+router.get('/books', productController.renderSearchBookPage);
 
 
 router.use('/api/products', productApiRouter);

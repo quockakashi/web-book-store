@@ -50,11 +50,18 @@
         <h4>Product Details</h4>
         <ul style="padding: 0;">
             <li>
-                <div class="row" style="width: 500px;">
-                    <p class="detail-key text-secondary col-4">Categories </p>
-                    {{#each product.categories}}
-                    <a class="col-8 text-primary" href="/books?cat={{this._id}}">{{this.name}}</a>
-                    {{/each}}
+                <div class="row" style="width: 100%;">
+                    <p class="detail-key text-secondary" style="width: 168px">Categories </p>
+                    <div class="col-8 d-flex">
+                        {{#each product.categories}}
+                            {{#eq @index 0}}
+                            {{else}} 
+                                <span class="text-primary">,&nbsp;</span>
+                            {{/eq}}
+                            <a style="max-width: 240px; text-overflow: ellipsis; white-space: nowrap;
+  overflow: hidden;" class="text-primary" href="/books?cat={{this._id}}">{{this.name}}</a>
+                        {{/each}}
+                    </div>
                 </div>
             </li>
             <li>
@@ -66,7 +73,7 @@
                         {{else}} 
                             <span class="text-primary">,&nbsp;</span>
                         {{/eq}}
-                        <a class="detail-value text-primary" href="/books?search={{this}}">{{this}}</a>
+                        <a class="detail-value text-primary" href="/books?keyword={{this}}">{{this}}</a>
                         {{/each}}
                     </div>
                 </div>

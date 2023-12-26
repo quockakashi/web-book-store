@@ -30,7 +30,7 @@ hbs.registerHelper('renderStars', (rating, option) => {
         } else if(Math.round(rating) === i) {
             starClass = 'fa-solid fa-star-half-stroke checked-star';
         } else {
-            starClass = 'fa-regular fa-star';
+            starClass = 'fa-regular fa-star checked-star';
         }
 
         result += `<span class="${starClass}" ${style}></span>`;

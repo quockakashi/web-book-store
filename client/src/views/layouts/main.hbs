@@ -37,8 +37,8 @@
   </style>
 
   <body>
-        <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 99;" class="bg-white">
-            <nav class="d-flex align-items-center p-3" style="box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.05); gap: 32px;">
+        <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 99; box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.05);" class="bg-white">
+            <nav class="d-flex align-items-center p-3 mx-auto" style=" gap: 32px; max-width: 1200px">
                 <a style="font-size: 24px;" href="/">Book Store</a>
                 <div class="d-flex justify-content-center align-items-center gap-4" style="flex: 1; position: relative;">
                     <button class="border-0 text-primary category-btn" style="background-color: inherit;">
@@ -49,10 +49,10 @@
                             
                         </ul>
                     </div>
-                    <form style="max-width: 500px; width: 100%;">
+                    <form style="max-width: 500px; width: 100%;" action="/books">
                         <div class="input-group mb-3 rounded-4 overflow-hidden shadow-sm mt-3">
-                            <input type="text" class="form-control border-0 shadow-none" aria-label="Amount (to the nearest dollar)" placeholder="Find your book!">
-                            <span class="input-group-text border-0 text-primary" style="background-color: inherit"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            <input type="text" class="search-input form-control border-0 shadow-none" aria-label="Amount (to the nearest dollar)" placeholder="Find your book!" required name="keyword">
+                            <button type="submit" class="input-group-text border-0 text-primary" style="background-color: inherit"><i class="fa-solid fa-magnifying-glass"></i></button>
                           </div>
                     </form>
                 </div>

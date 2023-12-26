@@ -1,8 +1,4 @@
 $(document).ready(async() => {
-    await loadCategories();
-    $('.category-btn').on('click', () => {
-        $('.category-menu').toggleClass('hide')
-    })
     await loadBook($('.new-book-container'), 'new-books');
     await loadBook($('.top-rating-container'), 'top-rating');
     await loadBook($('.best-seller-container'), 'best-seller');
@@ -45,16 +41,3 @@ async function loadBook(container, urlPrams) {
     }
 }
 
-async function loadCategories() {
-    const response = await fetch('/api/categories');
-
-    if(response.ok) {
-        data = (await response.json()).data;
-        data.forEach(category => {
-            $('.category-list').append(`
-            <li>
-                <a class="category-link" href="/books?cat=${category._id}">${category.name}</a>
-            </li>`)
-        }) 
-    }
-}

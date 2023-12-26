@@ -1,0 +1,66 @@
+<main class="container-fluid" style="max-width: 1200px; min-height: 91%; display: grid; grid-template-columns: 250px 1fr; padding-top: 130px; padding-bottom: 40px">
+    <div class="ps-3">
+        <p class="fw-bold mb-3">
+            <i class="fa-solid fa-filter"></i>&nbsp
+            Filters
+        </p>
+        <div class="mb-3">
+            <p class="mb-1">Price</p>
+            <form class="price-range">
+                <div class="row align-items-center" style="padding-left: 16px">
+                    <div class="input-group-sm col-4 ps-0">
+                        <input class="form-control text-center min-price" placeholder="Min $">
+                    </div>
+                   &nbsp;-&nbsp;
+                    <div class="input-group-sm col-4">
+                        <input class="form-control text-center max-price" placeholder="Max">
+                    </div>
+                    <p class="text-danger p-0 mt-1 price-range-error" style="font-size: 12px;"></p>
+                    <button class="btn btn-primary col-8 mt-2">Apply</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <p class="mb-2">Reviews</p>
+            <div style="cursor: pointer;">
+                <div class="d-flex gap-1 review-rating-filter" value="5">
+                    {{#renderStars 5}}{{/renderStars}}
+                </div>
+            </div>
+            <div class="d-flex gap-1 align-items-center review-rating-filter" value="4" style="cursor: pointer;">
+                    {{#renderStars 4}}{{/renderStars}} and up
+            </div>
+            <div class="d-flex gap-1 align-items-center review-rating-filter" value="3" style="cursor: pointer;">
+                    {{#renderStars 3}}{{/renderStars}} and up
+            </div>
+            <div class="d-flex gap-1 align-items-center review-rating-filter" value="2" style="cursor: pointer;">
+                    {{#renderStars 2}}{{/renderStars}} and up
+            </div>
+            <div class="d-flex gap-1 align-items-center review-rating-filter" value="1" style="cursor: pointer;">
+                    {{#renderStars 1}}{{/renderStars}} and up
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="d-flex align-items-center mb-4">
+            <p class="me-2">Sort by: </p>
+            <select class="form-select sort-select" aria-label="Default select example" style="max-width: 160px;">
+                <option value="name-asc">
+                    Name a-z
+                </option>
+                <option value="publishDate-desc">Newest</option>
+                <option value="sold-desc">Sold high-low</option>
+                <option value="price-desc">Price high-low</option>
+                <option value="price-asc">Price low-high</option>
+            </select>
+            <button class="btn btn-primary ms-4 clear-filter-btn">
+                <i class="fa-solid fa-x"></i>&nbsp;
+                Clear all filters</button>
+        </div>
+        <div class="product-container">
+        </div>
+        </div>
+    </div>
+</main>
+
+<script src="/js/search-book.js"></script>
