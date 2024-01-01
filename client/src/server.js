@@ -6,6 +6,7 @@ const fileUpload = require('express-fileupload');
 const hbs = require('./configs/hbs');
 const session = require('express-session');
 
+
 // import database
 const connectDB = require('./configs/database');
 // connect database
@@ -21,6 +22,7 @@ const path = require('path');
 
 const router = require('./routers');
 
+
 // create app
 const app = express();
 
@@ -30,7 +32,15 @@ app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 }
 }));
 
+app.get('/recharge', function(req, res){
+    res.render('recharge-page');
+});
+
+app.use('/static',express.static(path.join(__dirname,'public')))
+
+
 // set up view engine
+
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
