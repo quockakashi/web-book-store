@@ -57,9 +57,9 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
         secure: false,
-        sameSite: 'strict',
     }
 }))
+app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(morgan('dev'));

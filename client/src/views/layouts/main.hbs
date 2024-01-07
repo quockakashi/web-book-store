@@ -61,16 +61,23 @@
                     <div class="nav-list">
                         <a class="nav_link" href='/recharge' style="margin-left:5px;margin-right:5px">
                           <i class="fa-solid fa-sack-dollar"></i>
-                          <span class="nav_name">Recharge</span>
+                          <span class="nav_name ms-1">Recharge</span>
                         </a>
                         <a class="nav_link" href="/cart" style="margin-left:5px;margin-right:5px">
                             <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="nav_name">Cart</span>
+                            <span class="nav_name ms-1">Cart</span>
                         </a>
-                        <a class="nav_link" href="#" style="margin-left:5px;margin-right:5px">
-                            <i class="fa-regular fa-user"></i>
-                            <span class="nav_name">Account</span>
+                        {{#if user}}
+                          <a class="nav_link" style="margin-left:5px;margin-right:5px">
+                            {{!-- <i class="fa-regular fa-user"></i> --}}
+                            <img style="width: 30px; height: 30px; border-radius: 50%" src="{{user.avatar.url}}">
+                            <span class="nav_name ms-1">{{user.username}}</span>
                         </a>
+                        {{else}}
+                          <a class="nav_link" href="/login" style="margin-left:5px;margin-right:5px">
+                            <span class="nav_name ms-1">Login</span>
+                        </a>
+                        {{/if}}
                         
                     </div>
                   </nav>

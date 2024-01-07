@@ -5,6 +5,7 @@ const path = require('path');
 const toDataUri = require('../utils/dataUri');
 const mongoose = require('mongoose');
 const reviewModel = require('../models/reviewModel');
+const orderModel = require('../models/orderModel');
 
 const NUMBER_USER_PER_PAGE =  5;
 
@@ -123,6 +124,9 @@ const removeUser = async (req, res, next) => {
         const { id } = req.params;
         await reviewModel.deleteMany({user: id});
         const user = await userModel.findByIdAndDelete(id);
+        await reviewModel.deleteMany({user: id});
+        await orderModel.deleteMany({user: id});
+        
         if(user) {
             return res.status(200).json({
                 message: `User ${user.fullName} has been deleted`,

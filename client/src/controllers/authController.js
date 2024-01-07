@@ -80,7 +80,7 @@ const register = async(req, res, next) => {
             purpose: 'confirm-email',
             id: user._id,
         }, process.env.SECRET_KEY, {expiresIn: 24 * 60 * 60 * 1000});
-        sendConfirmAccountMail(user.email, `http://localhost:8080/confirm-token/${confirmToken}`);
+        await sendConfirmAccountMail(user.email, `http://localhost:8080/confirm-token/${confirmToken}`);
 
         res.status(201).json({
             message: 'User created',

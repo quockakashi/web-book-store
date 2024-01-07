@@ -47,7 +47,12 @@ passport.use (
             createdUser.confirmed = true;
             await createdUser.save();
         }
-        done(null, createdUser);
+        if(!createdUser.avatar?.url) {
+            createdUser.avatar = {url: profile.picture};
+            await createdUser.save();
+        }
+        console.log(createdUser);
+        return done(null, createdUser);
     })
 );
 
@@ -63,6 +68,11 @@ passport.deserializeUser(async (_id, done) => {
         if(!user) {
             done(null, false);
         } else {
+            if(!user.avatar?.url) {
+                user.avatar = {
+                    url: 'https://res.cloudinary.com/dsv2f6qxf/image/upload/v1700707173/book-store-system/avatars/default-avatar.png',
+                }
+            }
             done(null, user);
         }
     } catch(err) {

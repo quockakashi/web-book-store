@@ -6,7 +6,7 @@ const { ObjectId } = require('mongoose').Types;
 const DEFAULT_PER_PAGE = 12;
 
 const renderHomePage = async(req, res) => {
-    res.render('homepage', {layout: 'layouts/main', title: 'Homepage'})
+    res.render('homepage', {layout: 'layouts/main', title: 'Homepage', user: req.user})
 };
 
 const renderProductDetails = async(req, res) => {
@@ -78,7 +78,7 @@ const renderProductDetails = async(req, res) => {
         if(product[0].publishDate) {
             product[0].publishDate = (new Date(product[0].publishDate)).toLocaleDateString('en-UK', {dateStyle: 'medium'})
         }
-        return res.render('product-detail', {layout: '/layouts/main', title: product[0].name.slice(0, 20) + '...',product : product[0]});
+        return res.render('product-detail', {layout: '/layouts/main', title: product[0].name.slice(0, 20) + '...',product : product[0], user: req.user});
     } catch(error) {
         console.error(error);
     }

@@ -1,16 +1,17 @@
 const router = require('express').Router();
 const productController = require('../controllers/productController');
 const authController = require('../controllers/authController');
-const {redirectConfirmPage} = require('../middlewares/handleLoginUser')
+const {redirectConfirmPage, requireLogin} = require('../middlewares/handleLoginUser')
 
 
 const productApiRouter = require('./api/productApiRouter');
 const categoryApiRouter = require('./api/categoryApiRouter');
 const authApiRouter = require('./api/authApiRouter');
 const passport = require('../configs/passport');
+const reviewApiRouter = require('./api/reviewApiRouter');
 
 
-router.get('/', redirectConfirmPage, productController.renderHomePage,);
+router.get('/', redirectConfirmPage, productController.renderHomePage);
 router.get('/books/:id', productController.renderProductDetails);
 router.get('/books', productController.renderSearchBookPage);
 router.get('/register', authController.renderRegisterPage);
@@ -36,6 +37,7 @@ router.use('/api/products', productApiRouter);
 
 router.use('/api/categories', categoryApiRouter);
 router.use('/api/auth', authApiRouter);
+router.use('/api/reviews', reviewApiRouter);
 
 
 

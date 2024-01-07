@@ -1,3 +1,14 @@
 .quantity-btn {
     cursor: pointer;
 }
+
+.rating {
+    width: 240px;
+ }
+ 
+ .rating__star {
+    cursor: pointer;
+    color: orange;
+ }
+ 
+ 
