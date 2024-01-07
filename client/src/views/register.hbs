@@ -1,0 +1,82 @@
+<div class="alert alert-danger d-flex align-items-center position-absolute align-items-center"
+        style="top: 25px; right: 36px; opacity: 0" role="alert">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            &nbsp;
+            <p class="alert-message" style="margin: 0;"></p>
+        <div>
+    </div>
+    </div>
+    <form class="py-4 px-4 rounded-3 shadow-lg" style="width: 500px;">
+        <h3 class="mb-2">Register an account</h3>
+        <div class="mt-4 mb-3">
+          <label for="email" class="form-label">Full name</label>
+          <input required type="text" class="form-control" id="name" aria-describedby="emailHelp">
+        </div>
+        <div class="mt-4 mb-3">
+          <label for="email" class="form-label">Username</label>
+          <input required type="text" class="form-control" id="username" aria-describedby="emailHelp">
+        </div>
+        <div class="mt-4 mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input required type="email" class="form-control" id="email" aria-describedby="emailHelp">
+        </div>
+        <div class="mt-4 mb-3">
+          <label for="email" class="form-label">Phone number</label>
+          <input required type="tel" class="form-control" id="phone" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3 position-relative">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <input required type="password" class="form-control" id="password"
+            style="border-right: none;">
+          <button
+          id="show-pw-btn"
+          style="background-color: inherit; border-left: none;" 
+          type="button"
+          class="input-group-text text-primary"><i class="fa-regular fa-eye show-pw-icon"></i></button>
+          </div>
+        </div>
+        <a class="link-primary
+         text-decoration-none" style="font-size: 14px;" href="/login">You already have an account?</a>
+        <button type="submit" class="btn btn-primary w-100 mt-2">Continue</button>
+      </form>
+<script src="/js/main.js">
+</script>
+<script>
+    $(document).ready(() => {
+        $('form')[0].addEventListener('submit', async(e) => {
+            e.preventDefault();
+            const fullName = $('#name').val();
+            const username = $('#username').val();
+            const email = $('#email').val();
+            const phoneNumber = $('#phone').val();
+            const password = $('#password').val();
+
+            const checkDuplicate = await fetch(`/api/auth/check-duplicate?username=${username}&email=${email}`).then(res => res.json());
+
+            if(checkDuplicate.isDuplicated) {
+                showMainAlert('warning', checkDuplicate.message);
+                return;
+            }
+
+            const body = JSON.stringify({
+                fullName,
+                username,
+                email,
+                phoneNumber,
+                password,
+            });
+
+            const createdUser = await fetch(`/api/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body,
+            }).then(res => res.json());
+
+            window.location.href = `/confirm-email?id=${createdUser.data.id}`
+
+        })
+    })
+</script>
