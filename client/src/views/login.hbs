@@ -1,0 +1,91 @@
+<div class="alert alert-danger d-flex align-items-center position-absolute align-items-center"
+        style="top: 25px; right: 36px; opacity: 0" role="alert">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            &nbsp;
+            <p class="alert-message" style="margin: 0;"></p>
+        <div>
+    </div>
+    </div>
+    <form class="py-4 px-4 rounded-3 shadow-lg" style="width: 450px;" onsubmit="return handleSubmit(event)">
+        <h3 class="mb-2">Welcome back</h3>
+        <a class="link-primary text-decoration-none" href="/register">Don't have an account</a>
+        <div class="mt-4 mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input required type="email" class="form-control" id="email" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3 position-relative">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <input required type="password" class="form-control" id="password"
+            style="border-right: none;">
+          <button
+          id="show-pw-btn"
+          style="background-color: inherit; border-left: none;" 
+          type="button"
+          class="input-group-text text-primary"><i class="fa-regular fa-eye show-pw-icon"></i></button>
+          </div>
+        </div>
+        <div class="mb-3 form-check">
+          <input checked type="checkbox" class="form-check-input" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">Remember Me</label>
+        </div>
+        <div class="mb-3">
+            <label for="rememberMe">Login with: </label>
+            <a type="submit" class="btn btn-secondary w-100 mt-2"><i class="fa-brands fa-google"></i></a>
+        </div>
+        <a class="link-primary
+         text-decoration-none" style="font-size: 14px;">Forgot your password?</a>
+        <button type="submit" class="btn btn-primary w-100 mt-2">Login</button>
+      </form>
+<script>
+    $(document).ready(() => {
+    let showPw = false;
+    $('#show-pw-btn').on('click', (e) => {
+        if(!showPw) {
+            $("#password").attr('type', 'text');
+            $('.show-pw-icon').removeClass('fa-eye');
+            $('.show-pw-icon').addClass('fa-eye-slash');
+            showPw = true;
+        } else {
+            $("#password").attr('type', 'password');
+            $('.show-pw-icon').removeClass('fa-eye-slash');
+            $('.show-pw-icon').addClass('fa-eye');
+            showPw = false;
+        }
+    })
+});
+
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    const email = $('#email').val();
+    const password = $('#password').val();
+    const rememberMe = $('#rememberMe').prop('checked');
+    //console.log(email, password, rememberMe);
+
+    try {
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email, password, rememberMe})
+        });
+        if(res.ok) {
+            const user = (await res.json()).user;
+            console.log(user);
+            localStorage.setItem('authenticatedUser', JSON.stringify(user));
+            window.location.href = '/';
+        } else {
+            console.log('Authenticate failed')
+            $('.alert-message').html('Invalid Credential!');
+            $('.alert').css({
+                'opacity': '1',
+            })
+        }
+    } catch(err) {
+        console.log(err);
+    }
+
+    return false;
+};
+</script>

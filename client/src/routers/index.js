@@ -14,6 +14,7 @@ router.get('/books', productController.renderSearchBookPage);
 router.get('/register', authController.renderRegisterPage);
 router.get('/confirm-email', authController.renderConfirmEmailPage);
 router.get('/confirm-token/:token', authController.confirmToken);
+router.get('/login', authController.renderLoginPage)
 
 
 

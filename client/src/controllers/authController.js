@@ -22,6 +22,14 @@ const renderConfirmEmailPage = async(req, res, next) => {
     res.render('confirm-email', {layout: 'layouts/login', user})
 }
 
+const renderLoginPage = (req, res, next) => {
+    if(req.user) {
+        return res.redirect('/');
+    } else {
+        return res.render('login', {layout: 'layouts/login'});
+    }
+}
+
 const checkDuplicateInfo = async (req, res, next) => {
     const {username, email} = req.query;
 
@@ -107,4 +115,5 @@ module.exports = {
     checkDuplicateInfo,
     register,
     confirmToken,
+    renderLoginPage
 }
