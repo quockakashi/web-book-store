@@ -84,9 +84,27 @@ const register = async(req, res, next) => {
     }
 }
 
+const confirmToken = async(req, res, next) => {
+    const {token} = req.params;
+
+    try {
+        const payload = jwt.verify(token, process.env.SECRET_KEY);
+        if(payload.purpose != 'confirm-email') {
+            throw new Error();
+        }
+        const id = payload.id;
+        const user = await userModel.findById(id);
+        user.confirmed = true;
+        return res.redirect('/login');
+    } catch(error) {
+        return res.redirect('/404');
+    }
+}
+
 module.exports = {
     renderRegisterPage,
     renderConfirmEmailPage,
     checkDuplicateInfo,
     register,
+    confirmToken,
 }

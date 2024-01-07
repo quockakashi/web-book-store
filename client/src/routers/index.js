@@ -13,6 +13,7 @@ router.get('/books/:id', productController.renderProductDetails);
 router.get('/books', productController.renderSearchBookPage);
 router.get('/register', authController.renderRegisterPage);
 router.get('/confirm-email', authController.renderConfirmEmailPage);
+router.get('/confirm-token/:token', authController.confirmToken);
 
 
 
