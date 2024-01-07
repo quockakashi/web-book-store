@@ -19,7 +19,7 @@ const renderConfirmEmailPage = async(req, res, next) => {
         return res.redirect('/homepage');
     }
 
-    res.render('confirm-email', {layout: 'layouts/login', user})
+    res.render('confirm-email', {layout: 'layouts/confirm', user})
 }
 
 const renderLoginPage = (req, res, next) => {
@@ -103,6 +103,7 @@ const confirmToken = async(req, res, next) => {
         const id = payload.id;
         const user = await userModel.findById(id);
         user.confirmed = true;
+        user.save();
         return res.redirect('/login');
     } catch(error) {
         return res.redirect('/404');

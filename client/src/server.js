@@ -17,6 +17,7 @@ const passport = require('./configs/passport');
 
 // import middlewares
 const {errorHandler, notFound} = require('./middlewares/errorHandler');
+const {redirectConfirmPage} = require('./middlewares/handleLoginUser')
 
 const path = require('path');
 
@@ -62,6 +63,7 @@ app.use(session({
 app.use(passport.session());
 
 app.use(morgan('dev'));
+
 
 app.use('/', router);
 

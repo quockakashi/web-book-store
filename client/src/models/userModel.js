@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     confirmed: {
         type: Boolean,
         default: false,
+    },
+    provider: {
+        type: String,
+        default: 'local',
     }
 }, {versionKey: false, timestamps: true});
 
