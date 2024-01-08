@@ -86,10 +86,10 @@ const postReview = async(req, res, next) => {
         console.error(error);
         next(error);
     }
-}
+};
 
 module.exports = {
     getReviewsByUser,
     postReview,
     getAllReviewsByProductId,
-}
+};

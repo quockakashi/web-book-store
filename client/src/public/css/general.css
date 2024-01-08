@@ -79,3 +79,13 @@ a {
 .category-link:hover {
     text-decoration: underline;
 }
+
+li .user-menu-item {
+    padding: 4px 6px;
+    border-radius: 6px;
+}
+
+li .user-menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.4s;
+}

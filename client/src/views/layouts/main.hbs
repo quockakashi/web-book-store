@@ -68,11 +68,27 @@
                             <span class="nav_name ms-1">Cart</span>
                         </a>
                         {{#if user}}
-                          <a class="nav_link" style="margin-left:5px;margin-right:5px">
-                            {{!-- <i class="fa-regular fa-user"></i> --}}
-                            <img style="width: 30px; height: 30px; border-radius: 50%" src="{{user.avatar.url}}">
-                            <span class="nav_name ms-1">{{user.username}}</span>
-                        </a>
+                        <div style="position: relative; display:inline">
+                          <img class="user-avatar" style="object-fit: cover; object-position: center; width: 30px; height: 30px; border-radius: 50%; cursor: pointer" alt="user-img" src="{{user.avatar.url}}" />
+                          <div class="bg-light shadow-sm hide profile-popover" style="position: absolute; bottom: -100px; right: 0; width: 200px; border-radius: 8px; padding: 4px 8px">
+                            <ul style="padding-left: 0;">
+                              <li class="mb-2">
+                                <a class="d-flex user-menu-item" 
+                                href="/account"
+                                style="justify-content: space-between; align-items: center">
+                                  <i class="fa-regular fa-user"></i>
+                                  <p class="fw-bold full-name">{{user.fullName}}</p>
+                                </a>
+                              </li>
+                              <li class="mt-1">
+                                <a class="d-flex user-menu-item" style="justify-content: space-between; align-items: center" href="/logout">
+                                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                  <p>Logout</p>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                         {{else}}
                           <a class="nav_link" href="/login" style="margin-left:5px;margin-right:5px">
                             <span class="nav_name ms-1">Login</span>
@@ -211,4 +227,11 @@
 
   </body>
   <script src="/js/index.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    $('.user-avatar').click(function() {
+            $('.profile-popover').toggleClass('hide')
+    })
+  </script>
+
 </html>
