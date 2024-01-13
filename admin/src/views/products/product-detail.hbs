@@ -8,7 +8,7 @@
         <p class="card-subtitle mb-4" style="font-size: 14px;">Authors: <span class="text-primary">{{product.authors}}</span></p>
     {{/if}}
     <div class="d-flex w-100 justify-content-center mb-3">
-      <img src="{{product.image}}" width="240px" height="360px">
+      <img src="{{product.image}}" width="240$px" height="360px">
     </div>
     <div class="{{#if product.stock}}bg-success{{else}}bg-danger{{/if}} text-center text-light mx-auto mb-3" style="max-width: 200px; border-radius: 16px; padding: 9px;">
       {{#if product.stock}}Available ({{product.stock}} in stock){{else}}Out of stock{{/if}}</div>
@@ -26,7 +26,7 @@
     {{/if}}
     <div class="mb-4">
       <h4 class="fw-bold">Product Details</h4>
-      <p style="font-size: 14px; margin-bottom: 0;">Price: <span class="text-primary" >${{product.price}}</span></p>
+      <p style="font-size: 14px; margin-bottom: 0;">Price: <span class="text-primary" >&#8363;{{#formatNumber product.price}}{{/formatNumber}}</span></p>
       {{#if product.publisher}}
       <p style="font-size: 14px; margin-bottom: 0;">Publisher: {{product.publisher}}</p>
       {{/if}}

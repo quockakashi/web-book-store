@@ -26,7 +26,7 @@
                 {{/if}}
                 <p>{{product.sold}} Sold</p>
             </div>
-            <p class="product-price text-primary" style="font-size: 28px;">${{product.price}}</p>
+            <p class="product-price text-primary" style="font-size: 28px;"><span style="font-size: 20px; vertical-align: text-top">&#8363;</span>{{#formatNumber product.price}}{{/formatNumber}}</p>
             <form>
                 <div class="d-flex align-items-center gap-3 mb-3 disable">
                     <div class="input-group" style="max-width: 120px;">
@@ -115,7 +115,7 @@
     </section>
     {{/if}}
 
-    <section class="p-4 mt-3">
+    <section class="p-3 mt-3">
         <h4>Reviews</h4>
         <div class="review-container">
     

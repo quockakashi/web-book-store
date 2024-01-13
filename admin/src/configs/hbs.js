@@ -43,4 +43,8 @@ hbs.registerHelper('add', (op1, op2) => {
     return op1 + op2;
 })
 
+hbs.registerHelper('formatNumber', (number) => {
+    return new Number(number).toLocaleString('vi-VN')
+})
+
 module.exports = hbs;

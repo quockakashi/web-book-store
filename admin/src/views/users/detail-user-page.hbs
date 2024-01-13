@@ -95,7 +95,7 @@
               <span class="fw-bold order-id">${order.orderId}</span>
               <div>
                 <span class="me-2" style="font-size: 14px;">${order.createAt}</span>
-                <span class="text-primary fw-bold"> $${order.total}</span>
+                <span class="text-primary fw-bold"> &#8363;${Number(order.total).toLocaleString('vi-VN')}</span>
               </div>
               <div class="px-2 py-1 text-white ${statusBg}" style="width: fit-content; border-radius: 16px;font-size: 12px;">
                 ${order.status}

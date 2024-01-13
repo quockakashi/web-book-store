@@ -70,7 +70,7 @@ Chart.register(ChartDataLabels);
                             style: 'normal',
                             lineHeight: 2
                         },
-                        stepSize: 40,
+                        stepSize: 50000,
                     }
             },
                 x: {
