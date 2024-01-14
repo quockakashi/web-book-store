@@ -34,6 +34,7 @@ async function handleSubmit(e) {
     const description = $('#description').val();
     const pages = parseFloat(pagesInput);
     const stock = $('#stock').val();
+    const preview = $('#preview').val();
     const image = $('#image')[0].files[0];
     console.log()
 
@@ -98,6 +99,10 @@ async function handleSubmit(e) {
     }
     if(publishDate) {
         formData.append('publishDate', publishDate);
+    }
+
+    if(preview) {
+        formData.append('preview', preview);
     }
 
     const response = await fetch(`/api/products/${id}`, {

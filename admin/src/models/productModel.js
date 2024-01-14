@@ -15,7 +15,8 @@ const productSchema = new mongoose.Schema({
     image: {
         public_id: String,
         url: String,
-    }
+    },
+    preview: String,
 }, {
     versionKey: false,
     timestamps: true,

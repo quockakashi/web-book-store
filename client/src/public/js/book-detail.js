@@ -1,4 +1,12 @@
 $(document).ready(async () => {
+    $('.preview-btn').click(() => {
+        $('.preview-box').removeClass('hide');
+    });
+
+    $('.close-preview-btn').click(() => {
+        $('.preview-box').addClass('hide');
+    })
+
     const productId = $('.product-id').val();
     let quantity = $('.quantity-input').val();
     let max_quantity = $('.quantity-input').attr('max');
@@ -39,7 +47,7 @@ $(document).ready(async () => {
                                                 </span>
                                             </div>
                                             <div class="price-box d-flex align-items-center mt-auto">
-                                                <p class="text-primary" style="margin: 0;">\$${book.price}</p>
+                                                <p class="text-primary" style="margin: 0;">&#8363;${new Number(book.price).toLocaleString('vi-VN')}</p>
                                                 <span style="color: #666; font-size: 14px;"> ${book.sold ? book.sold + ' sold' : ''}</span>
                                             </div>
                                         </div>

@@ -50,6 +50,7 @@ const renderProductDetails = async(req, res) => {
                 publisher: 1,
                 pages: 1,
                 description: 1, 
+                preview: 1,
             }},
             {$lookup: {
                 from: 'orders',

@@ -237,7 +237,8 @@ const addProduct = async (req, res, next) => {
             language,
             categories,
             description,
-            stock
+            stock,
+            preview,
         } = req.body;
         if(stock) {
             stock = parseInt(stock);
@@ -266,7 +267,7 @@ const addProduct = async (req, res, next) => {
             image = {public_id: result.public_id, url: result.secure_url};
         }
 
-        const product = await productModel.create({name, authors, publisher, publishDate, categories, price, language, description, pages, stock, image});
+        const product = await productModel.create({name, authors, publisher, publishDate, categories, price, language, description, pages, stock, image, preview});
 
         if (product) {
             return res.status(201).json({
@@ -324,7 +325,8 @@ const editProduct = async(req, res, next) => {
             language,
             categories,
             description,
-            stock
+            stock,
+            preview
         } = req.body;
 
         // check stored product
@@ -369,7 +371,7 @@ const editProduct = async(req, res, next) => {
         }
 
 
-        product = await productModel.findOneAndUpdate({_id: id}, {name, authors, publisher, publishDate, categories, price, language, description, pages, stock, image});
+        product = await productModel.findOneAndUpdate({_id: id}, {name, authors, publisher, publishDate, categories, price, language, description, pages, stock, image, preview});
         return res.status(200).json({
             message: `Product "${product.name}" updated`,
             data: {

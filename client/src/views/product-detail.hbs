@@ -1,9 +1,24 @@
 <link href="/css/book-detail.css" rel="stylesheet">
 <main class="container-fluid d-flex flex-column justify-content-center" style="padding-top: 130px; padding-bottom: 40px; max-width: 1000px;">
+    {{#if product.preview}}
+    <div class="bg-light p-4 border-3 shadow-lg preview-box hide" style="position: absolute; left: 0; 
+  right: 0; 
+  top: 120px;
+  margin-left: auto; 
+  margin-right: auto; width: 600px; z-index: 2">
+        <button class="border-none close-preview-btn" style="background: inherit; border: none; margin-bottom: 6px; margin-left: 100%;">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <iframe frameborder="0" scrolling="no" style="border:0px; margin-left: auto; margin-right: auto" src="{{product.preview}}" width=550 height=500></iframe>
+    </div>
+    {{/if}}
     <input type="hidden" class="product-id" value="{{product._id}}">
     <section class="product-box d-grid bg-white rounded-3 p-3" style="grid-template-columns: 30% 70%; gap: 24px;">
-        <div style="max-width: 250px; max-height: 400px; justify-self: center;" class="d-flex">
+        <div style="max-width: 250px; max-height: 400px; justify-self: center; align-items: center" class="d-flex flex-column gap-2">
             <img style="width: 80%; height: 90%;"  src="{{product.image}}">
+            {{#if product.preview}}
+            <button style="padding: 4px 8px; border:none; border-radius: 12px" class="btn btn-primary bg-primary text-white preview-btn">Read Preview</button>
+            {{/if}}
         </div>
         <div class="d-flex flex-column justify-content-start gap-2">
             <h3 class="fw-bold" style="display: -webkit-box;
@@ -14,7 +29,7 @@
             <div class="product-stat d-flex gap-3">
                 {{#if product.rating}}
                 <span>
-                    <span style="color: orange;">{{product.rating}}</span>
+                    <span style="color: orange;">{{#toFixedNumber product.rating}}{{/toFixedNumber}}</span>
                     {{#renderStars product.rating}}
                     {{/renderStars}}
                 </span>
@@ -224,7 +239,7 @@
                                                                     <div class="rating mb-1">
                                                                             <span class="me-1" style="font-size: 14px">${review.user.username}</span>
                                                                             ${renderStar(review.rating)}
-                                                                            <span class="ms-1" style="font-size: 14px">${new Date(review.createdAt).toLocaleDateString('en-UK', {dateStyle: 'medium'})}</span>
+                                                                            <p class="m-0" style="font-size: 14px">${new Date(review.createdAt).toLocaleDateString('en-UK', {dateStyle: 'medium'})}</p>
                                                                     </div>
                                                                     <div>
                                                                         ${review.content}

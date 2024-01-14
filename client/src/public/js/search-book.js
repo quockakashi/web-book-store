@@ -87,7 +87,7 @@ async function loadBooks(query) {
                             ${renderStar(book.rating)}
                         </div>` : ''}
                         <div class="price-box d-flex align-items-center mt-auto">
-                            <p class="text-primary" style="margin: 0;">&#8363;${book.price}</p>
+                            <p class="text-primary" style="margin: 0;">&#8363;${new Number(book.price).toLocaleString('vi-VN')}</p>
                             <span style="color: #666; font-size: 14px;">${book.sold} sold</span>
                         </div>
                     </div>

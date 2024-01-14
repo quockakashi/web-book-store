@@ -47,4 +47,8 @@ hbs.registerHelper('formatNumber', (number) => {
     return new Number(number).toLocaleString('vi-VN')
 })
 
+hbs.registerHelper('toFixedNumber', (number) => {
+    return new Number(number).toFixed(1);
+})
+
 module.exports = hbs;
