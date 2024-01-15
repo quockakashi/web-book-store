@@ -1,0 +1,84 @@
+<style>
+  tr:hover {
+    background: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: linear background 0.4s;
+  }
+</style>
+
+<h3 style="font-weight: bold; margin-bottom: 0px;">
+        {{component.name}}
+</h3>
+<p class="mb-4">{{component.subtitle}}</p>
+
+<form style="max-width: 220px; border-radius: 16px" class="shadow-sm bg-light" action="/users">
+    <div class="input-group mb-3" style="border-radius: 16px;">
+        <input name="search" type="text" class="form-control bg-light" style="border-radius: 16px 0 0 16px; border: none" placeholder="Search!" value="{{meta.search}}">
+        <button style="border-radius: 0 16px 16px 0; background-color: inherit; border: none" class="input-group-text">
+            <i class=" text-primary fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
+</form>
+  <table class="mx-auto table mt-4 bg-light" style="border-radius: 8px; box-shadow:7px 7px 7px rgba(0, 0, 0, 0.1); max-width: 900px;">
+    <caption class="caption-top">List of users</caption>
+    <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Username</th>
+        <th scope="col">Name</th>
+        <th scope="col">Role</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        {{#each users}}
+        <tr class="px-4 py-3" rowId="{{this._id}}">
+            <td>
+            <div class="d-flex align-items-center">
+                <img src="{{this.avatar.url}}" style="width: 35px; height: 35px; border-radius: 6px;  object-fit: cover; object-position: center">
+                <p class="card-subtitle" style="margin-left: 6px;font-size: 14px;">{{this.email}}</p>
+            </div></td>
+            <td style="font-size: 14px"><p>{{this.username}}</p></td>
+            <td style="font-size: 14px;"><p>{{this.fullName}}</p></td>
+            <td>
+                <div class="bg-primary d-flex align-items-center justify-content-center" style="width: 80px; color: white; padding: 4px 6px; border-radius: 6px;">
+                    {{#eq this.role 'admin'}}
+                    <i class="fa-solid fa-shield"></i>
+                    {{/eq}}
+                    {{#eq this.role 'user'}}
+                    <i class="fa-solid fa-user"></i>
+                    {{/eq}}
+                    <p class="ms-2 mb-0" style="font-size: 12px;">{{this.role}}</p>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <a href="/admin/users/edit/{{this._id}}" class="btn btn-warning btn-sm">Edit</a>
+                    <a class="btn btn-danger btn-sm btn-delete-user" userId="{{this._id}}">Remove</a>
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+  </table>
+{{#if meta.showPagination}}
+<nav aria-label="Page navigation example" style="margin-top: 32px;">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {{#if meta.noPrev}}disabled{{/if}}">
+      <a class="page-link" aria-label="Previous" pageNum="{{meta.prevPage}}">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {{#range 1 meta.totalPage}}
+        <li class="page-item {{#eq this ../meta.page}}active{{/eq}}"><a class="page-link" pageNum="{{this}}">{{this}}</a></li>
+    {{/range}}
+    <li class="page-item {{#if meta.noNext}}disabled{{/if}}">
+      <a class="page-link"  aria-label="Next" pageNum="{{meta.nextPage}}">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+{{/if}}  
+
+<script src="/admin/js/user-page.js"></script>

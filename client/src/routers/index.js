@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const productController = require('../controllers/productController');
 const authController = require('../controllers/authController');
-const {redirectConfirmPage, requireLogin} = require('../middlewares/handleLoginUser')
+const {redirectConfirmPage, requireLogin, requireAdmin} = require('../middlewares/handleLoginUser')
 
 
 const productApiRouter = require('./api/productApiRouter');
@@ -10,6 +10,9 @@ const authApiRouter = require('./api/authApiRouter');
 const passport = require('../configs/passport');
 const reviewApiRouter = require('./api/reviewApiRouter');
 const orderApiRouter = require('./api/orderApiRouter');
+
+// admin
+const adminRouter = require('./admin/index');
 
 
 router.get('/', redirectConfirmPage, productController.renderHomePage);
@@ -43,6 +46,9 @@ router.use('/api/categories', categoryApiRouter);
 router.use('/api/auth', authApiRouter);
 router.use('/api/reviews', reviewApiRouter);
 router.use('/api/orders', orderApiRouter);
+
+
+router.use('/admin', requireLogin, requireAdmin, adminRouter);
 
 
 

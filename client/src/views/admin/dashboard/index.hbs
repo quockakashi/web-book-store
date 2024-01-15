@@ -1,0 +1,174 @@
+<link href="/admin/css/dashboard.css" rel="stylesheet" type="text/css">
+<h3 style="font-weight: bold; margin-bottom: 0px;">
+    {{component.name}}
+</h3>
+<p class="mb-4">{{component.subtitle}}</p>
+<div>
+  <div class="summary mb-5">
+    <div class="summary-box bg-light">
+      <div class="summary-title">
+        <span class="summary-name">Weekly Revenue</span>
+        <i class="fa-solid fa-dollar-sign"></i>
+      </div>
+      <div class="summary-content">
+        <p>&#8363; {{#formatNumber weeklyRevenue.data}}{{/formatNumber}}</p>
+        <div class="status-box">
+          {{#eq weeklyRevenue.compare.status 'increased'}}
+            <i class="fa-solid fa-arrow-trend-up increased"></i>
+            {{#if weeklyRevenue.compare.increasedBy}}
+            <span>Increased by {{weeklyRevenue.compare.increasedBy}}</span>
+            {{/if}}
+          {{/eq}}
+          {{#eq weeklyRevenue.compare.status 'same'}}
+            <i class="fa-solid fa-grip-lines" style="color: orange;"></i>
+            <span>Not change in this week</span>
+          {{/eq}}
+          {{#eq weeklyRevenue.compare.status 'decreased'}}
+            <i class="fa-solid fa-arrow-trend-down" style="color: red;"></i>
+            <span>Decreased by {{weeklyRevenue.compare.increasedBy}}</span>
+          {{/eq}}
+        </div>
+      </div>
+    </div>
+    <div class="summary-box bg-light">
+      <div class="summary-title">
+        <span class="summary-name">Monthly orders</span>
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <div class="summary-content">
+        <p>{{monthlyOrder.data}}</p>
+        <div class="status-box">
+          {{#eq monthlyOrder.compare.status 'increased'}}
+            <i class="fa-solid fa-arrow-trend-up increased"></i>
+            <span>Increased by {{monthlyOrder.compare.increasedBy}}</span>
+          {{/eq}}
+          {{#eq monthlyOrder.compare.status 'decreased'}}
+            <i class="fa-solid fa-arrow-trend-down" style="color: red;"></i>
+            <span>Not change in this week</span>
+          {{/eq}}
+          {{#eq monthlyOrder.compare.status 'same'}}
+            <i class="fa-solid fa-grip-lines" style="color: orange;"></i>
+            <span>Decreased by {{monthlyOrder.compare.increasedBy}}</span>
+          {{/eq}}
+        </div>
+      </div>
+    </div>
+    <div class="summary-box bg-light">
+      <div class="summary-title">
+        <span class="summary-name">Total books</span>
+        <i class="fa-solid fa-book-open"></i>
+      </div>
+      <div class="summary-content">
+        <p>{{totalBooks.data}}</p>
+        <div class="status-box">
+          <div class="status-box">
+          {{#eq totalBooks.compare.status 'increased'}}
+            <i class="fa-solid fa-arrow-trend-up increased"></i>
+            <span>Increased by {{totalBooks.compare.increasedBy}} in last 30days</span>
+          {{/eq}}
+          {{#eq totalBooks.compare.status 'same'}}
+            <i class="fa-solid fa-grip-lines" style="color: orange;"></i>
+            <span>No books were added last 30days</span>
+          {{/eq}}
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="summary-box bg-light">
+      <div class="summary-title">
+        <span class="summary-name">Total users</span>
+        <i class="fa-solid fa-users"></i>
+      </div>
+      <div class="summary-content">
+        <p>{{totalUsers.data}}</p>
+        <div class="status-box">
+          {{#eq totalUsers.compare.status 'increased'}}
+            <i class="fa-solid fa-arrow-trend-up increased"></i>
+            <span>Increased by {{totalUsers.compare.increasedBy}} in last 30days</span>
+          {{/eq}}
+          {{#eq totalUsers.compare.status 'same'}}
+            <i class="fa-solid fa-grip-lines" style="color: orange;"></i>
+            <span>No users were added last 30days</span>
+          {{/eq}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-2">
+    <ul class="list order-review shadow-sm bg-light">
+      <p>Orders in process</p>
+      {{#each ordersInProcess}}
+      <li class="order-review-box">
+        <i class="text-primary fa-solid fa-boxes-packing"></i>
+        <div>
+          <span class="fw-bold order-id">#{{this.orderId}}</span>
+          <div>
+            <span class="me-2" style="font-size: 14px;">{{this.createdAt}}</span>
+            <span class="text-primary fw-bold"> &#8363;{{#formatNumber this.total}}{{/formatNumber}}</span>
+          </div>
+        </div>
+      </li>
+      {{/each}}
+      {{#if seeMoreOrder}}
+        <a href="/orders?status=processing" class="btn btn-primary btn-sm">See More</a>
+      {{/if}}
+    </ul>
+    <div class="line-chart-box bg-light shadow-sm">
+      <div class="d-flex align-items-center gap-3">
+        <p class="ms-2 mt-2">Revenue Overview</p>
+        <select class="form-select form-select-sm bg-light shadow-sm" id="revenueSelect" onchange="handleRevenueSelectChange()">
+          <option value="last-12-months">Last 12 months</option>
+          <option value="last-7-days">Last 7 days</option>
+        </select>
+      </div>
+      <canvas id="revenueChart"></canvas>
+    </div>
+  </div>
+  <div class="content-2">
+    <div class="doughnut-chart-box bg-light shadow-sm">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <p class="ms-2 mt-2">Revenue by</p>
+        <select class="form-select form-select-sm bg-light shadow-sm" id="doughnutChartSelect" onchange="loadDoughnutChart()">
+          <option value="categories">Categories</option>
+          <option value="products">Products</option>
+        </select>
+      </div>
+      <canvas id="doughnutChart" width="400px" height="400px"></canvas>
+    </div>
+
+    <div class="top-user-box shadow-sm bg-light">
+      <p class="mb-3">Top Customers</p>
+        <table>
+          <thead>
+            <tr class="row">
+              <th class="col-3">Rank</th>
+              <th class="col-5">Customer</th>
+              <th class="col-2">Total</th>
+              <th class="col-2">Orders</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each topCustomers}}
+              <tr class="row">
+              <td class="text-primary fw-bold col-3" {{#if @index}}style="font-size: 32px;"{{else}}style="font-size: 48px;"{{/if}}>{{#add @index 1}}{{/add}}</td>
+              <td class="col-5">
+                <div class="d-flex align-items-center gap-3">
+                  <img src="{{this.avatar}}">
+                  <span class="fw-bold" style="font-size: 14px;">{{this.username}}</span>
+                </div>
+                <td class="fw-bold col-2 text-primary">&#8363;{{#formatNumber this.total}}{{/formatNumber}}</td>
+                <td class="col-2">{{this.orders}}</td>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="/admin/js/dashboard.js"></script>
+
+  

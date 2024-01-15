@@ -70,7 +70,7 @@
                         {{#if user}}
                         <div style="position: relative; display:inline">
                           <img class="user-avatar" style="object-fit: cover; object-position: center; width: 30px; height: 30px; border-radius: 50%; cursor: pointer" alt="user-img" src="{{user.avatar.url}}" />
-                          <div class="bg-light shadow-sm hide profile-popover" style="position: absolute; bottom: -100px; right: 0; width: 200px; border-radius: 8px; padding: 4px 8px">
+                          <div class="bg-light shadow-sm hide profile-popover" style="position: absolute; {{#eq user.role 'admin'}}bottom: -140px;{{else}}bottom: -100px;{{/eq}} right: 0; width: 200px; border-radius: 8px; padding: 4px 8px">
                             <ul style="padding-left: 0;">
                               <li class="mb-2">
                                 <a class="d-flex user-menu-item" 
@@ -80,6 +80,14 @@
                                   <p class="fw-bold full-name">{{user.fullName}}</p>
                                 </a>
                               </li>
+                              {{#eq user.role 'admin'}}
+                              <li class="mt-1">
+                                <a class="d-flex user-menu-item" style="justify-content: space-between; align-items: center" target="_blank" href="/admin">
+                                  <i class="fa-solid fa-screwdriver-wrench"></i>
+                                  <p>Admin page</p>
+                                </a>
+                              </li>
+                              {{/eq}}
                               <li class="mt-1">
                                 <a class="d-flex user-menu-item" style="justify-content: space-between; align-items: center" href="/logout">
                                   <i class="fa-solid fa-arrow-right-from-bracket"></i>

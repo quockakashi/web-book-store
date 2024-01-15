@@ -1,0 +1,115 @@
+<link href="/admin/css/products.css" rel="stylesheet">
+<h3 style="font-weight: bold; margin-bottom: 0px;">
+        {{component.name}}
+</h3>
+<p class="mb-4">{{component.subtitle}}</p>
+
+<a href="/admin/products/new-product" class="btn btn-primary mb-4"><i class="fa-solid fa-plus"></i>&nbsp;Add Product</a>
+
+<div class="d-flex mb-4" style="gap: 24px;">
+    <form style="max-width: 220px; border-radius: 16px" class="shadow-sm" action="/admin/products">
+      <div class="input-group" style="border-radius: 16px;">
+          <input name="search" type="text" class="form-control bg-light" style="border-radius: 16px 0 0 16px; border: none" placeholder="Search!" value="{{meta.search}}" required>
+          <button style="border-radius: 0 16px 16px 0; background-color: inherit; border: none" class="input-group-text bg-light">
+              <i class=" text-primary fa-solid fa-magnifying-glass"></i>
+          </button>
+      </div>
+  </form>
+  <div class="d-flex align-items-center" style="gap: 8px">
+    <i class="text-primary fa-solid fa-filter"></i>
+    <select class="form-select form-select-sm shadow-sm bg-light" aria-label=".form-select-sm example" style="max-width: 180px; border: none; border-radius: 16px" onchange="handleSelectCategoriesChange(event)" id="categorySelect">
+              <option value="all">All Categories</option>
+            {{#each categories}}
+              <option value="{{this._id}}" {{#eq this._id ../meta.catId}}selected{{/eq}}>
+                {{this.name}}
+              </option>
+            {{/each}}
+    </select>
+  </div>
+  <div class="d-flex align-items-center" style="gap: 8px">
+    <i class="text-primary fa-solid fa-sort"></i>
+    <select class="form-select form-select-sm shadow-sm bg-light" aria-label=".form-select-sm example" style="max-width: 140px; border: none; border-radius: 16px" onchange="handleSelectSortChange(event)" id="sortSelect">
+            <option value="publishDate-desc" {{#eq meta.sort 'publishDate-desc'}}selected{{/eq}}>Newest</option>
+            <option value="publishDate-asc" {{#eq meta.sort 'publishDate-asc'}}selected{{/eq}}>Oldest</option>
+            <option value="name-asc" {{#eq meta.sort 'name-asc'}}selected{{/eq}}>
+              Name: A-Z
+            </option>
+            <option value="name-desc" {{#eq meta.sort 'name-desc'}}selected{{/eq}}>
+              Name: Z-A
+            </option>
+            <option value="price-desc" {{#eq meta.sort 'price-desc'}}selected{{/eq}}>
+              Price: High-Low
+            </option>
+            <option value="price-asc" {{#eq meta.sort 'price-asc'}}selected{{/eq}}>
+              Price: Low-High
+            </option>
+    </select>
+  </div>
+</div>
+  <div class="container d-grid product-list">
+    {{#each products}}
+        <div class="card rounded-3 shadow-sm" style="max-width: 15rem; border: none" cardId="{{this._id}}">
+        <div class="w-100 d-flex justify-content-center py-2 bg-light">
+            <img src="{{this.image}}" width="140px" height="200px">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title" style="text-overflow: ellipsis; overflow: hidden; max-width: 100%; white-space: nowrap;">{{this.name}}</h5>
+            <div class="mb-2">
+                  {{#if this.rating}}<span class="me-1" style="color: orange">{{this.rating}}</span>{{/if}}{{#renderStars this.rating}}{{/renderStars}}
+                  {{#if this.reviews}}<span class="text-primary" style="font-size: 14px;">({{this.reviews}} reviews)</span>{{/if}}
+            </div>
+            <p class="card-text" 
+            style="margin: 0;">Price: <span class="text-primary">&#8363;{{#formatNumber this.price}}{{/formatNumber}}</span></p>
+            <p class="card-text">Stock: {{this.stock}}</p>
+            <div class="mt-2">
+            <a href="/admin/products/edit/{{this._id}}" class="btn btn-primary btn-sm">Edit</a>
+            <a class="btn btn-danger btn-sm btn-remove-product" productId="{{this._id}}" productName="{{this.name}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Remove</a>
+            </div>
+        </div>
+        </div>
+    {{/each}}
+  </div>
+{{#if meta.showPagination}}
+<nav aria-label="Page navigation example" style="margin-top: 32px;">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {{#if meta.noPrev}}disabled{{/if}}">
+      <a class="page-link" aria-label="Previous" pageNum="{{meta.prevPage}}" style="cursor: pointer;">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {{#range 1 meta.totalPage}}
+        <li class="page-item {{#eq this ../meta.page}}active{{/eq}}"><a class="page-link" style="cursor: pointer;" pageNum="{{this}}" >{{this}}</a></li>
+    {{/range}}
+    <li class="page-item {{#if meta.noNext}}disabled{{/if}}">
+      <a class="page-link" pageNum="{{meta.nextPage}}" style="cursor: pointer;" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+{{/if}}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Deleting!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" 
+        data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="continueBtn" data-bs-dismiss="modal">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="/admin/js/product-page.js"></script>

@@ -86,7 +86,7 @@ const renderProductDetails = async(req, res) => {
 }
 
 const renderSearchBookPage = async(req, res, next) => {
-    res.render('search-books', {layout: 'layouts/main', title: 'Books'});
+    res.render('search-books', {layout: 'layouts/main', title: 'Books', user: req.user});
 }
 
 
