@@ -7,5 +7,5 @@ router.get('/best-seller', productController.getBestSeller);
 router.get('/for-kids', productController.getKidBooks);
 router.get('/book-same-categories/:id', productController.getBookSameCategories);
 router.get('/', productController.getBooks);
-
+router.get('/by-ids/:ids', productController.getBookByIds);
 module.exports = router;

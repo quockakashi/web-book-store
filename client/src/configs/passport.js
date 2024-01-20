@@ -29,6 +29,18 @@ passport.use (
         let createdUser = await userModel.findOne({email: profile.email});
         if(!createdUser) {
             // if not have an user with this email, create this user;
+            const walletResponse = await fetch(`${process.env.PAYMENT_DOMAIN}/api/wallet`, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: jwt.sign({type: 'user'}, process.env.TRANSACTION_SECRET_KEY)
+                })
+            });
+
+            const wallet = await walletResponse.json();
+            const walletId = wallet.data.id;
             const password = await bcrypt.hash(uuid.v4(), 10);
             const user = {
                 fullName: profile.displayName,
@@ -40,6 +52,7 @@ passport.use (
                 confirmed: true,
                 provider: 'google',
                 password,
+                wallet: walletId,
             }
 
             createdUser = await userModel.create(user);

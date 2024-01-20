@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
 const hbs = require('./configs/hbs');
 const session = require('express-session');
+const flash = require('express-flash');
 
 
 // import database
@@ -32,6 +33,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 }
 }));
+app.use(flash());
 
 app.get('/recharge', function(req, res){
     res.render('recharge-page');

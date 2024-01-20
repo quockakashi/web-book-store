@@ -65,6 +65,19 @@ const register = async(req, res, next) => {
     let {fullName, username, email, phoneNumber, password} = req.body;
     console.log(fullName, username, password)
     password = await bcrypt.hash(password, 10);
+    const walletResponse = await fetch(`${process.env.PAYMENT_DOMAIN}/api/wallet`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            token: jwt.sign({type: 'user'}, process.env.TRANSACTION_SECRET_KEY)
+        })
+    });
+
+    const wallet = await walletResponse.json();
+    const walletId = wallet.data.id;
+
     const user = await userModel.create({
         fullName,
         username,
@@ -72,6 +85,7 @@ const register = async(req, res, next) => {
         phoneNumber,
         password,
         confirmed: false,
+        wallet: walletId,
     });
 
 

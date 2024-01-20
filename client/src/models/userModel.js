@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema.Types;
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -37,6 +38,10 @@ const userSchema = new mongoose.Schema({
     provider: {
         type: String,
         default: 'local',
+    },
+    wallet: {
+        type: ObjectId,
+        ref: 'wallet',
     }
 }, {versionKey: false, timestamps: true});
 

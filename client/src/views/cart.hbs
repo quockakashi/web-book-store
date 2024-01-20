@@ -1,462 +1,368 @@
-<!DOCTYPE html>
-<html lang="en">
-  <html>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>{{title}} | HCMUS Book Store</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
-      rel="stylesheet"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://kit.fontawesome.com/0f8c4fe9ac.js"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.js"
-      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" type="text/css" href="/css/general.css" />
-    <link rel="stylesheet" type="text/css" href="/css/homepage.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
-    <style>
-        body{
-            background: linear-gradient(110deg, #BBDEFB 60%,#42A5F5  60%);                        
-        }
-                
-        .shop{
-            font-size: 10px;
-        }
-
-        .space{
-            letter-spacing: 0.8px !important;
-        }
-
-        .second a:hover {
-            color: rgb(92, 92, 92) ;
-        }
-
-        .active-2 {
-            color: rgb(92, 92, 92) 
-        }
-
-
-        .breadcrumb>li+li:before {
-            content: "" !important
-        }
-
-        .breadcrumb {
-            padding: 0px;
-            font-size: 10px;
-            color: #aaa !important;
-        }
-
-        .first {
-            background-color: white ;
-        }
-
-        a {
-            text-decoration: none !important;
-            color: #aaa ;
-        }
-
-        .btn-lg,.form-control-sm:focus,
-        .form-control-sm:active,
-        a:focus,a:active {
-            outline: none !important;
-            box-shadow: none !important
-        }
-
-        .form-control-sm:focus{
-            border:1.5px solid #4bb8a9 ; 
-        }
-
-        .btn-group-lg>.btn, .btn-lg {
-            padding: .5rem 0.1rem;
-            font-size: 1rem;
-            border-radius: 0;
-            color: white !important;
-            background-color: #4bb8a9;
-            height: 2.8rem !important;
-            border-radius: 0.2rem !important;
-        }
-
-        .btn-group-lg>.btn:hover, .btn-lg:hover {
-            background-color: #26A69A;
-        }
-
-        .btn-outline-primary{
-            background-color: #fff !important;
-            color:#4bb8a9 !important;
-            border-radius: 0.2rem !important;   
-            border:1px solid #4bb8a9;
-        }
-
-        .btn-outline-primary:hover{
-            background-color:#4bb8a9  !important;
-            color:#fff !important;
-            border:1px solid #4bb8a9;
-        }
-
-        .card-2{
-            margin-top: 40px !important;
-        }
-
-        .card-header{
-            background-color: #fff;
-            border-bottom:0px solid #aaaa !important;
-        }
-
-        p{
-            font-size: 13px ;
-        }
-                
-        .small{
-            font-size: 9px !important;
-        }
-
-        .form-control-sm {
-            height: calc(2.2em + .5rem + 2px);
-            font-size: .875rem;
-            line-height: 1.5;
-            border-radius: 0;   
-        }
-
-        .cursor-pointer{
-            cursor: pointer;
-        }
-
-        .boxed {
-            padding: 0px 8px 0 8px ;
-            background-color: #4bb8a9;
-            color: white;
-        }
-
-        .boxed-1{
-            padding: 0px 8px 0 8px ;
-            color: black !important;
-            border: 1px solid #aaaa;
-        }
-
-        .bell{
-            opacity: 0.5;
-            cursor: pointer;
-        }
-
-        @media (max-width: 767px) {
-            .breadcrumb-item+.breadcrumb-item {
-                padding-left: 0
-            }
-        }
-    </style>
-    <body>
-        <header
-      style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 99;
-        box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.05);
-      "
-      class="bg-white"
-    >
-      <nav
-        class="d-flex align-items-center p-3 mx-auto"
-        style="gap: 32px; max-width: 1200px"
-      >
-        <a style="font-size: 24px" href="/">Book Store</a>
-        <div
-          class="d-flex justify-content-center align-items-center gap-4"
-          style="flex: 1; position: relative"
-        >
-          <button
-            class="border-0 text-primary category-btn"
-            style="background-color: inherit"
-          >
-            <i class="fa-solid fa-bars-progress"></i>
-          </button>
-          <div
-            class="category-menu hide bg-white rounded-3 shadow-lg"
-            style="
-              position: absolute;
-              z-index: 999;
-              top: 100%;
-              padding: 12px 24px;
-            "
-          >
-            <ul
-              class="category-list"
-              style="
-                display: grid;
-                list-style: none;
-                grid-template-columns: 1fr 1fr 1fr 1fr;
-                padding: 0;
-                row-gap: 16px;
-                column-gap: 32px;
-              "
-            ></ul>
-          </div>
-          <form style="max-width: 500px; width: 100%" action="/books">
-            <div
-              class="input-group mb-3 rounded-4 overflow-hidden shadow-sm mt-3"
-            >
-              <input
-                type="text"
-                class="search-input form-control border-0 shadow-none"
-                aria-label="Amount (to the nearest dollar)"
-                placeholder="Find your book!"
-                required
-                name="keyword"
-              />
-              <button
-                type="submit"
-                class="input-group-text border-0 text-primary"
-                style="background-color: inherit"
-              >
-                <i class="fa-solid fa-magnifying-glass"></i>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+<main class="main bg-white">
+  <div class="section container-2xxl">
+    <div class="row">
+      <div class="card">
+        <div class="card-body mt-5 pt-5">
+          <ul class="nav nav-tabs nav-tabs-bordered w-fit m-auto gap-3 fw-bold fs-4">
+            <li class="nav-item">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about-product"
+                id="btn-about-product">
+                Giỏ hàng
               </button>
-            </div>
-          </form>
+            </li>
+
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#details" id="btn-details">
+                Thanh toán
+              </button>
+            </li>
+          </ul>
         </div>
-        <nav class="1-navbar" id="navbar">
-          <nav class="nav">
-            <div class="nav-list">
-              <a
-                class="nav_link"
-                href="/recharge"
-                style="margin-left: 5px; margin-right: 5px"
-              >
-                <i class="fa-solid fa-sack-dollar"></i>
-                <span class="nav_name">Recharge</span>
-              </a>
-              <a
-                class="nav_link"
-                href="/cart"
-                style="margin-left: 5px; margin-right: 5px"
-              >
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span class="nav_name">Cart</span>
-              </a>
-              <a
-                class="nav_link"
-                href="#"
-                style="margin-left: 5px; margin-right: 5px"
-              >
-                <i class="fa-regular fa-user"></i>
-                <span class="nav_name">Account</span>
-              </a>
-            </div>
-          </nav>
-        </nav>
-      </nav>
-    </header>
-        <div class=" " style="margin-top: 120px">
-            <div class="row justify-content-center ">
-                <div class="col-xl-10">
-                    <div class="card shadow-lg" style="width: 1150px; height:680px">
-                        <div class="row p-2 mt-3 justify-content-between mx-sm-2">
-                            <div class="col">
-                                <p class="text-muted space mb-0 shop">HCMUS-BOOK_STORE</p>   
+      </div>
+    </div>
+    <div class="row">
+      <div class="tab-content mt-4 mb-4">
+        <div class="tab-pane fade show active about-product" id="about-product">
+          <div class="row">
+            <div class="col-lg-7">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title"></h5>
+
+                  <!-- Default Table -->
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Gía</th>
+                        <th scope="col">Tổng giá</th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-cart">
+                      {{!-- <tr>
+                        <td scope="row">
+                          <div class="d-flex justify-content-start align-items-center">
+                            <div class="avatar-wrapper me-3">
+                              <div style="width: 80px;height: 96px;">
+                                <img src="./assets/img/messages-1.jpg" class="w-100 h-100" alt="Avatar" />
+                              </div>
                             </div>
-                        </div>
-                        <div class="row  mx-auto justify-content-center text-center">
-                            <div class="col-12 mt-3 ">
-                                <nav aria-label="breadcrumb" class="second ">
-                                    <ol class="breadcrumb indigo lighten-6 first  ">
-                                        <li class="breadcrumb-item font-weight-bold "><a class="black-text text-uppercase " href="/"><span class="mr-md-3 mr-1">BACK TO SHOP</span></a><i class="fa fa-angle-double-right " aria-hidden="true"></i></li>
-                                        <li class="breadcrumb-item font-weight-bold"><a class="black-text text-uppercase active-2" href="#"><span class="mr-md-3 mr-1">CHECKOUT</span></a></li>
-                                    </ol>
-                                </nav>
+                            <div class="d-flex flex-column">
+                              <a href="about-product.php" class="text-truncate">
+                                <span class="text-heading fs-7 fw-medium">Cristine
+                                  Easom</span>
+                              </a>
+                              <a href="javascript:void(0)" class="d-flex align-items-center fw-medium text-secondary"><i
+                                  class="bi bi-x fs-3"></i> Xóa bỏ</a>
                             </div>
-                        </div>
-                    
-                        <div class="row justify-content-around">
-                            <div class="col-md-5" style="width: 500px;">
-                                <div class="card border-0" style="width:450px">
-                                    <div class="card-header pb-0" style="width:450px">
-                                        <h2 class="card-title space ">Checkout</h2>
-                                        <p class="card-text text-muted mt-4  space">SHIPPING DETAILS</p>
-                                        <hr class="my-0">
-                                    </div>
-                                    <div class="card-body" style="width: 450px;">
-                                        <div class="row justify-content-between">
-                                            <div class="col-auto mt-0"><p><b>University of Science, Ward 6, Thu Duc City, Ho Chi Minh City</b></p></div>
-                                            <br>
-                                            <div class="col-auto"><p><b>Email:ctduong010803@gmail.com</b> </p></div>
-                                        </div>
-                                        <div class="row mt-4">
-                                            <div class="col"><p class="text-muted mb-2">PAYMENT DETAILS</p><hr class="mt-0"></div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="NAME" class="small text-muted mb-1">USERNAME</label>
-                                            <input type="text" class="form-control form-control-sm" name="NAME" id="NAME" aria-describedby="helpId" placeholder="USERNAME">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="NAME" class="small text-muted mb-1">YOUR BALANCE</label>
-                                            <input type="text" class="form-control form-control-sm" name="NAME" id="NAME" aria-describedby="helpId" placeholder="0">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="NAME" class="small text-muted mb-1">REMAIN AFTER PURCHASE: </label>
-                                            <input type="text" class="form-control form-control-sm" name="NAME" id="NAME" aria-describedby="helpId" placeholder="0">
-                                        </div>
-                                        <div class="row mb-md-5" style="margin-top:10px">
-                                            <div class="col">
-                                                <button type="button" name="" id="" class="btn  btn-lg btn-block ">PURCHASE</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5" style="width:500px;height: 480px">
-                                <div class="card border-0 " style="width:450px">
-                                    <div class="card-header" style="width:450px; margin-top:0px">
-                                        <p class="card-text text-muted mt-md-4  mb-2 space">YOUR ORDER <span class=" small text-muted ml-2 cursor-pointer">EDIT SHOPPING BAG</span> </p>
-                                        <hr class="my-2">
-                                    </div>
-                                    <div class="card-body pt-0" style="width:450px;height:400px; overflow:auto">
-                                        <div class="row  justify-content-between">
-                                            <div class="col-auto col-md-7">
-                                                <div class="media flex-column flex-sm-row">
-                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
-                                                    <div class="media-body  my-auto">
-                                                        <div class="row ">
-                                                            <div class="col-auto"><p class="mb-0"><b>EC-GO Bag Standard</b></p></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto"> <p class="boxed-1">1</p></div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto "><p><b>179.000</b><b>đ</b></p></div>
-                                        </div>
-                                        <div class="row  justify-content-between">
-                                            <div class="col-auto col-md-7">
-                                                <div class="media flex-column flex-sm-row">
-                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
-                                                    <div class="media-body  my-auto">
-                                                        <div class="row ">
-                                                            <div class="col-auto"><p class="mb-0"><b>EC-GO Bag Standard</b></p></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto"> <p class="boxed-1">1</p></div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto "><p><b>179.000</b><b>đ</b></p></div>
-                                        </div>
-                                        <div class="row  justify-content-between">
-                                            <div class="col-auto col-md-7">
-                                                <div class="media flex-column flex-sm-row">
-                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
-                                                    <div class="media-body  my-auto">
-                                                        <div class="row ">
-                                                            <div class="col-auto"><p class="mb-0"><b>EC-GO Bag Standard</b></p></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto"> <p class="boxed-1">1</p></div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto "><p><b>179.000</b><b>đ</b></p></div>
-                                        </div>
-                                        <div class="row  justify-content-between">
-                                            <div class="col-auto col-md-7">
-                                                <div class="media flex-column flex-sm-row">
-                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
-                                                    <div class="media-body  my-auto">
-                                                        <div class="row ">
-                                                            <div class="col-auto"><p class="mb-0"><b>EC-GO Bag Standard</b></p></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto"> <p class="boxed-1">1</p></div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto "><p><b>179.000</b><b>đ</b></p></div>
-                                        </div>
-                                        <div class="row  justify-content-between">
-                                            <div class="col-auto col-md-7">
-                                                <div class="media flex-column flex-sm-row">
-                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
-                                                    <div class="media-body  my-auto">
-                                                        <div class="row ">
-                                                            <div class="col-auto"><p class="mb-0"><b>EC-GO Bag Standard</b></p></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto"> <p class="boxed-1">1</p></div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto "><p><b>179.000</b><b>đ</b></p></div>
-                                        </div>
-                                        <div class="row  justify-content-between">
-                                            <div class="col-auto col-md-7">
-                                                <div class="media flex-column flex-sm-row">
-                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
-                                                    <div class="media-body  my-auto">
-                                                        <div class="row ">
-                                                            <div class="col-auto"><p class="mb-0"><b>EC-GO Bag Standard</b></p></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto"> <p class="boxed-1">1</p></div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto "><p><b>179.000</b><b>đ</b></p></div>
-                                        </div>
-                                        <div class="row  justify-content-between">
-                                            <div class="col-auto col-md-7">
-                                                <div class="media flex-column flex-sm-row">
-                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
-                                                    <div class="media-body  my-auto">
-                                                        <div class="row ">
-                                                            <div class="col-auto"><p class="mb-0"><b>EC-GO Bag Standard</b></p></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto"> <p class="boxed-1">1</p></div>
-                                            <div class=" pl-0 flex-sm-col col-auto  my-auto "><p><b>179.000</b><b>đ</b></p></div>
-                                        </div>
-                                    </div>
-                                    <hr class="my-2">
-                                        <div class="row ">
-                                            <div class="col">
-                                                <div class="row justify-content-between">
-                                                    <div class="col-4"><p class="mb-1"><b>Subtotal</b></p></div>
-                                                    <div class="flex-sm-col col-auto"><p class="mb-1"><b>716.000</b><b>đ</b></p></div>
-                                                </div>
-                                                <div class="row justify-content-between">
-                                                    <div class="col"><p class="mb-1"><b>Shipping</b></p></div>
-                                                    <div class="flex-sm-col col-auto"><p class="mb-1"><b>0</b><b>đ</b></p></div>
-                                                </div>
-                                                <div class="row justify-content-between">
-                                                    <div class="col-4"><p ><b>Total</b></p></div>
-                                                    <div class="flex-sm-col col-auto"><p  class="mb-1"><b>716.000</b><b>đ</b></p></div>
-                                                </div><hr class="my-0">
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                          </div>
+                        </td>
+                        <td style="vertical-align:middle">
+                          <div class="form-group" style="width: 84px;">
+                            <input type="number" class="form-control" value="1" min="1" />
+                          </div>
+                        </td>
+                        <td style="vertical-align:middle">
+                          <span>19000000</span>
+                          <sup>đ</sup>
+                        </td>
+                        <td class="fw-bold" style="vertical-align:middle">
+                          <span>19000000</span>
+                          <sup>đ</sup>
+                        </td>
+                      </tr> --}}
+                    </tbody>
+                  </table>
+                  <!-- End Default Table Example -->
                 </div>
+              </div>
             </div>
+            <div class="col-lg-5">
+              <div class="card border border-2 border-dark">
+                <div class="card-body">
+                  <div class="card-title fw-bold">Chi tiết giỏ hàng</div>
+
+                  <div class="row px-3 gap-3">
+                    <div class="form-group border border-2 border-dark p-3">
+                      <div class="form-check fs-5">
+                        <input class="form-check-input" value="Giao hàng miễn phí" type="radio" name="shipping_method"
+                          id="flexRadioDefault1" checked />
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          Giao hàng miễn phí
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group border border-2 border-dark p-3">
+                      <div class="form-check fs-5">
+                        <input class="form-check-input" value="Giao hàng hỏa tốc" type="radio" name="shipping_method"
+                          id="flexRadioDefault2" />
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          Giao hàng hỏa tốc
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="px-3 d-flex justify-content-between mt-4">
+                    <span class="fw-bold fs-4">Tổng:</span>
+                    <span class="fs-4"><span class="total-bill" id="total-bill"></span><sup>đ</sup></span>
+                  </div>
+
+                  <button class="btn btn-dark mt-3 w-100 p-3" id="btn-payment">Thanh toán</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </body>
-</html>
+        <div class="tab-pane fade details" id="details">
+          <div class="row">
+            <div class="col-lg-7">
+              <form action="" id="formAddOrder">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title fw-bold fs-5">Thông tin liên lạc</h4>
+
+                    <div class="row">
+                      <div class="col-lg-6 mb-3">
+                        <label for="firstname" class="form-label">Họ</label>
+                        <input type="text" class="form-control" id="firstname" />
+                      </div>
+                      <div class="col-lg-6 mb-3">
+                        <label for="lastname" class="form-label">Tên</label>
+                        <input type="text" class="form-control" id="lastname" />
+                      </div>
+                      <div class="col-lg-6 mb-3">
+                        <label for="phone" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" id="phone" />
+                      </div>
+                      <div class="col-lg-6 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" />
+                      </div>
+                      <div class="col-12 mb-3">
+                        <label for="address" class="form-label">Địa chỉ</label>
+                        <textarea type="text" class="form-control" id="address"></textarea>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <label for="address" class="form-label">Ghi chú</label>
+                        <textarea type="text" class="form-control" id="note"></textarea>
+                      </div>
+                      <div class="col-12 mb-3 gap-3 nav nav-tabs nav-tabs-bordered">
+                        <div class="form-check form-switch nav-item">
+                          <input class="form-check-input active" type="radio" id="flexSwitchCheckDefault" value="COD"
+                            name="payment-method" checked data-bs-toggle="tab" data-bs-target="#cod" />
+                          <label class="form-check-label" for="flexSwitchCheckDefault">Thanh
+                            toán khi nhận hàng</label>
+                        </div>
+                        <div class="form-check form-switch nav-item">
+                          <input class="form-check-input" type="radio" id="flexSwitchCheckChecked" value="OnlineBanking"
+                            name="payment-method" data-bs-toggle="tab" data-bs-target="#pay" />
+                          <label class="form-check-label" for="flexSwitchCheckChecked">Thanh
+                            toán chuyển khoản</label>
+                        </div>
+                      </div>
+                      <!-- <div class="tab-content">
+                                              <div class="tab-pane fade show active cod" id="cod">
+                                                hello
+                                              </div>
+                                              <div class="tab-pane fade show pay" id="pay">
+                                                pay
+                                              </div>
+                                            </div> -->
+                    </div>
+
+                    <button class="btn btn-dark w-100 p-3 buy-now" id="btn-confirm">Đặt hàng</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-lg-5">
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-title fw-bold">Chi tiết giỏ hàng</div>
+                  <div class="row">
+                    <table class="table">
+                      <tbody id="table-cart-2">
+
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td scope="row" class="fw-bold fs-5">
+                            Tổng
+                          </td>
+                          <td><span class="fs-6 fw-bold"><span class="total-bill"
+                                id="total-bill-detail"></span><sup>đ</sup></span></td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+<script>
+  const searchParams = new URLSearchParams(window.location.search);
+  const vnp_ResponseCode = searchParams.get('vnp_ResponseCode');
+  console.log(vnp_ResponseCode)
+  const handleDelete = (id) => {
+    console.log(id)
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    var newArray = cart.filter(function (item) {
+      return item.id !== id;
+    });
+
+    localStorage.setItem('cart', JSON.stringify(cart))
+    fetchData()
+  }
+
+  let products = [];
+  let total = 0;
+  async function fetchData() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    $('#table-cart').empty();
+    try {
+      const response = await fetch('/api/products/by-ids/' + cart.map(p => p.id).join("_"));
+      const { data } = await response.json();
+
+      const filteredBooks = data
+        .map(book => {
+          const newItem = cart.find(item => item.id === book._id);
+          if (newItem) {
+            return { ...book, quantityIncart: newItem.quantity };
+          }
+        })
+        .filter(item => item !== undefined);
+      products = [...filteredBooks];
+      filteredBooks.forEach((book) => {
+        total += book.quantityIncart * book.price;
+        let htmls = `
+                                    <tr>
+                                        <td scope="row">
+                                        <div class="d-flex justify-content-start align-items-center">
+                                            <div class="avatar-wrapper me-3">
+                                            <div style="width: 80px;height: 96px;">
+                                                <img src="${book.image}" class="w-100 h-100" alt="Avatar">
+                                            </div>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                            <a href="http://localhost:8080/books/${book._id}" class="">
+                                                <span style="width: 300px" class="d-block text-truncate text-heading fs-7 fw-medium">${book.name}</span>
+                                            </a>
+                                            <a onclick="handleDelete('${book._id}')" href="javascript:void(0)" class="d-flex align-items-center fw-medium text-secondary"><i class="bi bi-x fs-3"></i> Xóa bỏ</a>
+                                            </div>
+                                        </div>
+                                        </td>
+                                        <td style="vertical-align:middle">
+                                        <div class="form-group" style="width: 84px;">
+                                            <input type="number" class="form-control" value="${book.quantityIncart}" min="1">
+                                        </div>
+                                        </td>
+                                        <td style="vertical-align:middle">
+                                        <span>${book.price.toLocaleString()}</span>
+                                        <sup>đ</sup>
+                                        </td>
+                                        <td class="fw-bold" style="vertical-align:middle">
+                                        <span>${(book.price * book.quantityIncart).toLocaleString()}</span>
+                                        <sup>đ</sup>
+                                        </td>
+                                    </tr>
+                                `
+        $('#table-cart').append(htmls)
+      })
+      $('#total-bill').text(total.toLocaleString());
+      $('#total-bill-detail').text(total.toLocaleString());
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+  $(document).ready(function () {
+    // Gán sự kiện click cho nút có id là "btn-payment"
+    $('#btn-payment').click(function () {
+      console.log('Nút "Thanh toán" đã được click.');
+      $('#btn-about-product').removeClass('active');
+      $('#btn-details').addClass('active');
+      $('#about-product').removeClass('show active');
+      $('#details').addClass('show active');
+    });
+    $('#btn-details').click(function () {
+      $('#btn-about-product').removeClass('active');
+      $('#btn-details').addClass('active');
+      $('#about-product').removeClass('show active');
+      $('#details').addClass('show active');
+    });
+    $('#btn-about-product').click(function () {
+      $('#btn-details').removeClass('active');
+      $('#btn-about-product').addClass('active');
+      $('#about-product').addClass('show active');
+      $('#details').removeClass('show active');
+    });
+    $('#btn-confirm').click(function (e) {
+      e.preventDefault();
+      const paymentMethod = $('input[name="payment-method"]:checked').val() == '#cod' ? 0 : 1;
+      fetch('/api/vn-pay/create-payment?amount=' + total).then(res => res.json()).then(res => {
+        const { id, data } = res;
+        console.log(paymentMethod)
+        if (paymentMethod)
+          localStorage.setItem('pending',
+            JSON.stringify({ orderId: id, products: products })
+          );
+        else
+          localStorage.setItem('success',
+            JSON.stringify(
+              [
+                { orderId: id, products: products },
+                ...(JSON.parse(localStorage.getItem('success')) || [])
+              ]
+            )
+          );
+        window.location.href = data;
+      });
+    });
+  });
+  
+  function returnPayment() {
+    if (vnp_ResponseCode == '00') {
+      const query = window.location.href.split('?').filter((u, index) => index !== 0).join()
+      fetch('/api/vn-pay/confirm-payment?' + query).then(res => res.json()).then(res => {
+        const { data } = res;
+        if (localStorage.getItem('pending'))
+          localStorage.setItem('success',
+            JSON.stringify([
+              JSON.parse(localStorage.getItem('pending')),
+              ...(JSON.parse(localStorage.getItem('success')) || [])
+            ]
+            )
+          );
+        localStorage.setItem("authenticatedUser", JSON.stringify(
+          { ...JSON.parse(localStorage.getItem('authenticatedUser')), cartItems: [] }
+        ));
+        localStorage.removeItem("pending");
+        alert("Mua hàng thành công");
+        fetchData();
+      });
+    }
+    else {
+      localStorage.removeItem("pending");
+      alert("Mua hàng chưa thành công! Vui lòng thử lại hoặc liên hệ với chúng tôi.")
+      fetchData();
+    }
+
+  }
+  // Gán sự kiện click cho nút hoặc thành phần khác
+  if (vnp_ResponseCode != null || vnp_ResponseCode != undefined)
+    returnPayment()
+  else
+    fetchData();
+
+</script>

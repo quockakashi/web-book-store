@@ -55,7 +55,7 @@
                     <p class="text-danger">Out of stock</p>
                     {{/if}}
                 </div>
-                <button class="add-cart-btn btn btn-danger" style="padding: 6px 24px; border-radius: 24px;" {{#eq product.stock 0}}disabled{{/eq}}>
+                <button class="add-cart-btn btn btn-danger" style="padding: 6px 24px; border-radius: 24px;" {{#eq product.stock 0}}disabled{{/eq}} userid="{{user.id}}">
                     <i class="fa-solid fa-cart-shopping"></i>
                     Add to Cart</button>                         
             </form>
@@ -251,6 +251,44 @@
                                                 })
     }
 
+    $('.add-cart-btn').click((e) => {
+        e.preventDefault();
+        const user = $('.add-cart-btn').attr('userid');
+        console.log(user)
+        if (!user) {
+            alert("Please login")
+            window.location.href = 'http://localhost:8080/login'
+        }
+
+        var productId = $('.product-id').val()
+        var quantityInput = $(".quantity-input").val();
+        var cartItems = JSON.parse(localStorage.getItem('cart'));
+        if(!cartItems) {
+            cartItems = [];
+        }
+
+        var existingItem = cartItems.find(function (item) {
+            return item.id === productId;
+        });
+        console.log(existingItem);
+        console.log(quantityInput)
+        if (existingItem) {
+            // Nếu sản phẩm đã tồn tại trong giỏ hàng, cộng thêm số lượng mới vào số lượng hiện có
+            console.log(existingItem.quantity)
+            let newQuantity = parseInt(existingItem.quantity) + parseInt(quantityInput)
+            existingItem.quantity = newQuantity;
+        } else {
+            // Nếu sản phẩm chưa tồn tại trong giỏ hàng, tạo một mục mới và thêm vào giỏ hàng
+            var newItem = {
+                id: productId,
+                quantity: quantityInput
+            };
+            cartItems.push(newItem);
+        }
+        alert('Thêm vào giỏ hàng thành công')
+        user.cartItems = cartItems
+        localStorage.setItem('cart', JSON.stringify(cartItems))
+    })
     loadReviews();
 
 </script>
