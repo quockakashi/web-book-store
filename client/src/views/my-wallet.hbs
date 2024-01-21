@@ -1,0 +1,279 @@
+ <style>
+    .line-chart-box {
+    position: relative;
+    padding: 12px 12px; 
+    width:90%;
+    max-height: 400px;
+    border-radius: 12px;
+    justify-self: center;
+    }
+
+    .line-chart-box select {
+        max-width: 200px;
+        border: none;
+        border-radius: 12px;
+    }
+ </style>
+ 
+ <div class="px-4 container-fluid" style="margin-top: 120px; margin-bottom: 40px; max-width: 1200px">
+      <div class="bg-light" style="width: 100%; height: 340px; border-radius: 12px;">
+        <input type="hidden" value="{{user._id}}" id="userId">
+        <div style="background: url(https://images.pexels.com/photos/3394939/pexels-photo-3394939.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2); 
+        background-size: cover;
+        background-position: center; width: 100%; height: 50%; border-radius: 12px;">
+        </div>
+        <div class="d-flex gap-3">
+          <img style="width: 70px; height: 70px;object-fit: cover; object-position: center; border-radius: 50%; padding: 3px; transform: translatey(-50%); margin-left: 5%;" class="bg-light" src="{{user.avatar.url}}">
+        <div>
+          <p class="fw-bold">{{user.fullName}}</p>
+        </div>
+    </div>
+    <div style="margin-left: 6%; font-size: 14px; transform: translateY(-10px);">
+      <p><i class="fa-regular fa-credit-card"></i>&nbsp;&nbsp;Wallet No: {{user.wallet}}</p>
+      <p class="mt-1"><i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;Balance: &#8363;{{#formatNumber user.balance}}{{/formatNumber}}</p>
+      <button class="btn btn-primary mt-2">
+        <img src="/images/vnpay-logo.webp" style="width: 30px; height: 25px;">
+        <span class="ms-2 deposit-vnpay-btn" style="font-size: 14px">Deposit with VNPay</span>
+      </button>
+    </div>
+    <form class="bg-light p-4 border-3 shadow-lg deposit-box rounded-4 hide" style="position: absolute; left: 0; 
+  right: 0; 
+  top: 180px;
+  margin-left: auto; 
+  margin-right: auto; width: 600px; z-index: 2">
+        <button class="border-none close-deposit-btn" style="background: inherit; border: none; margin-bottom: 6px; margin-left: 100%;">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="d-flex align-items-center">
+            <img src="/images/vnpay-logo.webp" style="width: 30px; height: 25px">
+        <h4 class="m-0 ms-3" style="display: inline;">Deposit with VNPay</h4>
+        </div>
+        <div class="mb-3 g-2 row align-items-center mt-3">
+                    <div class="col-2">
+                        <label 
+                        for="amount" class="form-label">Amount:<span class="text-danger"></span></label>
+                    </div>
+                    <div class="col-10">
+                        <div class="input-group mb-3">
+                            <span 
+                            class="input-group-text text-primary"
+                            style="background-color: #fff;"
+                            >&#8363;</span>
+                            <input
+                            id="amount"
+                            name="amount"
+                            step="1000"
+                            min="5000"
+                            value="0"
+                            type="number" class="form-control"
+                            style="border-left: none" 
+                            aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary mx-auto continue-btn">Continue</button>
+    </form>
+      </div>
+    <div class="mt-4 d-flex gap-5">
+      <div style="padding: 12px 24px; border-radius: 12px; flex: 0.4; max-height: 400px; overflow: scroll" class="bg-light">
+        <p>Transaction History</p>
+        <ul style="padding: 0; flex-direction: column;" class="mt-3 d-flex gap-4 orders-container">
+          <li class="d-flex gap-4 order-placeholder" id="order-placeholder">
+            <i class="fa-solid fa-bag-shopping my-auto text-primary"></i>
+            <div class="col-6">
+              <div class="fw-bold placeholder-glow">
+                <span class="placeholder col-9"></span>
+              </div>
+              <div class="fw-bold placeholder-glow">
+                <span class="placeholder col-12"></span>
+              </div>
+              <div class="fw-bold placeholder-glow">
+                <span class="placeholder col-9"></span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div style="padding: 12px 24px; border-radius: 12px; flex: 0.6;" class="line-chart-box bg-light shadow-sm">
+            <div class="d-flex align-items-center gap-3">
+                <p class="ms-2 mt-2">Outcome/Income</p>
+                <select class="form-select form-select-sm bg-light shadow-sm" id="revenueSelect" onchange="loadRevenueOverview()">
+                <option value="last-12-months">Last 12 months</option>
+                <option value="last-7-days">Last 7 days</option>
+                </select>
+            </div>
+            <canvas id="revenueChart"></canvas>
+            </div>
+      </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script>
+    Chart.register(ChartDataLabels);
+  $(document).ready(() => {
+    $('.deposit-vnpay-btn').click(() => {
+        $('.deposit-box').removeClass('hide');
+    });
+
+    $('.close-deposit-btn').click(() => {
+        $('.deposit-box').addClass('hide');
+    })
+
+    $('.deposit-box')[0].addEventListener('submit', async(e) => {
+        e.preventDefault();
+        const amount = $('#amount').val();
+        const response = await fetch(`/api/vn-pay/create-payment?amount=${amount}`);
+        const data = (await response.json()).data;
+        window.location.href = data;
+
+    })
+
+    const userId = $('#userId').val();
+    getRecentOrders(userId);
+    loadRevenueOverview();
+    
+  })
+
+  async function getRecentOrders(id) {
+    const response = await fetch(`/api/payment/transactions`, {
+      method: 'GET',
+    });
+    if(!response.ok) {
+      showMainAlert('warning', 'Something was wrong when loading transaction!');
+      return;
+    }
+    const data = (await response.json()).data;
+    const transactions = data.transactions;
+    setTimeout(() => {
+      $('#order-placeholder').addClass('d-none')
+    transactions.forEach(transaction => {
+      transaction.createAt = new Date(transaction.createdAt).toLocaleString('en-UK');
+      $('.orders-container').append(
+          `
+          <li class="d-flex gap-4">
+            ${transaction.type == 'deposit' ? '<i class="fa-solid fa-turn-down my-auto text-success" style="font-size: 20px; vertical-align: middle"></i>' : '<i class="fa-solid fa-bag-shopping my-auto text-primary"></i>'}
+            <div>
+              <span class="fw-bold order-id my-auto">${transaction.type}</span>
+              <span class="text-primary" style="font-size: 12px">#${transaction._id}</span>
+              <div>
+                <span class="me-2" style="font-size: 14px;">${transaction.createAt}</span>
+                <span class="text-primary fw-bold"> &#8363;${new Number(transaction.amount).toLocaleString('vi-VN')}</span>
+              </div>
+            </div>
+          </li>
+          `
+      )
+    })
+    if(!transactions.length) {
+            $('.orders-container').append(`<li class="my-3 text-primary" style="text-align:center">
+              <img src="/images/nodata.svg" style="max-width: 90px">
+              <p>You don't have any order before</p><li>`)
+          }
+    }, 600)
+  }
+
+  async function loadRevenueOverview() {
+      const value = $('#revenueSelect').find(':selected').val();
+      const ctx = document.getElementById('revenueChart');
+      let chartStatus = Chart.getChart("revenueChart"); // <canvas> id
+      if (chartStatus != undefined) {
+        chartStatus.destroy();
+      }
+      const response = await fetch(`/api/payment/transactions/overview?by=${value}`);
+      let result = [];
+      if(response.ok) {
+      result = (await response.json()).data.data; 
+      }
+      let labels = [];
+      let data1 = [];
+      let data2 = [];
+      for(let i = 0; i < result.length; i++) {
+        labels.push(result[i].name);
+        data1.push(result[i].income);
+        data2.push(result[i].outcome);
+      }
+
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'income',
+            tension: 0.4,
+            borderWidth: 3,
+            data: data1,
+            borderSkipped: false,
+            borderColor: '#007bff',
+            backgroundColor: '#007bff',
+            maxBarThickness: 2,
+          },
+          {
+            label: 'outcome',
+            tension: 0.4,
+            borderWidth: 3,
+            data: data2,
+            borderSkipped: false,
+            borderColor: '#FF8C00',
+            backgroundColor: '#FF8C00',
+            maxBarThickness: 2,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+                legend: {
+                    display: true,
+                },
+                datalabels: {
+                  display: false
+                }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                        drawBorder: false,
+                        display: true,
+                        drawOnChartArea: true,
+                        borderDash: [5, 5]
+              },
+              ticks: {
+                        display: true,
+                        padding: 10,
+                        color: '#b2b9bf',
+                        font: {
+                            size: 11,
+                            family: "Open Sans",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                        stepSize: 100000,
+                    }
+            },
+                x: {
+                    grid: {
+                        drawBorder: false,
+                        display: false,
+                        drawOnChartArea: false,
+                        drawTicks: false,
+                        borderDash: [5, 5]
+                    },
+                    ticks: {
+                        display: true,
+                        color: '#b2b9bf',
+                        padding: 20,
+                        font: {
+                            size: 11,
+                            family: "Open Sans",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    }
+          }
+          }
+        }
+      });
+  }
+</script>

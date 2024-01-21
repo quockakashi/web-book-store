@@ -2,6 +2,7 @@
 /node_modules
 admin/node_modules
 client/node_modules
+payment/node_modules
 admin/src/views/test.html
 client/src/views/test.html
 

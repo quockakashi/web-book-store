@@ -202,6 +202,7 @@ const getNewBooks = async (req, res, next) => {
                     publishDate: 1,
                     rating: { $avg: '$reviews.rating' },
                     sold: { $sum: '$orders.products.quantity' },
+                    stock: 1,
                 }
             }
         ])
@@ -256,6 +257,7 @@ const getBestSeller = async (req, res, next) => {
                     publishDate: 1,
                     rating: { $avg: '$reviews.rating' },
                     sold: { $sum: '$orders.products.quantity' },
+                    stock: 1,
                 }
             },
             { $sort: { sold: -1 } },
@@ -316,6 +318,7 @@ const getKidBooks = async (req, res, next) => {
                     publishDate: 1,
                     rating: { $avg: '$reviews.rating' },
                     sold: { $sum: '$orders.products.quantity' },
+                    stock: 1,
                 }
             },
         ])
@@ -534,6 +537,7 @@ const getBooks = async (req, res, next) => {
                                 publishDate: 1,
                                 rating: 1,
                                 sold: 1,
+                                stock: 1
                             }
                         }
                     ]
@@ -638,6 +642,7 @@ const getBookByIds = async (req, res, next) => {
                                 publishDate: 1,
                                 rating: 1,
                                 sold: 1,
+                                stock: 1,
                             }
                         }
                     ]

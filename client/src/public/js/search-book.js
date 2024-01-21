@@ -57,13 +57,6 @@ $(document).ready(async() => {
         window.history.pushState({}, "", window.location.pathname + `?keyword=${keyword}`)
         await loadBooks(url.search);
     })
-
-    $('.card').each((index, card) => {
-        $(card).click(() => {
-            const bookId = $(card).attr('bookId');
-            window.location.href = `/books/${bookId}`
-        })
-    })
 })
 
 async function loadBooks(query) {
@@ -77,13 +70,14 @@ async function loadBooks(query) {
         books.forEach(book => {
             $('.product-box').append(
                 `
-                    <div class="card border-0 shadow-sm" bookid="${book._id}" style="width: 11rem;">
+                    <div class="card border-0 shadow-sm" bookid="${book._id}" style="width: 11rem; position: relative">
                     <img class="card-image" src="${book.image}" style="height: 14rem;">
                     <div class="card-body p-1 d-flex flex-column gap-1">
+                    ${book.stock <= 0 ? '<span class="px-2 py-1 bg-danger text-white rounded-2" style="font-size: 12px; width: fit-content; position: absolute; top: 5px; right: 5px">Out of Stock</span>' : ''}
                         <h5 class="card-title mb-0">${book.name}</h5>
                         ${book.rating >= 1 ? `
                         <div class="mt-auto" style="font-size: 14px;">
-                            <span style="color: #ffa500;">${book.rating}</span>
+                            <span style="color: #ffa500;">${book.rating.toFixed(1)}</span>
                             ${renderStar(book.rating)}
                         </div>` : ''}
                         <div class="price-box d-flex align-items-center mt-auto">
@@ -95,6 +89,13 @@ async function loadBooks(query) {
     
                 `
             )
+        })
+
+        $('.card').each((index, card) => {
+            $(card).click(() => {
+                const bookId = $(card).attr('bookId');
+                window.location.href = `/books/${bookId}`
+            })
         })
         if(books.length == 0) {
             $('.product-container').append(

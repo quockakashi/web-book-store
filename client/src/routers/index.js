@@ -2,6 +2,7 @@ const router = require('express').Router();
 const productController = require('../controllers/productController');
 const authController = require('../controllers/authController');
 const { redirectConfirmPage, requireLogin, requireAdmin } = require('../middlewares/handleLoginUser')
+const jwt = require('jsonwebtoken');
 
 
 const productApiRouter = require('./api/productApiRouter');
@@ -48,6 +49,108 @@ router.get('/transaction-status', (req, res) => {
 
     res.render('transaction-status', { layout: 'layouts/main', title: 'Transaction status', user: req.user, type, status, amount, transaction});
 })
+router.get('/cart', function(req, res){
+    res.render('cart', { layout: 'layouts/main', title: 'Transaction status', user: req.user});
+});
+
+router.get('/wallet',async function(req, res) {
+    
+    const userWallet = req.user.wallet;
+    const body = {
+        walletId: userWallet,
+    }
+
+    const walletResponse = await fetch(`${process.env.PAYMENT_DOMAIN}/api/wallet/balance`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            token: jwt.sign(body, process.env.TRANSACTION_SECRET_KEY)
+    })});
+
+    const data = (await walletResponse.json()).data;
+    req.user.balance = data.balance;
+
+    res.render('my-wallet',  { layout: 'layouts/main', title: 'My wallet', user: req.user})
+})
+
+router.get('/api/payment/balance', async(req, res, next) => {
+    const userWallet = req.user.wallet;
+    const body = {
+        walletId: userWallet,
+    }
+
+    const walletResponse = await fetch(`${process.env.PAYMENT_DOMAIN}/api/wallet/balance`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            token: jwt.sign(body, process.env.TRANSACTION_SECRET_KEY)
+    })});
+
+    const data = (await walletResponse.json()).data;
+
+    res.status(200).json({
+        id: req.user._id,
+        balance: data.balance,
+    })
+});
+
+
+router.get('/api/payment/transactions', async(req, res, next) => {
+    const userWallet = req.user.wallet;
+    const body = {
+        walletId: userWallet,
+    }
+
+    const walletResponse = await fetch(`${process.env.PAYMENT_DOMAIN}/api/transactions/by-wallet`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            token: jwt.sign(body, process.env.TRANSACTION_SECRET_KEY)
+    })});
+
+    const data = (await walletResponse.json()).data;
+
+    res.status(200).json({
+        data: {
+            userId: req.user._id,
+            transactions: data,
+        }
+    })
+});
+
+router.get('/api/payment/transactions/overview', async(req, res, next) => {
+    const userWallet = req.user.wallet;
+    const { by } = req.query;
+    const body = {
+        walletId: userWallet,
+        duration: by,
+    }
+
+    const walletResponse = await fetch(`${process.env.PAYMENT_DOMAIN}/api/transactions/overview`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            token: jwt.sign(body, process.env.TRANSACTION_SECRET_KEY)
+    })});
+
+    const data = (await walletResponse.json()).data;
+
+    res.status(200).json({
+        data: {
+            userId: req.user._id,
+            data,
+        }
+    })
+});
+
 
 
 router.use('/api/products', productApiRouter);

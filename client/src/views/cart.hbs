@@ -1,44 +1,38 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-<main class="main bg-white">
-  <div class="section container-2xxl">
-    <div class="row">
-      <div class="card">
+<main class="px-4 container-fluid" style="margin-bottom: 40px; max-width: 1200px; width: 100%; margin-top: 40px">
+  <input type="hidden" value="{{user.wallet}}" id="userWallet">
+    <div class="row" style="width: 100%;">
         <div class="card-body mt-5 pt-5">
-          <ul class="nav nav-tabs nav-tabs-bordered w-fit m-auto gap-3 fw-bold fs-4">
+          <ul class="nav nav-tabs nav-tabs-bordered m-auto gap-3 fw-bold fs-5">
             <li class="nav-item">
               <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about-product"
                 id="btn-about-product">
-                Giỏ hàng
+                Cart
               </button>
             </li>
 
             <li class="nav-item">
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#details" id="btn-details">
-                Thanh toán
+                Payment
               </button>
             </li>
           </ul>
-        </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row width-100">
       <div class="tab-content mt-4 mb-4">
         <div class="tab-pane fade show active about-product" id="about-product">
-          <div class="row">
-            <div class="col-lg-7">
-              <div class="card">
-                <div class="card-body">
+          <div class="row" style="gap: 32px">
+            <div class="col-lg-7 bg-light p-4 rounded-3">
+                <div class="card-body bg-light">
                   <h5 class="card-title"></h5>
 
                   <!-- Default Table -->
-                  <table class="table">
+                  <table class="table table-light" style="background: inherit;">
                     <thead>
-                      <tr>
-                        <th scope="col">Sản phẩm</th>
-                        <th scope="col">Số lượng</th>
-                        <th scope="col">Gía</th>
-                        <th scope="col">Tổng giá</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Subtotal</th>
                       </tr>
                     </thead>
                     <tbody id="table-cart">
@@ -78,12 +72,10 @@
                   </table>
                   <!-- End Default Table Example -->
                 </div>
-              </div>
             </div>
-            <div class="col-lg-5">
-              <div class="card border border-2 border-dark">
-                <div class="card-body">
-                  <div class="card-title fw-bold">Chi tiết giỏ hàng</div>
+            <div class="col-lg-4">
+                <div class="card-body px-2">
+                  <div class="card-title fw-bold mb-2">Details</div>
 
                   <div class="row px-3 gap-3">
                     <div class="form-group border border-2 border-dark p-3">
@@ -91,7 +83,7 @@
                         <input class="form-check-input" value="Giao hàng miễn phí" type="radio" name="shipping_method"
                           id="flexRadioDefault1" checked />
                         <label class="form-check-label" for="flexRadioDefault1">
-                          Giao hàng miễn phí
+                          Free Shipping
                         </label>
                       </div>
                     </div>
@@ -100,69 +92,45 @@
                         <input class="form-check-input" value="Giao hàng hỏa tốc" type="radio" name="shipping_method"
                           id="flexRadioDefault2" />
                         <label class="form-check-label" for="flexRadioDefault2">
-                          Giao hàng hỏa tốc
+                          Express Shipping
                         </label>
                       </div>
                     </div>
                   </div>
 
                   <div class="px-3 d-flex justify-content-between mt-4">
-                    <span class="fw-bold fs-4">Tổng:</span>
-                    <span class="fs-4"><span class="total-bill" id="total-bill"></span><sup>đ</sup></span>
+                    <span class="fw-bold fs-4">Total:</span>
+                    <span class="fs-4"><span class="total-bill" id="total-bill">0</span><sup>đ</sup></span>
                   </div>
 
-                  <button class="btn btn-dark mt-3 w-100 p-3" id="btn-payment">Thanh toán</button>
+                  <button class="btn btn-dark mt-3 w-100 p-3" id="btn-payment">Purchase</button>
                 </div>
               </div>
-            </div>
           </div>
         </div>
         <div class="tab-pane fade details" id="details">
-          <div class="row">
-            <div class="col-lg-7">
-              <form action="" id="formAddOrder">
-                <div class="card">
+          <div class="row" style="gap: 32px">
+            <div class="col-lg-6 bg-light p-4 rounded-3">
+              <div  id="formAddOrder">
                   <div class="card-body">
-                    <h4 class="card-title fw-bold fs-5">Thông tin liên lạc</h4>
+                    <h4 class="card-title fw-bold fs-5 mb-4">Contact Information</h4>
 
                     <div class="row">
-                      <div class="col-lg-6 mb-3">
-                        <label for="firstname" class="form-label">Họ</label>
-                        <input type="text" class="form-control" id="firstname" />
+                      <div class="col-lg-12 mb-3">
+                        <label for="firstname" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="fullName" value="{{user.fullName}}" required/>
                       </div>
-                      <div class="col-lg-6 mb-3">
-                        <label for="lastname" class="form-label">Tên</label>
-                        <input type="text" class="form-control" id="lastname" />
-                      </div>
-                      <div class="col-lg-6 mb-3">
-                        <label for="phone" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control" id="phone" />
-                      </div>
-                      <div class="col-lg-6 mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" />
+                      <div class="col-lg-12 mb-3">
+                        <label for="phone" class="form-label">Phone number</label>
+                        <input type="text" class="form-control" id="phone" value="{{user.phoneNumber}}" required/>
                       </div>
                       <div class="col-12 mb-3">
-                        <label for="address" class="form-label">Địa chỉ</label>
-                        <textarea type="text" class="form-control" id="address"></textarea>
+                        <label for="address" class="form-label">Address</label>
+                        <textarea type="text" class="form-control" id="address" required></textarea>
                       </div>
                       <div class="col-12 mb-3">
-                        <label for="address" class="form-label">Ghi chú</label>
+                        <label for="address" class="form-label">Note</label>
                         <textarea type="text" class="form-control" id="note"></textarea>
-                      </div>
-                      <div class="col-12 mb-3 gap-3 nav nav-tabs nav-tabs-bordered">
-                        <div class="form-check form-switch nav-item">
-                          <input class="form-check-input active" type="radio" id="flexSwitchCheckDefault" value="COD"
-                            name="payment-method" checked data-bs-toggle="tab" data-bs-target="#cod" />
-                          <label class="form-check-label" for="flexSwitchCheckDefault">Thanh
-                            toán khi nhận hàng</label>
-                        </div>
-                        <div class="form-check form-switch nav-item">
-                          <input class="form-check-input" type="radio" id="flexSwitchCheckChecked" value="OnlineBanking"
-                            name="payment-method" data-bs-toggle="tab" data-bs-target="#pay" />
-                          <label class="form-check-label" for="flexSwitchCheckChecked">Thanh
-                            toán chuyển khoản</label>
-                        </div>
                       </div>
                       <!-- <div class="tab-content">
                                               <div class="tab-pane fade show active cod" id="cod">
@@ -174,15 +142,13 @@
                                             </div> -->
                     </div>
 
-                    <button class="btn btn-dark w-100 p-3 buy-now" id="btn-confirm">Đặt hàng</button>
+                    <button class="btn btn-dark w-100 p-3 buy-now" disabled id="btn-confirm">Buy Now</button>
                   </div>
-                </div>
-              </form>
+              </div>
             </div>
             <div class="col-lg-5">
-              <div class="card">
                 <div class="card-body">
-                  <div class="card-title fw-bold">Chi tiết giỏ hàng</div>
+                  <div class="card-title fw-bold">Detail Cart</div>
                   <div class="row">
                     <table class="table">
                       <tbody id="table-cart-2">
@@ -191,47 +157,51 @@
                       <tfoot>
                         <tr>
                           <td scope="row" class="fw-bold fs-5">
-                            Tổng
+                            Total
                           </td>
                           <td><span class="fs-6 fw-bold"><span class="total-bill"
                                 id="total-bill-detail"></span><sup>đ</sup></span></td>
                         </tr>
                       </tfoot>
                     </table>
+                    <div class="hide insufficient-alert">
+                      <p class="text-danger mb-3" style="font-size: 14px;">
+                          Insufficient funds in your wallet. Please deposit an additional <span class="amount-insufficient"></span>đ.
+                      </p>
+                      <a href="/wallet" class="btn btn-dark" target="_blank">
+                        My Wallet
+                      </a>
+                    </div>
+
                   </div>
                 </div>
               </div>
             </div>
-          </div>
         </div>
 
       </div>
     </div>
-  </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
   crossorigin="anonymous"></script>
 <script>
-  const searchParams = new URLSearchParams(window.location.search);
-  const vnp_ResponseCode = searchParams.get('vnp_ResponseCode');
-  console.log(vnp_ResponseCode)
+  var cart = JSON.parse(localStorage.getItem('cart')) || [];
+  var total = 0;
+  var products = [];
   const handleDelete = (id) => {
-    console.log(id)
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    var newArray = cart.filter(function (item) {
+    cart = cart.filter(function (item) {
       return item.id !== id;
     });
+    let product = products.find(product => product._id === id);
+    total -= Number.parseInt(product.quantityIncart) * product.price;
+    $('#total-bill').text(total.toLocaleString());
+    $('#total-bill-detail').text(total.toLocaleString());
+    $(`tr[bookId="${id}"]`).remove()
 
     localStorage.setItem('cart', JSON.stringify(cart))
-    fetchData()
+    updateCartSize();
   }
-
-  let products = [];
-  let total = 0;
-  async function fetchData() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    $('#table-cart').empty();
-    try {
+  async function getProducts () {
       const response = await fetch('/api/products/by-ids/' + cart.map(p => p.id).join("_"));
       const { data } = await response.json();
 
@@ -244,10 +214,16 @@
         })
         .filter(item => item !== undefined);
       products = [...filteredBooks];
-      filteredBooks.forEach((book) => {
+      console.log(products);
+  }
+
+  async function fetchData() {
+    
+      products.forEach((book) => {
         total += book.quantityIncart * book.price;
+        console.log(total)
         let htmls = `
-                                    <tr>
+                                    <tr bookId="${book._id}">
                                         <td scope="row">
                                         <div class="d-flex justify-content-start align-items-center">
                                             <div class="avatar-wrapper me-3">
@@ -257,15 +233,15 @@
                                             </div>
                                             <div class="d-flex flex-column">
                                             <a href="http://localhost:8080/books/${book._id}" class="">
-                                                <span style="width: 300px" class="d-block text-truncate text-heading fs-7 fw-medium">${book.name}</span>
+                                                <span style="width: 200px" class="d-block text-truncate text-heading fs-7 fw-medium">${book.name}</span>
                                             </a>
-                                            <a onclick="handleDelete('${book._id}')" href="javascript:void(0)" class="d-flex align-items-center fw-medium text-secondary"><i class="bi bi-x fs-3"></i> Xóa bỏ</a>
+                                            <button onclick="handleDelete('${book._id}')" href="handleDelete" class="btn btn-danger d-flex align-items-center fw-medium text-secondary text-white mt-2" style="font-size: 14px; padding: 4px 8px; width: fit-content"><i class="fa-solid fa-trash"></i> <span class="ms-2">Remove</span></button>
                                             </div>
                                         </div>
                                         </td>
                                         <td style="vertical-align:middle">
                                         <div class="form-group" style="width: 84px;">
-                                            <input type="number" class="form-control" value="${book.quantityIncart}" min="1">
+                                            <input type="number" class="form-control" value="${book.quantityIncart}" readonly min="1">
                                         </div>
                                         </td>
                                         <td style="vertical-align:middle">
@@ -282,11 +258,26 @@
       })
       $('#total-bill').text(total.toLocaleString());
       $('#total-bill-detail').text(total.toLocaleString());
-    } catch (error) {
-      console.error('Error fetching data:', error);
     }
-  }
-  $(document).ready(function () {
+
+  $(document).ready(async function () {
+    await getProducts();
+    await fetchData();
+    console.log(total)
+    const userWallet = $('#userWallet').val();
+    const balanceResponse = await fetch('/api/payment/balance');
+    const balance = (await balanceResponse.json()).balance;
+
+    if(balance >= total) {
+      console.log(total)
+      $('.buy-now').removeAttr('disabled')
+    } else {
+      $('.amount-insufficient').text((total - balance).toLocaleString('vi-VN'))
+      $('.insufficient-alert').removeClass('hide')
+    }
+
+
+
     // Gán sự kiện click cho nút có id là "btn-payment"
     $('#btn-payment').click(function () {
       console.log('Nút "Thanh toán" đã được click.');
@@ -307,62 +298,33 @@
       $('#about-product').addClass('show active');
       $('#details').removeClass('show active');
     });
-    $('#btn-confirm').click(function (e) {
-      e.preventDefault();
-      const paymentMethod = $('input[name="payment-method"]:checked').val() == '#cod' ? 0 : 1;
-      fetch('/api/vn-pay/create-payment?amount=' + total).then(res => res.json()).then(res => {
-        const { id, data } = res;
-        console.log(paymentMethod)
-        if (paymentMethod)
-          localStorage.setItem('pending',
-            JSON.stringify({ orderId: id, products: products })
-          );
-        else
-          localStorage.setItem('success',
-            JSON.stringify(
-              [
-                { orderId: id, products: products },
-                ...(JSON.parse(localStorage.getItem('success')) || [])
-              ]
-            )
-          );
-        window.location.href = data;
-      });
-    });
-  });
-  
-  function returnPayment() {
-    if (vnp_ResponseCode == '00') {
-      const query = window.location.href.split('?').filter((u, index) => index !== 0).join()
-      fetch('/api/vn-pay/confirm-payment?' + query).then(res => res.json()).then(res => {
-        const { data } = res;
-        if (localStorage.getItem('pending'))
-          localStorage.setItem('success',
-            JSON.stringify([
-              JSON.parse(localStorage.getItem('pending')),
-              ...(JSON.parse(localStorage.getItem('success')) || [])
-            ]
-            )
-          );
-        localStorage.setItem("authenticatedUser", JSON.stringify(
-          { ...JSON.parse(localStorage.getItem('authenticatedUser')), cartItems: [] }
-        ));
-        localStorage.removeItem("pending");
-        alert("Mua hàng thành công");
-        fetchData();
-      });
-    }
-    else {
-      localStorage.removeItem("pending");
-      alert("Mua hàng chưa thành công! Vui lòng thử lại hoặc liên hệ với chúng tôi.")
-      fetchData();
-    }
 
-  }
-  // Gán sự kiện click cho nút hoặc thành phần khác
-  if (vnp_ResponseCode != null || vnp_ResponseCode != undefined)
-    returnPayment()
-  else
-    fetchData();
+    $('.buy-now').click(async () => {
+      const response = await fetch('/api/orders', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          products: cart,
+          total: total,
+        })
+      })
+
+      if(response.status === 201) {
+        cart = [],
+        total = 0;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartSize();
+        $('#table-cart').empty();
+        alert('Payment successful! Thank you!');
+        window.location.href = '/';
+      } else {
+        alert('Payment failed! Try again!');
+      }
+    });
+
+  });
+    
 
 </script>

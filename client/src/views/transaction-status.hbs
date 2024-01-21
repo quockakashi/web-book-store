@@ -1,5 +1,26 @@
-<p>{{type}}</p>
-<p>{{status}}</p>
+<main class="container-fluid" style="max-width: 1200px; display: flex; flex-direction: column; padding-top: 130px; padding-bottom: 40px; align-items: center; justify-content: center">
+        {{#eq status 'success'}}
+        <img style="width: 150px; height: 150px" src="/images/success-transaction.svg">
+        <p class="text-primary" style="font-size: 24px">Successful transaction</p>
+        {{/eq}}
+        {{#eq status 'failure'}}
+        <img style="width: 150px; height: 150px" src="/images/failure.svg">
+        <p class="text-primary" style="font-size: 24px">Failed transaction</p>
+        {{/eq}}
+        {{#eq type 'deposit'}}
+        <p>
+            You have deposited &#x20AB;{{amount}} into your wallet
+        </p>
+        {{/eq}}
+        {{#eq status 'success'}}
+        <p>
+            #transactionId: {{transaction}}
+        </p>
+        {{/eq}}
 
-<p>{{amount}}</p>
-<p>{{transaction}}</p>
+        <a class="btn btn-primary mt-4" href="/wallet">
+            My Wallet
+        </a>
+</main>
+
+<script src="/js/search-book.js"></script>

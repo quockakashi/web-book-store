@@ -89,3 +89,22 @@ li .user-menu-item:hover {
     background-color: rgba(0, 0, 0, 0.2);
     transition: background-color 0.4s;
 }
+
+.notification {
+    text-decoration: none;
+    padding: 15px 26px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
+  }
+  
+  
+  .notification .badge {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    padding: 3px 6px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+  }

@@ -35,14 +35,6 @@ app.use(fileUpload({
 }));
 app.use(flash());
 
-app.get('/recharge', function(req, res){
-    res.render('recharge-page');
-});
-
-app.get('/cart', function(req, res){
-    res.render('cart');
-});
-
 app.use('/static',express.static(path.join(__dirname,'public')))
 
 

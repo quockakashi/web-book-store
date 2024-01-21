@@ -58,19 +58,17 @@
                 </div>
                 <nav class="1-navbar" id="navbar">
                   <nav class="nav">
-                    <div class="nav-list">
-                        <a class="nav_link" href='/recharge' style="margin-left:5px;margin-right:5px">
-                          <i class="fa-solid fa-sack-dollar"></i>
-                          <span class="nav_name ms-1">Recharge</span>
-                        </a>
-                        <a class="nav_link" href="/cart" style="margin-left:5px;margin-right:5px">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="nav_name ms-1">Cart</span>
-                        </a>
+                    <div class="nav-list align-items-center d-flex">
+                       {{#if user}} 
+                        <a href="/cart" class="notification nav_link" style="margin-left:5px;margin-right:5px">
+                            <span style="font-size: 20px;"><i class="fa-solid fa-cart-shopping"></i></span>
+                            <span class="badge nav_name ms-1 cart-size hide"></span>
+                          </a> 
+                       {{/if}}
                         {{#if user}}
                         <div style="position: relative; display:inline">
                           <img class="user-avatar" style="object-fit: cover; object-position: center; width: 30px; height: 30px; border-radius: 50%; cursor: pointer" alt="user-img" src="{{user.avatar.url}}" />
-                          <div class="bg-light shadow-sm hide profile-popover" style="position: absolute; {{#eq user.role 'admin'}}bottom: -140px;{{else}}bottom: -100px;{{/eq}} right: 0; width: 200px; border-radius: 8px; padding: 4px 8px">
+                          <div class="bg-light shadow-sm hide profile-popover" style="position: absolute; {{#eq user.role 'admin'}}bottom: -180px;{{else}}bottom: -140px;{{/eq}} right: 0; width: 200px; border-radius: 8px; padding: 4px 8px">
                             <ul style="padding-left: 0;">
                               <li class="mb-2">
                                 <a class="d-flex user-menu-item" 
@@ -89,7 +87,13 @@
                               </li>
                               {{/eq}}
                               <li class="mt-1">
-                                <a class="d-flex user-menu-item" style="justify-content: space-between; align-items: center" href="/logout">
+                                <a class="d-flex user-menu-item" style="justify-content: space-between; align-items: center" target="_blank" href="/wallet">
+                                  <i class="fa-regular fa-credit-card"></i>
+                                  <p>My wallet</p>
+                                </a>
+                              </li>
+                              <li class="mt-1">
+                                <a class="d-flex user-menu-item logout-btn" style="justify-content: space-between; align-items: center" href="/logout">
                                   <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                   <p>Logout</p>
                                 </a>
@@ -240,6 +244,25 @@
     $('.user-avatar').click(function() {
             $('.profile-popover').toggleClass('hide')
     })
+
+    updateCartSize();
+
+    $('.logout-btn').click(() => {
+      localStorage.clear();
+    })
+
+    function updateCartSize(){
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      if(cart.length > 0) {
+        $('.cart-size').removeClass('hide');
+        $('.cart-size').text(cart.length);
+      } else {
+        $('.cart-size').addClass('hide');
+      }
+    }
   </script>
+
+
 
 </html>

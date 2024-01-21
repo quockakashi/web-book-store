@@ -285,9 +285,10 @@
             };
             cartItems.push(newItem);
         }
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+        updateCartSize();
         alert('Thêm vào giỏ hàng thành công')
-        user.cartItems = cartItems
-        localStorage.setItem('cart', JSON.stringify(cartItems))
+        
     })
     loadReviews();
 
