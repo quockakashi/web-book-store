@@ -9,7 +9,7 @@ let productId = null;
        $('.card').each((index, product) => {
             $(product).click(function(e) {
                 const productId = $(this).attr('cardId');
-                window.location.href = `/products/${productId}`
+                window.location.href = `/admin/products/${productId}`
             })
         })
         

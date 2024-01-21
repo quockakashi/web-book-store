@@ -68,7 +68,7 @@ const createNewOrder = async(req, res, next) => {
             }
         }),
         orderId: 'order' + Date.now(),
-        type: 'processing',
+        status: 'processing',
     };
 
     const userWallet = req.user.wallet;

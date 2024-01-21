@@ -152,7 +152,7 @@ const renderEditProductPage = async(req , res, next) => {
                     return category;
                 });
 
-                return res.render('products/edit-product', {user: req.user, layout: 'layouts/index', title: 'Edit Product', component: {name: 'Products', subtitle: `Edit product #${id}`}, product, categories});
+                return res.render('admin/products/edit-product', {user: req.user, layout: 'admin/layouts/index', title: 'Edit Product', component: {name: 'Products', subtitle: `Edit product #${id}`}, product, categories});
             }
         }
         res.render('error/404'); 

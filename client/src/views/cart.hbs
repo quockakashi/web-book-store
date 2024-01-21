@@ -187,6 +187,7 @@
 <script>
   var cart = JSON.parse(localStorage.getItem('cart')) || [];
   var total = 0;
+  var balance = 0;
   var products = [];
   const handleDelete = (id) => {
     cart = cart.filter(function (item) {
@@ -198,8 +199,9 @@
     $('#total-bill-detail').text(total.toLocaleString());
     $(`tr[bookId="${id}"]`).remove()
 
-    localStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCartSize();
+    checkBalance();
   }
   async function getProducts () {
       const response = await fetch('/api/products/by-ids/' + cart.map(p => p.id).join("_"));
@@ -266,15 +268,9 @@
     console.log(total)
     const userWallet = $('#userWallet').val();
     const balanceResponse = await fetch('/api/payment/balance');
-    const balance = (await balanceResponse.json()).balance;
+    balance = (await balanceResponse.json()).balance;
 
-    if(balance >= total) {
-      console.log(total)
-      $('.buy-now').removeAttr('disabled')
-    } else {
-      $('.amount-insufficient').text((total - balance).toLocaleString('vi-VN'))
-      $('.insufficient-alert').removeClass('hide')
-    }
+    checkBalance();
 
 
 
@@ -325,6 +321,17 @@
     });
 
   });
+
+  function checkBalance() {
+    if(balance >= total) {
+      console.log(total)
+      $('.buy-now').removeAttr('disabled')
+      $('.insufficient-alert').addClass('hide')
+    } else {
+      $('.amount-insufficient').text((total - balance).toLocaleString('vi-VN'))
+      $('.insufficient-alert').removeClass('hide')
+    }
+  }
     
 
 </script>

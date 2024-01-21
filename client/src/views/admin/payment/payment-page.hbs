@@ -1,0 +1,225 @@
+<link href="/admin/css/dashboard.css" rel="stylesheet" type="text/css">
+<div class="container-fluid" style="max-width: 1200px;">
+    <h3 style="font-weight: bold; margin-bottom: 0px;">
+        {{component.name}}
+</h3>
+<p class="mb-4">{{component.subtitle}}</p>
+
+<div class="d-flex mb-4" style="gap: 24px;">
+    <div class="row gap-3" style="max-width: 800px; width: 100%">
+        <div class="col-6 bg-light rounded-3" style="padding: 12px 16px;">
+            <p class="fw-bold fs-5 mb-2">
+                Bookstore Wallet
+            </p>
+            <p>
+                <i class="fa-regular fa-credit-card"></i> Wallet No: <span class="wallet-number" ></span>
+            </p>
+        </div>
+       <div class="summary-box bg-light col-6">
+      <div class="summary-title">
+        <span class="summary-name">Balance</span>
+        <i class="fa-solid fa-dollar-sign"></i>
+      </div>
+      <div class="summary-content">
+        <p>&#8363<span class="balance" style="font-size: 24px;"></span></p>
+        
+      </div>
+    </div>
+        
+    </div>
+</div>
+<div class="mt-4 gap-5 row">
+      <div style="padding: 12px 24px; border-radius: 12px; flex: 0.4; max-height: 400px; overflow: scroll" class="bg-light col col-lg-6 col-md-12">
+        <p>Payment History</p>
+        <ul style="padding: 0; flex-direction: column;" class="mt-3 d-flex gap-4 orders-container">
+          <li class="d-flex gap-4 order-placeholder" id="order-placeholder">
+            <i class="fa-solid fa-bag-shopping my-auto text-primary"></i>
+            <div class="col-6">
+              <div class="fw-bold placeholder-glow">
+                <span class="placeholder col-9"></span>
+              </div>
+              <div class="fw-bold placeholder-glow">
+                <span class="placeholder col-12"></span>
+              </div>
+              <div class="fw-bold placeholder-glow">
+                <span class="placeholder col-9"></span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div style="padding: 12px 24px; border-radius: 12px; flex: 0.6;" class="line-chart-box bg-light shadow-sm col-lg-6">
+            <div class="d-flex align-items-center gap-3">
+                <p class="ms-2 mt-2">Deposit and Payment</p>
+                <select class="form-select form-select-sm bg-light shadow-sm" id="revenueSelect" onchange="loadRevenueOverview()">
+                <option value="last-12-months">Last 12 months</option>
+                <option value="last-7-days">Last 7 days</option>
+                </select>
+            </div>
+            <canvas id="revenueChart"></canvas>
+            </div>
+      </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script>
+    Chart.register(ChartDataLabels);
+  $(document).ready(() => {
+    loadMainWallet();
+    getRecentOrders();
+    loadRevenueOverview();
+    
+  })
+
+  async function getRecentOrders() {
+    const response = await fetch(`/admin/payment/payments`, {
+      method: 'GET',
+    });
+    if(!response.ok) {
+      showMainAlert('warning', 'Something was wrong when loading transaction!');
+      return;
+    }
+    const data = (await response.json()).data;
+    const transactions = data;
+    setTimeout(() => {
+      $('#order-placeholder').addClass('d-none')
+    transactions.forEach(transaction => {
+      transaction.createAt = new Date(transaction.createdAt).toLocaleString('en-UK');
+      $('.orders-container').append(
+          `
+          <li class="d-flex gap-4">
+            ${transaction.type == 'deposit' ? '<i class="fa-solid fa-turn-down my-auto text-success" style="font-size: 20px; vertical-align: middle"></i>' : '<i class="fa-solid fa-bag-shopping my-auto text-primary"></i>'}
+            <div>
+              <span class="fw-bold order-id my-auto">${transaction.type}</span>
+              <span class="text-primary" style="font-size: 12px">#${transaction._id}</span>
+              <p class="text-primary" style="font-size: 12px"><span class="text-secondary">from wallet:</span> ${transaction.from}</p>
+              <div>
+                <span class="me-2" style="font-size: 14px;">${transaction.createAt}</span>
+                <span class="text-primary fw-bold"> &#8363;${new Number(transaction.amount).toLocaleString('vi-VN')}</span>
+              </div>
+            </div>
+          </li>
+          `
+      )
+    })
+    if(!transactions.length) {
+            $('.orders-container').append(`<li class="my-3 text-primary" style="text-align:center">
+              <img src="/images/nodata.svg" style="max-width: 90px">
+              <p>You don't have any order before</p><li>`)
+          }
+    }, 600)
+  }
+
+  async function loadRevenueOverview() {
+      const value = $('#revenueSelect').find(':selected').val();
+      const ctx = document.getElementById('revenueChart');
+      let chartStatus = Chart.getChart("revenueChart"); // <canvas> id
+      if (chartStatus != undefined) {
+        chartStatus.destroy();
+      }
+      const response = await fetch(`/admin/payment/overview?by=${value}`);
+      let result = [];
+      if(response.ok) {
+      result = (await response.json()).data; 
+      }
+      let labels = [];
+      let data1 = [];
+      let data2 = [];
+      for(let i = 0; i < result.length; i++) {
+        labels.push(result[i].name);
+        data1.push(result[i].deposit);
+        data2.push(result[i].payment);
+      }
+
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'deposit',
+            tension: 0.4,
+            borderWidth: 3,
+            data: data1,
+            borderSkipped: false,
+            borderColor: '#007bff',
+            backgroundColor: '#007bff',
+            maxBarThickness: 2,
+          },
+          {
+            label: 'payment',
+            tension: 0.4,
+            borderWidth: 3,
+            data: data2,
+            borderSkipped: false,
+            borderColor: '#FF8C00',
+            backgroundColor: '#FF8C00',
+            maxBarThickness: 2,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+                legend: {
+                    display: true,
+                },
+                datalabels: {
+                  display: false
+                }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                        drawBorder: false,
+                        display: true,
+                        drawOnChartArea: true,
+                        borderDash: [5, 5]
+              },
+              ticks: {
+                        display: true,
+                        padding: 10,
+                        color: '#b2b9bf',
+                        font: {
+                            size: 11,
+                            family: "Open Sans",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                        stepSize: 100000,
+                    }
+            },
+                x: {
+                    grid: {
+                        drawBorder: false,
+                        display: false,
+                        drawOnChartArea: false,
+                        drawTicks: false,
+                        borderDash: [5, 5]
+                    },
+                    ticks: {
+                        display: true,
+                        color: '#b2b9bf',
+                        padding: 20,
+                        font: {
+                            size: 11,
+                            family: "Open Sans",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    }
+          }
+          }
+        }
+      });
+  }
+
+  async function loadMainWallet() {
+    const response = await fetch('/admin/payment/main-wallet');
+    const wallet = (await response.json()).data;
+
+    $('.balance').text(wallet.balance.toLocaleString('vi-VN'));
+    $('.wallet-number').text(wallet._id);
+  }
+</script>

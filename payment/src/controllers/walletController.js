@@ -45,8 +45,26 @@ const getBalance = async(req, res, next) => {
     }
 }
 
+const getMainWalletInfo = async(req, res, next) => {
+    try {
+
+        const wallet = await walletModel.findById(process.env.MAIN_WALLET);
+
+        return res.status(200).json({
+            data: wallet
+        })
+    } catch(error) {
+        console.error(error);
+        return res.status(500).json({
+            message: 'Internal server error',
+            error,
+        })
+    }
+}
+
 module.exports = {
     createNewWallet,
     getBalance,
+    getMainWalletInfo
 };
 

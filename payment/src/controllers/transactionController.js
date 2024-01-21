@@ -124,11 +124,100 @@ const getTransactionsOverview = async (req, res, next) => {
         console.error(err);
         next(err);
     }
+};
+
+const getAllPayment = async(req, res, next) => {
+    const transactions = await transactionModel.find({type: 'payment'}).lean();
+
+    return res.status(200).json({
+        data: transactions
+    })
+};
+
+getOverviewDepositAndPayment = async(req, res, next) => {
+    try {
+        const { duration } = req.body;
+        const data = [];
+        const current = new Date();
+        const startCurrentDate = new Date(current.getFullYear(), current.getMonth(), current.getDate());
+        if(duration === 'last-7-days') {
+            for(let i = 0; i < 7; i++) {
+                const date = new Date(startCurrentDate);
+                date.setDate(date.getDate() - i);
+                const endDate = new Date(startCurrentDate);
+                endDate.setDate(date.getDate() + 1);
+
+                const transactions = await transactionModel.find({
+                    createdAt: { $gte: date, $lt: endDate },
+                });
+                let deposit = 0;
+                let payment = 0;
+                transactions.forEach(transaction => {
+                    if(transaction.type == 'deposit') {
+                        deposit += transaction.amount;
+                    } else {
+                        payment += transaction.amount;
+                    }
+                })
+                const name = date.toLocaleDateString('en-UK', { dateStyle: 'medium' }).slice(0, 6).trim();
+                data.push({
+                    name,
+                    deposit,
+                    payment,
+                })
+            }
+        }
+        else {
+            let month = current.getMonth();
+            let year = current.getFullYear();
+            for (let i = 0; i < 12; i++) {
+                
+                const startMonth = new Date(year, month, 1);
+                const endMonth = new Date(year, month + 1, 0, 23, 59, 59, 999);
+
+                const transactions = await transactionModel.find({
+                    createdAt: { $gte: startMonth, $lte: endMonth },
+                });
+                let deposit = 0;
+                let payment = 0;
+                transactions.forEach(transaction => {
+                    if(transaction.type == 'deposit') {
+                        deposit += transaction.amount;
+                    } else {
+                        payment += transaction.amount;
+                    }
+                })
+                const name = startMonth.toLocaleDateString('en-UK', { dateStyle: 'medium' }).slice(2,);
+                data.push({
+                    name,
+                    deposit,
+                    payment
+                })
+                month--;
+                if (month == -1) {
+                    month = 11;
+                    year = year - 1;
+                }
+            }
+        }
+
+        data.reverse();
+
+        return res.status(200).json({
+            message: 'Transaction info',
+            data,
+        })
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
 }
 
 module.exports = {
     createNewTransaction,
     getAllTransactionByWalletId,
     getTransactionsOverview,
+    getAllPayment,
+    getOverviewDepositAndPayment
 };
 

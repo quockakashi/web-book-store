@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const authRouter = require('./authRouter');
 const userRouter = require('./userRouter');
+const paymentRouter = require('./paymentRouter');
 const authApiRouter = require('./api/authApiRouter');
 const dashboardRouter = require('./dashboardRouter');
 const userApiRouter = require('./api/userApiRouter');
@@ -22,6 +23,7 @@ router.use('/categories', categoryRouter);
 router.use('/products', productRouter);
 router.use('/orders', orderRouter);
 router.use('/profile', profileRouter);
+router.use('/payment', paymentRouter);
 
 
 /** api  */
