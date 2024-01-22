@@ -6,6 +6,9 @@ const fileUpload = require('express-fileupload');
 const hbs = require('./configs/hbs');
 const session = require('express-session');
 const flash = require('express-flash');
+const https = require('https');
+const fs = require('fs');
+
 
 
 // import database
@@ -63,7 +66,12 @@ app.use('/', router);
 
 
 // create server
-const server = http.createServer(app);
+const server = https.createServer(
+    {
+        key: fs.readFileSync(path.join(__dirname,'..', 'cert', 'key.pem')),
+        cert: fs.readFileSync(path.join(__dirname,'..', 'cert', 'cert.pem')),
+    },
+    app);
 // listen on the server
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {

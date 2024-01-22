@@ -4,6 +4,9 @@ require('dotenv').config();
 const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
 const connectDB = require('./configs/database');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 
 connectDB();
 
@@ -40,7 +43,12 @@ app.use('/api/transactions', transactionRouter);
 
 
 // create server
-const server = http.createServer(app);
+const server = https.createServer(
+    {
+        key: fs.readFileSync(path.join(__dirname,'..', 'cert', 'key.pem')),
+        cert: fs.readFileSync(path.join(__dirname,'..', 'cert', 'cert.pem')),
+    },
+    app);
 // listen on the server
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
