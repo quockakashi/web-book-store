@@ -321,10 +321,26 @@ const getOrdersByUser  = async(req, res, next) => {
     }
 }
 
+const getOrderById = async(req, res, next) => {
+    try {
+        const {id} = req.params;
+        const order = await orderModel.findById(id).populate('customer products.product');
+
+
+    return res.status(200).json({
+        data: order,
+    })
+    } catch(err) {
+        console.error(err);
+        next(err);
+    }
+}
+
 module.exports = {
     renderOrderPage,
     updateStatus,
     getYearlyRevenue,
     getTopRevenue,
     getOrdersByUser,
+    getOrderById
 }

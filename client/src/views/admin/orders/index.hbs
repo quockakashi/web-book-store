@@ -1,3 +1,13 @@
+<style>
+  .card-title {
+  display: -webkit-box;
+  font-size: 14px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-weight: bold;
+}
+</style>
 <h3 style="font-weight: bold; margin-bottom: 0px;">
         {{component.name}}
 </h3>
@@ -58,7 +68,7 @@
     </thead>
     <tbody>
         {{#each orders}}
-        <tr class="px-4 py-3" rowId="{{this._id}}" rowName="{{this.name}}">
+        <tr class="px-4 py-3" rowId="{{this._id}}" rowName="{{this.name}}" onclick="showDetailOrder('{{this._id}}')">
             <td style="vertical-align: middle;">
                 <p style="font-size: 12px;">{{this.orderId}}</p>
             </td>
@@ -71,6 +81,7 @@
             </td>
             <td class="text-center" style="vertical-align: middle;">
                 <select 
+                onclick="changeStatus(event)"
                 class="form-select text-light status-select"
                 style="border: none; font-size: 14px; border-radius: 24px; outline: none; max-width: 200px" orderId="{{this._id}}">
                     <option
@@ -94,6 +105,46 @@
         {{/each}}
     </tbody>
   </table>
+  <div class="bg-light p-4 border-3 shadow-lg preview-box rounded-4 hide" style="position: absolute; left: 0; 
+  right: 0; 
+  top: 50px;
+  margin-left: auto; 
+  margin-right: auto; width: 600px; z-index: 2">
+        <button class="border-none close-preview-btn" style="background: inherit; border: none; margin-bottom: 6px; margin-left: 100%;">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h5>
+          Order Details <span class="order-id text-primary" style="font-size: 14px"></span>
+        </h5>
+
+        <div class="card-body order-placeholder">
+          <h5 class="card-title placeholder-glow">
+            <span class="placeholder col-6"></span>
+          </h5>
+          <p class="card-text placeholder-glow">
+            <span class="placeholder col-7"></span>
+            <span class="placeholder col-4"></span>
+            <span class="placeholder col-4"></span>
+            <span class="placeholder col-6"></span>
+            <span class="placeholder col-8"></span>
+            <span class="placeholder col-7"></span>
+            <span class="placeholder col-4"></span>
+            <span class="placeholder col-4"></span>
+            <span class="placeholder col-6"></span>
+            <span class="placeholder col-8"></span>
+             <span class="placeholder col-8"></span>
+            <span class="placeholder col-7"></span>
+            <span class="placeholder col-4"></span>
+            <span class="placeholder col-4"></span>
+            <span class="placeholder col-6"></span>
+            <span class="placeholder col-8"></span>
+          </p>
+        </div>
+        <div class="order-detail-table hide">
+        
+      </div>
+        <button class="btn btn-primary mt-4" onclick="handleOkBtn()">Ok</button>
+    </div>
 {{#if meta.showPagination}}
 <nav aria-label="Page navigation example" style="margin-top: 32px;">
   <ul class="pagination justify-content-center">
@@ -135,3 +186,72 @@
   </div>
 </div>
 <script src="/admin/js/order-page.js"></script>
+<script>
+  $('.close-preview-btn').click(() => {
+        $('.preview-box').addClass('hide');
+    })
+
+  async function showDetailOrder(id) {
+    $('.preview-box').removeClass('hide');
+    $('.order-id').text(`#${id}`)
+    $('.order-detail-table').addClass('hide');
+    $('.order-placeholder').removeClass('hide');
+    
+
+    const response = await fetch(`/admin/orders/${id}`);
+
+    const data = (await response.json()).data;
+
+    setTimeout(() => {
+      $('.order-placeholder').addClass('hide');
+
+      $('.order-detail-table').removeClass('hide');
+    }, 300)
+
+    $('.order-detail-table').html(`
+    <div class="fw-bold mt-3" style="font-size: 14px">
+      <p>Customer: ${data.customer.username}</p>
+      <p>Status: ${data.status}</p>
+    </div>
+    <table class="table bg-light rounded-3 mt-3">
+      <thead>
+    <tr>
+      <th scope="col">Product</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${data.products.map(item => (
+      `
+      <tr>
+        <th scope="row">
+          <div class="row">
+            <img class="col-6" src=${item.product.image.url} style="width: 80px; height: 70px"/>
+            <div class="col-6">
+              <p class="card-title">
+                ${item.product.name}
+              </p>
+            </div>
+          </div>
+        </th>
+        <td>${item.quantity}</td>
+        <td class="fw-bold">${(item.quantity * item.product.price).toLocaleString('vi-VN')}<sup>&#8363;</sup></td>
+      </tr>
+      `
+    )).join('')}
+  </tbody>
+     </table>
+     <div style="width: 100%; text-align: end"><p class="fw-bold" style="font-size: 20px">Total: ${data.products.reduce((prev, currentValue) => prev + currentValue.product.price * currentValue.quantity, 0).toLocaleString('vi-VN')}<sup>&#8363;</sup></p></div>
+    `)
+
+  }
+
+  function changeStatus(e) {
+    e.stopPropagation();
+  }
+
+  function handleOkBtn() {
+    $('.preview-box').addClass('hide');
+  }
+</script>

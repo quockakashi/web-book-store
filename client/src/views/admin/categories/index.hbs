@@ -3,9 +3,9 @@
 </h3>
 <p class="mb-4">{{component.subtitle}}</p>
 
-<a href="/categories/new-category" class="btn btn-primary mb-4"><i class="fa-solid fa-plus"></i>&nbsp;Add Category</a>
+<a href="/admin/categories/new-category" class="btn btn-primary mb-4"><i class="fa-solid fa-plus"></i>&nbsp;Add Category</a>
 
-<form class="bg-light" style="max-width: 220px; border-radius: 16px" class="shadow-sm" action="/categories">
+<form class="bg-light" style="max-width: 220px; border-radius: 16px" class="shadow-sm" action="/admin/categories">
     <div class="input-group mb-3" style="border-radius: 16px;">
         <input name="search" type="text" class="form-control bg-light" style="border-radius: 16px 0 0 16px; border: none" placeholder="Search!" value="{{meta.search}}">
         <button style="border-radius: 0 16px 16px 0; background-color: inherit; border: none" class="input-group-text">
@@ -51,15 +51,15 @@
 <nav aria-label="Page navigation example" style="margin-top: 32px;">
   <ul class="pagination justify-content-center">
     <li class="page-item {{#if meta.noPrev}}disabled{{/if}}">
-      <a class="page-link" href="/categories?page={{meta.prevPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Previous">
+      <a class="page-link" href="/admin/categories?page={{meta.prevPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     {{#range 1 meta.totalPage}}
-        <li class="page-item {{#eq this ../meta.page}}active{{/eq}}"><a class="page-link" href="/categories?page={{this}}&sortBy={{../meta.sortBy}}&sortDir={{../meta.sortDir}}{{#if ../meta.hasSearch}}&search={{../meta.search}}{{/if}}">{{this}}</a></li>
+        <li class="page-item {{#eq this ../meta.page}}active{{/eq}}"><a class="page-link" href="/admin/categories?page={{this}}&sortBy={{../meta.sortBy}}&sortDir={{../meta.sortDir}}{{#if ../meta.hasSearch}}&search={{../meta.search}}{{/if}}">{{this}}</a></li>
     {{/range}}
     <li class="page-item {{#if meta.noNext}}disabled{{/if}}">
-      <a class="page-link" href="/categories?page={{meta.nextPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Next">
+      <a class="page-link" href="/admin/categories?page={{meta.nextPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

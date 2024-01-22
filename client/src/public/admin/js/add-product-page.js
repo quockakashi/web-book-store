@@ -105,7 +105,7 @@ async function handleSubmit(e) {
     if(response.ok) {
       const json = await response.json();
       localStorage.setItem('justEditing', json.message);
-      window.location.href = `/products?search=${json.data._id}`;
+      window.location.href = `/admin/products?search=${json.data._id}`;
     } else {
       const json = await response.json();
       scrollToTop();
