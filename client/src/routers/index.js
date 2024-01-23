@@ -12,6 +12,7 @@ const passport = require('../configs/passport');
 const reviewApiRouter = require('./api/reviewApiRouter');
 const orderApiRouter = require('./api/orderApiRouter');
 const vnpayApiRouter = require('./api/vnpayApiRouter');
+const userApiRouter = require('./api/userRouter');
 // admin
 const adminRouter = require('./admin/index');
 
@@ -49,11 +50,11 @@ router.get('/transaction-status', (req, res) => {
 
     res.render('transaction-status', { layout: 'layouts/main', title: 'Transaction status', user: req.user, type, status, amount, transaction});
 })
-router.get('/cart', function(req, res){
+router.get('/cart', requireLogin, function(req, res){
     res.render('cart', { layout: 'layouts/main', title: 'Transaction status', user: req.user});
 });
 
-router.get('/wallet',async function(req, res) {
+router.get('/wallet',requireLogin, async function(req, res) {
     
     const userWallet = req.user.wallet;
     const body = {
@@ -165,5 +166,6 @@ router.use('/admin', requireLogin, requireAdmin, adminRouter);
 
 
 router.use('/api/vn-pay/', vnpayApiRouter);
+router.use('/api/users', userApiRouter);
 
 module.exports = router;

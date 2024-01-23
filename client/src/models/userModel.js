@@ -42,7 +42,8 @@ const userSchema = new mongoose.Schema({
     wallet: {
         type: ObjectId,
         ref: 'wallet',
-    }
+    },
+    address: String,
 }, {versionKey: false, timestamps: true});
 
 const userModel = mongoose.model('user', userSchema);

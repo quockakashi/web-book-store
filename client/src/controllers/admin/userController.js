@@ -247,11 +247,76 @@ const getPersonalInfo = async(req, res, next) => {
     })
 }
 
+const updateUser = async (req, res, next) => {
+    try {
+        const id = req.user._id;
+        let {
+            fullName,
+            username,
+            address,
+        } = req.body;
+
+        let avatar = req.files?.avatar;
+        console.log(fullName, address, username, avatar)
+
+        // check stored user
+        let user = await userModel.findById(id);
+
+        // check username
+        if(username != user.username) {
+            const user = await userModel.findOne({username});
+            if(user) {
+                return res.status(400).json({
+                    message: 'This username was used by another',
+                })
+            }
+        }
+
+        const editInfo = {
+            fullName,
+            username,
+            address
+        };
+
+        // handle if editing includes avatar
+        if(avatar) {
+            // covert data from binary file to data URI
+            avatar = toDataUri(avatar);
+            if(user.avatar?.public_id) {
+                await cloudinary.uploader.destroy(user.avatar.public_id);
+            }
+
+            const result = await cloudinary.uploader.upload(avatar, {
+                folder: 'book-store-system/avatars',
+            });
+
+            avatar = {public_id: result.public_id, url: result.secure_url};
+            editInfo.avatar = avatar;
+            console.log(avatar);
+        };
+
+        console.log('User info: ', editInfo);
+
+        user = await userModel.findOneAndUpdate({_id: id}, editInfo);
+        return res.status(200).json({
+            message: 'User updated',
+            data: {
+                _id: user._id,
+                fullName: user.fullName,
+            }
+        })
+    } catch(err) {
+        console.error(err);
+        next(err);
+    }
+}
+
 module.exports = {
     renderIndexPage,
     renderEditPage,
     renderDetailPage,
     removeUser,
     editUser,
-    getPersonalInfo
+    getPersonalInfo,
+    updateUser
 }

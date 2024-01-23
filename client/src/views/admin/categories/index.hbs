@@ -36,8 +36,8 @@
             </td>
             <td>
                 <div>
-                    <a href="products?catId={{this._id}}" class="btn btn-primary btn-sm me-2">Views</a>
-                    <a href="categories/edit/{{this._id}}" class="btn btn-warning btn-sm me-2">Edit</a>
+                    <a href="/admin/products?catId={{this._id}}" class="btn btn-primary btn-sm me-2">Views</a>
+                    <a href="/admin/categories/edit/{{this._id}}" class="btn btn-warning btn-sm me-2">Edit</a>
                     <a class="btn btn-danger btn-sm btn-delete-category" catId="{{this._id}}"
                     catName="{{this.name}}" 
                     data-bs-toggle="modal" data-bs-target="#exampleModal">Remove</a>
@@ -90,4 +90,4 @@
 
 
 
-<script src="/js/category-page.js"></script>
+<script src="/admin/js/category-page.js"></script>

@@ -73,6 +73,7 @@ const renderOrderPage = async (req, res, next) => {
                 subtitle: "Orders Management",
             },
             orders,
+            user: req.user,
             meta: {
                 showPagination: totalPage > 1,
                 page,

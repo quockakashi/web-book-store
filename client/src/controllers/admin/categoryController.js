@@ -57,6 +57,7 @@ const renderCategoriesPage = async (req, res, next) => {
         name: "Categories",
         subtitle: "Categories Management",
       },
+      user: req.user,
       categories,
       meta: {
         showPagination: totalPage > 1,

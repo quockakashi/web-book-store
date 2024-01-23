@@ -1,4 +1,62 @@
+ <style>
+  .avatar-wrapper{
+	position: relative;
+	height: 200px;
+	width: 200px;
+  padding: 0;
+	margin: auto;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: 1px 1px 15px -5px black;
+	transition: all .3s ease;
+	&:hover{
+		transform: scale(1.05);
+		cursor: pointer;
+	}
+	&:hover .profile-pic{
+		opacity: .5;
+	}
+	.profile-pic {
+    height: 100%;
+		width: 100%;
+		transition: all .3s ease;
+		&:after{
+			font-family: FontAwesome;
+			content: "\f007";
+			top: 0; left: 0; right: 0;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			font-size: 190px;
+			background: #ecf0f1;
+			color: #34495e;
+			text-align: center;
+		}
+	}
+	.upload-button {
+		position: absolute;
+		top: 0; left: 0;
+		height: 100%;
+		width: 100%;
+		.fa-arrow-circle-up{
+			position: absolute;
+			font-size: 234px;
+			top: -17px;
+			left: 0;
+      right: 0;
+			text-align: center;
+			opacity: 0;
+			transition: all .3s ease;
+			color: #34495e;
+		}
+		&:hover .fa-arrow-circle-up{
+			opacity: .9;
+		}
+	}
+}
+ </style>
  <div class="px-4 container-fluid" style="margin-top: 120px; margin-bottom: 40px; max-width: 1200px">
+      
       <div class="bg-light" style="width: 100%; height: 280px; border-radius: 12px;">
         <input type="hidden" value="{{user._id}}" id="userId">
         <div style="background: url(https://images.pexels.com/photos/3394939/pexels-photo-3394939.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2); 
@@ -16,7 +74,40 @@
       <p><i class="fa-regular fa-user"></i>&nbsp;&nbsp;Username: {{user.username}}</p>
       <p class="mt-1"><i class="fa-regular fa-envelope"></i>&nbsp;&nbsp;Email: {{user.email}}</p>
     </div>
+        </div>
+              <div class="p-4 bg-light my-4 rounded-4">
+                  <form class="row update-form">
+                    <div class="avatar-wrapper col col-6">
+                      <img class="profile-pic" src="{{user.avatar.url}}" style="object-fit: cover";/>
+                      <div class="upload-button">
+                        <i class="fa fa-arrow-circle-up" aria-hidden="true" style="transform: translateX(-6%);"></i>
+                      </div>
+                      <input class="file-upload" type="file" accept="image/*"/ id="avatar" name="avatar">
+                  </div>
+            <div class="col col-6">
+              <div class="form-row">
+              <div class="form-group">
+                <label for="inputEmail4">Email</label>
+                <input type="email" class="form-control" id="inputEmail4" value="{{user.email}}" readonly placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="inputPassword4">Username</label>
+                <input type="text" class="form-control" id="username" placeholder="Username" value="{{user.username}}" required>
+              </div>
+            </div>
+             <div class="form-group">
+              <label for="inputAddress2">Full name</label>
+              <input type="text" class="form-control" id="fullName" placeholder="Full name" value="{{user.fullName}}" required>
+            </div>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" class="form-control" id="address" placeholder="1234 Main St" value="{{user.address}}">
+            </div>
+            <button type="submit" class="btn btn-primary mt-4">Update</button>
+            </div>
+          </form>
       </div>
+
     <div class="mt-4 d-flex gap-5">
       <div style="padding: 12px 24px; border-radius: 12px; flex: 0.4" class="bg-light">
         <p>Recent orders</p>
@@ -61,6 +152,26 @@
 
 <script>
   $(document).ready(() => {
+    var readURL = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.profile-pic').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+   
+    $(".file-upload").on('change', function(){
+        readURL(this);
+    });
+    
+    $(".upload-button").on('click', function() {
+       $(".file-upload").click();
+    });
+    $('.update-form').on('submit', handleSubmit);
     const userId = $('#userId').val();
     getUserReviews(userId);
     getRecentOrders(userId);
@@ -148,4 +259,42 @@
       }, 700)
     }
   }
+  async function handleSubmit(e) {
+        e.preventDefault();
+
+        const formData = new FormData();
+
+        const fullName = $('#fullName').val();
+        const avatar = $('#avatar')[0].files[0];
+        const username = $('#username').val();
+        const address =$('#address').val();
+
+        if(!/^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(username)) {
+            showMainAlert('warning', 'Invalid username, try another!')
+            return false;
+        }
+
+        formData.append('username', username)
+        formData.append('fullName', fullName);
+        formData.append('address', address)
+        if(avatar) {
+          formData.append('avatar', avatar);
+        };
+
+        const response = await fetch(`/api/users/update`, {
+          method: 'POST',
+          body: formData,
+        })
+        showMainAlert('success', 'Processing....')
+
+        if(response.ok) {
+          const json = await response.json();
+          window.location.href = `/account`;
+        } else {
+        scrollToTop();
+          const json = await response.json();
+          showMainAlert('danger', json.message)
+        }
+        return false;
+    }
 </script>

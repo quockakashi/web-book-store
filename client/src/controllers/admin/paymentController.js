@@ -5,7 +5,7 @@ const renderPaymentPage = async(req, res, next) => {
     component: {
         name: "Payment",
         subtitle: "Payment Management",
-    },})
+    },user: req.user})
 }
 
 const getMainWallet = async(req, res, next) => {
