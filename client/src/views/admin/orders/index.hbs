@@ -77,7 +77,7 @@
                 <p style="font-size: 12px;">{{this.createdAt}}</p>
             </td>
             <td class="text-center" style="vertical-align: middle;">
-                <p style="font-size: 12px;">${{this.total}}</p>
+                <p style="font-size: 12px;">đ{{#formatNumber this.total}}{{/formatNumber}}</p>
             </td>
             <td class="text-center" style="vertical-align: middle;">
                 <select 
@@ -149,15 +149,15 @@
 <nav aria-label="Page navigation example" style="margin-top: 32px;">
   <ul class="pagination justify-content-center">
     <li class="page-item {{#if meta.noPrev}}disabled{{/if}}">
-      <a class="page-link" href="/admin/categories?page={{meta.prevPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Previous">
+      <a class="page-link" href="/admin/orders?page={{meta.prevPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     {{#range 1 meta.totalPage}}
-        <li class="page-item {{#eq this ../meta.page}}active{{/eq}}"><a class="page-link" href="/admin/categories?page={{this}}&sortBy={{../meta.sortBy}}&sortDir={{../meta.sortDir}}{{#if ../meta.hasSearch}}&search={{../meta.search}}{{/if}}">{{this}}</a></li>
+        <li class="page-item {{#eq this ../meta.page}}active{{/eq}}"><a class="page-link" href="/admin/orders?page={{this}}&sortBy={{../meta.sortBy}}&sortDir={{../meta.sortDir}}{{#if ../meta.hasSearch}}&search={{../meta.search}}{{/if}}">{{this}}</a></li>
     {{/range}}
     <li class="page-item {{#if meta.noNext}}disabled{{/if}}">
-      <a class="page-link" href="/admin/categories?page={{meta.nextPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Next">
+      <a class="page-link" href="/admin/orders?page={{meta.nextPage}}&sortBy={{meta.sortBy}}&sortDir={{meta.sortDir}}{{#if meta.hasSearch}}&search={{meta.search}}{{/if}}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
